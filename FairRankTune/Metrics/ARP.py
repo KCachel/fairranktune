@@ -37,28 +37,28 @@ def fpr(ranking, grp_mem):
     return fpr
 
 
-def ARP(ranking, group_ids, agg):
+def ARP(ranking, group_ids, combo):
     """
     Calculate ARP score
     :param ranking: Numpy array of ranking methods
     :param group_ids: Numpy array of group ids
-    :param agg: String aggregation metric for calculating meta metric
+    :param combo: String aggregation metric for calculating meta metric
     :return: ARP value, numpy array of FPR values
     """
     vals = np.asarray(fpr(ranking, group_ids))
-    if agg == 'MinMaxRatio':
+    if combo == 'MinMaxRatio':
         return MinMaxRatio(vals), vals
-    if agg == 'MaxMinRatio':
+    if combo == 'MaxMinRatio':
         return MaxMinRatio(vals), vals
-    if agg == 'MaxMinDiff':
+    if combo == 'MaxMinDiff':
         return MaxMinDiff(vals), vals
-    if agg == 'MaxAbsDiff':
+    if combo == 'MaxAbsDiff':
         return MaxAbsDiff(vals), vals
-    if agg == 'MeanAbsDev':
+    if combo == 'MeanAbsDev':
         return MeanAbsDev(vals), vals
-    if agg == 'LTwo':
+    if combo == 'LTwo':
         return LTwo(vals), vals
-    if agg == 'Variance':
+    if combo == 'Variance':
         return Variance(vals), vals
 
 def pair_count(num_candidates):

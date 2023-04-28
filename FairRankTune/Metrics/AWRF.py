@@ -8,13 +8,13 @@ from FairRankTune.Metrics.AggUtil import *
 # In Proceedings of the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval (pp. 1033-1043).
 
 
-def AWRF(ranking, group_ids, p, agg):
+def AWRF(ranking, group_ids, p, combo):
     """
     Calculate AWRP score (Sapiezynski et al.)
     :param ranking: Numpy array of ranking methods
     :param group_ids: Numpy array of group ids
     :param p: p discounting param
-    :param agg: String aggregation metric for calculating meta metric
+    :param combo: String aggregation metric for calculating meta metric
     :return: AWRP score val, numpy array of group average attention
     """
 
@@ -30,19 +30,19 @@ def AWRF(ranking, group_ids, p, agg):
 
     vals = grp_attn_vals / grp_count_items
 
-    if agg == 'MinMaxRatio':
+    if combo == 'MinMaxRatio':
         return MinMaxRatio(vals), vals
-    if agg == 'MaxMinRatio':
+    if combo == 'MaxMinRatio':
         return MaxMinRatio(vals), vals
-    if agg == 'MaxMinDiff':
+    if combo == 'MaxMinDiff':
         return MaxMinDiff(vals), vals
-    if agg == 'MaxAbsDiff':
+    if combo == 'MaxAbsDiff':
         return MaxAbsDiff(vals), vals
-    if agg == 'MeanAbsDev':
+    if combo == 'MeanAbsDev':
         return MeanAbsDev(vals), vals
-    if agg == 'LTwo':
+    if combo == 'LTwo':
         return LTwo(vals), vals
-    if agg == 'Variance':
+    if combo == 'Variance':
         return Variance(vals), vals
 
 def attention_vector(num_items, p):
