@@ -132,9 +132,4 @@ dmypy.json
 #remove
 /.idea
 .Rhistory
-/xxxx_mallows
-/xxxx_preflib
-compare_rules_datasets_results_papertable.xlsx
-datasets_papertable_results.xlsx
-format_results.R
-/Preflib_Datasets/CSRankings_results.csv
+testing_script.py
