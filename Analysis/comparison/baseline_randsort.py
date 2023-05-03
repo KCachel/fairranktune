@@ -103,7 +103,7 @@ for num_items in items:
 
             results = pd.DataFrame(data)
             #print(results)
-            results.to_csv("distribution_robustness_results_randsortnormal.csv", index=False)
+            results.to_csv("results_randsortnormal.csv", index=False)
             r_seed += 1
 
 ####### RANDSORT WITH UNIFORM
@@ -167,7 +167,7 @@ for num_items in items:
 
             results = pd.DataFrame(data)
             #print(results)
-            results.to_csv("distribution_robustness_results_randsortuniform.csv", index=False)
+            results.to_csv("results_randsortuniform.csv", index=False)
             r_seed += 1
 
 

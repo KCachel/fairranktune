@@ -108,5 +108,5 @@ for num_items in items:
 
             results = pd.DataFrame(data)
             #print(results)
-            results.to_csv("distribution_robustness_results_geyiketal.csv", index=False)
+            results.to_csv("results_geyiketal.csv", index=False)
             r_seed += 1
