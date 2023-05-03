@@ -1,5 +1,5 @@
 import numpy as np
-from FairRankTune.Metrics.AggUtil import *
+from FairRankTune.Metrics.ComboUtil import *
 # Script to calculate Ecposure metric
 # References: Singh, A., & Joachims, T. (2018, July). Fairness of exposure in rankings.
 # In Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining (pp. 2219-2228).

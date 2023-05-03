@@ -91,7 +91,7 @@ for num_items in items:
 
                 results = pd.DataFrame(data)
                 #print(results)
-                results.to_csv("varyingitemnum_metric_results_ci.csv", index=False)
+                results.to_csv("varyingitemnum_distribution_results.csv", index=False)
                 r_seed += 1
 
 

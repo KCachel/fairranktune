@@ -1,5 +1,5 @@
 import numpy as np
-from FairRankTune.Metrics.AggUtil import *
+from FairRankTune.Metrics.ComboUtil import *
 # Script to calculate AWRF metric
 # References: Sapiezynski, P., Zeng, W., E Robertson, R., Mislove, A., & Wilson, C. (2019, May).
 # Quantifying the impact of user attentionon fair group representation in ranked lists.

@@ -133,3 +133,4 @@ dmypy.json
 /.idea
 .Rhistory
 testing_script.py
+/.ipynb_checkpoints/

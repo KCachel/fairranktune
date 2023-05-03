@@ -1,4 +1,4 @@
-from FairRankTune.Metrics.AggUtil import *
+from FairRankTune.Metrics.ComboUtil import *
 # Script to calculate ARP metric, using Cachel et al implementation
 # Code References:  https://github.com/KCachel/MANI-Rank/blob/main/multi_fair/metrics.py
 # References: Cachel, K., Rundensteiner, E., & Harrison, L. (2022, May). Mani-rank: Multiple attribute and intersectional group fairness for consensus ranking.
