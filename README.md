@@ -1,7 +1,7 @@
 # FairRankTune
 Repository corresponding to the paper.
 
-**Note, the Anonymous 4 open science program does NOT carry over the links below in all instances. To view the file please click on it in the navigation pane. Additionally, if the .pynb file does not render via the Anonymous 4 opens science UI, please click the "download file" button in the top right to see the file.**
+**Note, the Anonymous 4 open science program does NOT carry over the links below in all instances. To view the file please click on it in the navigation pane. Additionally, if the .ipynb file does not render via the Anonymous 4 opens science UI, please click the "download file" button in the top right to see the file.**
 ## Table of Contents
 1. [Basic installation instructions](#basic-installation-instructions)
 2. [Quick start & notebook playground](#quick-start-playground)
