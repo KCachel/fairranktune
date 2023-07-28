@@ -55,8 +55,14 @@ The RankTune source code is the [RankTune](https://github.com/KCachel/FairRankTu
 All metrics are in the *Metrics* directory. Each metric has a corresponding python script. 
 - [ARP](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/ARP.py) [1]
 - [AWRF](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/AWRF.py) [2]
-- [ER](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/ER.py) [3, 4]
+- [ER](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/EXR.py) [3, 4]
+- [EXPU](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/EXR.py) [4]
+- [EXPRU](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/EXR.py) [4]
 - [NDKL](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/NDKL.py) [5]
+- [ERBE](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/ERB.py) [8]
+- [ERBP](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/ERB.py) [8]
+- [ERBR](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/ERB.py) [8]
+- [IAA](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/IAA.py) [9]
 
 Functions to combine per-group metrics into a single metric are in the ComboUtil.py script. 
 
@@ -144,5 +150,23 @@ The scripts to generate the plots from the case study and comparison with URG ar
   author={Ke Yang and Julia Stoyanovich},
   journal={Proceedings of the 29th International Conference on Scientific and Statistical Database Management},
   year={2016}
+}
+```
+[8] Kirnap, Ö., Diaz, F., Biega, A.J., Ekstrand, M.D., Carterette, B., & Yilmaz, E. (2021). Estimation of Fair Ranking Metrics with Incomplete Judgments. Proceedings of the Web Conference 2021.
+```textmate
+@article{Kirnap2021EstimationOF,
+  title={Estimation of Fair Ranking Metrics with Incomplete Judgments},
+  author={{\"O}mer Kirnap and Fernando Diaz and Asia J. Biega and Michael D. Ekstrand and Ben Carterette and Emine Yilmaz},
+  journal={Proceedings of the Web Conference 2021},
+  year={2021}
+}
+```
+[9] Biega, A.J., Gummadi, K.P., & Weikum, G. (2018). Equity of Attention: Amortizing Individual Fairness in Rankings. The 41st International ACM SIGIR Conference on Research & Development in Information Retrieval.
+```textmate
+@article{Biega2018EquityOA,
+  title={Equity of Attention: Amortizing Individual Fairness in Rankings},
+  author={Asia J. Biega and Krishna P. Gummadi and Gerhard Weikum},
+  journal={The 41st International ACM SIGIR Conference on Research \& Development in Information Retrieval},
+  year={2018}
 }
 ```
