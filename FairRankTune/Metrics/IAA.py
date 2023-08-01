@@ -21,8 +21,8 @@ def IAA(ranking, relevance):
     for i in range(0, num_items):
         att_of_item = attention[i]
         rel_of_item = relevance[i]
-        IAA += np.abs(att_of_item - rel_of_item)
 
+    IAA = np.linalg.norm((att_of_item - rel_of_item), ord=1) #Eq. 1 in Biega et al.
     return IAA
 
 

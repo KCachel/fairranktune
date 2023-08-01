@@ -22,7 +22,8 @@ each group.
         #update total group exp
         grp_exposures[grp_of_item] += exp_of_item
 
-    vals = (1 - decay)*grp_exposures
+    Exposure_g = (1 - decay) * grp_exposures  # Eq. 2 in Kirnap et al.
+    vals = Exposure_g
     if combo == 'MinMaxRatio':
         return MinMaxRatio(vals), vals
     if combo == 'MaxMinRatio':
@@ -58,7 +59,8 @@ items in the corpus that belong to a given group.
         #update total group exp
         grp_exposures[grp_of_item] += exp_of_item
 
-    vals = ((1 - decay)*grp_exposures)/ grp_count_items
+    Exposure_g = (1 - decay)*grp_exposures #Eq. 2 in Kirnap et al.
+    vals = Exposure_g/ grp_count_items
     if combo == 'MinMaxRatio':
         return MinMaxRatio(vals), vals
     if combo == 'MaxMinRatio':
@@ -75,7 +77,7 @@ items in the corpus that belong to a given group.
         return Variance(vals), vals
 
 
-def ERBR(ranking, group_ids, relevance, decay, combo,):
+def ERBR(ranking, group_ids, relevance, decay, combo):
     """
     Calculate Exposure (based on RBP) score (Kirnap et. al) and measure proportionality to the relevance; here the exposure should be proportional to the number of items belonging to a given group that are relevant to the ranking
 query
@@ -101,7 +103,8 @@ query
         grp_exposures[grp_of_item] += exp_of_item
         grp_relevance_cnt[grp_of_item] += rel_of_item
 
-    vals = ((1 - decay) * grp_exposures) / grp_relevance_cnt
+    Exposure_g = (1 - decay) * grp_exposures  # Eq. 2 in Kirnap et al.
+    vals = Exposure_g / grp_relevance_cnt
     if combo == 'MinMaxRatio':
         return MinMaxRatio(vals), vals
     if combo == 'MaxMinRatio':
@@ -120,3 +123,15 @@ query
 
 def exp_rbp_at_position_array(num_items, decay):
     return np.array([decay**(i - 1) for i in range(1,num_items+1)])
+
+
+#generate unfair ranking
+from FairRankTune.Metrics.EXP import *
+import FairRankTune as frt
+phi = 1
+group_proportions = np.asarray([.2, .6, .1, .1])
+num_items = 1000
+score_dist = 'uniform' #give items scores from a uniform distribution
+r_cnt = 1
+ranking, groups, scores = frt.ScoredGenFromGroups(group_proportions, num_items, phi, r_cnt, score_dist)
+

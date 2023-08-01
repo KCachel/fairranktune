@@ -1,6 +1,9 @@
 # FairRankTune
 Repository corresponding to the paper.
 
+Updated 8/2023 with additional metrics (score-based group and individual fairness).
+
+
 **Note, the Anonymous 4 open science program does NOT carry over the links below in all instances. To view the file please click on it in the navigation pane. Additionally, if the .ipynb file does not render via the Anonymous 4 opens science UI, please click the "download file" button in the top right to see the file.**
 ## Table of Contents
 1. [Basic installation instructions](#basic-installation-instructions)
