@@ -2,7 +2,7 @@ import numpy as np
 import copy
 
 
-def episilongreedy(current_ranking, current_group_ids, current_ranking_scores, epsilon, seed):
+def EPSILONGREEDY(current_ranking, current_group_ids, current_ranking_scores, epsilon, seed):
     """
     Epsilon-Greedy reranking algorithm.
     :param current_ranking: Numpy array of items to rerank.
