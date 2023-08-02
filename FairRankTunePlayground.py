@@ -197,7 +197,7 @@ print("ERBR group fairness prior to reranking: ", erbrOLD)
 print("IAA individual fairness prior to reranking: ", iaaOLD)
 
 
-# In[ ]:
+# In[6]:
 
 
 #measure bias again
