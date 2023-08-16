@@ -3,17 +3,17 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "FairRankTune_kcachel"
-version = "0.0.2"
+name = "FairRankTune"
+version = "0.0.0"
 authors = [
   { name="Kathleen Cachel", email="kathleen.cachel@gmail.com" },
 ]
-description = "A small example package"
+description = "FairRankTune a python pacakage for fairness-aware data generation, metrics, and algorithms."
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
 ]
 

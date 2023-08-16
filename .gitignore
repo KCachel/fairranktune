@@ -135,3 +135,4 @@ dmypy.json
 testing_script.py
 /.ipynb_checkpoints/
 /dist
+/assets
