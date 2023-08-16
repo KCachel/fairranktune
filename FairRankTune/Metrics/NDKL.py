@@ -1,43 +1,72 @@
 import numpy as np
+import pandas as pd
+
 # Script to calculate NDKL metric
 # References: Geyik, S. C., Ambler, S., & Kenthapadi, K. (2019, July).
 # Fairness-aware ranking in search & recommendation systems with application to linkedin talent search.
 # In Proceedings of the 25th acm sigkdd international conference on knowledge discovery & data mining (pp. 2221-2231).
 
+
 def kl_divergence(p, q):
-    """ Epsilon is used here to avoid P or Q is equal to 0. """
-    epsilon = 0.0000001
+    """
+    Calculate KL-Divergence between P and Q, with epsilon to avoid divide by zero.
+    :param p: Numpy array p distribution.
+    :param q: Numpy array q distribution.
+    :return: KL-Divergence score.
+    """
+    epsilon = 0.0000001  # Epsilon is used here to avoid P or Q is equal to 0. "
     p = p + epsilon
     q = q + epsilon
 
     return np.sum(p * np.log(p / q))
 
 
-def NDKL(ranking, group_ids):
+def NDKL(ranking_df, item_group_dict):
     """
-    Calculate NDKL (Geyik et al)
-    :param ranking:
-    :param group_ids:
-    :return:
+    Calculate Normalized Discounted KL-Divergence Score (Geyik et al.).
+    :param ranking_df: Pandas dataframe of ranking(s).
+    :param item_group_dict: Dictionary of items (keys) and their group membership (values).
+    :return: NDKL value.
     """
-    # Stores the number of groups and the length of the list
-    num_groups, list_length = np.max(group_ids), len(group_ids)
+    if len(ranking_df.columns) > 1:
+        raise AssertionError("NDKL can only be calculated on a single ranking.")
 
-    # Stores the distributions of the groups based on the full list
-    dr = distributions(group_ids, num_groups)
+    single_ranking = ranking_df[ranking_df.columns[0]]  # isolate ranking
+    single_ranking = np.array(
+        single_ranking[~pd.isnull(single_ranking)]
+    )  # drop any NaNs
+    group_ids = np.asarray([item_group_dict[c] for c in single_ranking])
+    num_groups = np.max(group_ids)
+    num_items = len(group_ids)
 
-    # Define Z as an array of Z scores, which is the exposure function
-    Z = Z_Vector(list_length)
+    dr = distributions(group_ids, num_groups)  # Distributions per group
+    Z = Z_Vector(num_items)  # Array of Z scores
 
-    # Return the results fo 1 over the sum of Z scores times the kl_divergences of the sublists multiplied by their respective Z score
+    # Eq. 4 in Geyik et al.
     return (1 / np.sum(Z)) * np.sum(
-        [Z[i] * kl_divergence(distributions(group_ids[0: i + 1], num_groups), dr) for i in range(0, list_length)])
+        [
+            Z[i] * kl_divergence(distributions(group_ids[0 : i + 1], num_groups), dr)
+            for i in range(0, num_items)
+        ]
+    )
 
-def distributions(passed_ranked_list: np.array, num_groups: int) -> np.array:
-    # Returns an array with each group id's probability based on the passed ranked_list
-    return np.array([prob(i, passed_ranked_list) for i in range(0, num_groups + 1)])
-def prob(a, b):
-    return ((b == a).sum()) / len(b)
+
+def distributions(ranking, num_groups):
+    """
+    Calculate the proportion of each group
+    :param ranking: Numpy array of group id represented in the ranking.
+    :param num_groups: Int, number of distinct groups
+    :return: Numpy array of each group's proportion.
+    """
+    return np.array(
+        [((ranking == i).sum()) / len(ranking) for i in range(0, num_groups + 1)]
+    )
+
 
 def Z_Vector(k):
+    """
+    Calculate Z score
+    :param k: Int, position of ranking.
+    :return: Numpy array of Z values.
+    """
     return 1 / np.log2(np.array(range(0, k)) + 2)

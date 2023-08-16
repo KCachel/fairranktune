@@ -19,7 +19,8 @@ zipped = zip(score, item_ids)
 sorted_zipped = sorted(zipped)
 init_ranking = np.asarray([element for _, element in sorted_zipped])
 init_group_ids = np.asarray([sex[np.argwhere(item_ids == i)[0][0]]  for i in init_ranking])
-
+group_ids = dict(zip(init_ranking, init_group_ids))
+init_ranking = pd.DataFrame(init_ranking)
 
 item_counts = []
 phis = []
@@ -33,11 +34,11 @@ test_num = []
 test_n = 1
 
 p = 1/len(init_ranking)
-expdp, avg_exps = rt.EXP(init_ranking, init_group_ids, 'MinMaxRatio')
-ndkl = rt.NDKL(init_ranking, init_group_ids)
-eed, avg_exps = rt.EXP(init_ranking, init_group_ids, 'LTwo')
-arp, _ = rt.ARP(init_ranking, init_group_ids, 'MaxMinDiff')
-awrf, avg_attns = rt.AWRF(init_ranking, init_group_ids, p, 'MinMaxRatio')
+expdp, avg_exps = rt.EXP(init_ranking, group_ids, 'MinMaxRatio')
+ndkl = rt.NDKL(init_ranking, group_ids)
+eed, avg_exps = rt.EXP(init_ranking, group_ids, 'LTwo')
+arp, _ = rt.ARP(init_ranking, group_ids, 'MaxMinDiff')
+awrf, avg_attns = rt.AWRF(init_ranking, group_ids, p, 'MinMaxRatio')
 phis.append("original")
 ers.append(expdp)
 ndkls.append(ndkl)
@@ -75,7 +76,7 @@ for phi in [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1]:
         # For reproducibility
         random.seed(r_seed)
         np.random.seed(r_seed)
-        ranking, ranking_ids = rt.GenFromItems(item_ids, sex,phi, 1)
+        ranking, ranking_ids = rt.GenFromItems(group_ids,phi, 1)
         expdp, avg_exps = rt.EXP(ranking, ranking_ids, 'MinMaxRatio')
         ndkl = rt.NDKL(ranking, ranking_ids)
         eed, avg_exps = rt.EXP(ranking, ranking_ids, 'LTwo')
