@@ -134,3 +134,4 @@ dmypy.json
 .Rhistory
 testing_script.py
 /.ipynb_checkpoints/
+/dist
