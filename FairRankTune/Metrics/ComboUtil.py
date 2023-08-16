@@ -1,12 +1,12 @@
-# Script containing methods to aggregate group-level metrics to meta-metrics
+# Script containing methods to aggregate group-level metrics to meta-metrics.
 import numpy as np
 
 
 def MinMaxRatio(vals):
     """
-    Agg via min max ratio
-    :param vals: numpy array of group level metrics
-    :return: float score
+    Agg via min max ratio.
+    :param vals: Numpy array of group level metrics.
+    :return: Float score.
     """
     return np.min(vals) / np.max(vals)
 
@@ -14,26 +14,26 @@ def MinMaxRatio(vals):
 def MaxMinRatio(vals):
     """
     Agg via max min ratio
-    :param vals: numpy array of group level metrics
-    :return: float score
+    :param vals: Numpy array of group level metrics.
+    :return: Float score.
     """
     return np.max(vals) / np.min(vals)
 
 
 def MaxMinDiff(vals):
     """
-    Agg via max min difference
-    :param vals: numpy array of group level metrics
-    :return: float score
+    Agg via max min difference.
+    :param vals: Numpy array of group level metrics.
+    :return: Float score.
     """
     return np.max(vals) - np.min(vals)
 
 
 def MaxAbsDiff(vals):
     """
-    Agg via max absolute difference
-    :param vals: numpy array of group level metrics
-    :return: float score
+    Agg via max absolute difference.
+    :param vals: Numpy array of group level metrics.
+    :return: Float score.
     """
     mean = np.mean(vals)
     val = 0
@@ -47,27 +47,27 @@ def MaxAbsDiff(vals):
 
 def MeanAbsDev(vals):
     """
-        Agg via mean absolute difference
-        :param vals: numpy array of group level metrics
-        :return: float score
-        """
+    Agg via mean absolute difference,
+    :param vals: Numpy array of group level metrics.
+    :return: Float score.
+    """
     val = np.sum(np.abs(vals - np.mean(vals))) / len(vals)
     return val
 
 
 def LTwo(vals):
     """
-        Agg via L2 norm
-        :param vals: numpy array of group level metrics
-        :return: float score
-        """
+    Agg via L2 norm.
+    :param vals: Numpy array of group level metrics.
+    :return: Float score.
+    """
     return np.linalg.norm(vals, 2)
 
 
 def Variance(vals):
     """
-        Agg via variance
-        :param vals: numpy array of group level metrics
-        :return: float score
-        """
+    Agg via variance.
+    :param vals: Numpy array of group level metrics.
+    :return: Float score.
+    """
     return np.var(vals)

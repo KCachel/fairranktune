@@ -159,7 +159,7 @@ print("ERBP fairness prior to reranking: ", erbpOLD)
 
 #rerank to be fair
 distribution = np.asarray([.2, .6, .1, .1])
-reranking, reranking_ids, reranking_scores = frt.DETCONSORT(ranking, groups, scores, distribution, 1000)
+reranking, reranking_ids, reranking_scores = frt.DETCONSTSORT(ranking, groups, scores, distribution, 1000)
 
 #measure bias again
 expPOST, avg_exps = frt.EXP(reranking, reranking_ids, 'MinMaxRatio')

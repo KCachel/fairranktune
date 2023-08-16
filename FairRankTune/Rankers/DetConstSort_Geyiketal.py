@@ -3,18 +3,29 @@ import math
 from collections import defaultdict as ddict
 
 
-def DETCONSORT(
-    current_ranking, current_group_ids, current_ranking_scores, distribution, k
+# References: Geyik, S. C., Ambler, S., & Kenthapadi, K. (2019, July).
+# Fairness-aware ranking in search & recommendation systems with application to linkedin talent search.
+# In Proceedings of the 25th acm sigkdd international conference on knowledge discovery & data mining (pp. 2221-2231).
+import pandas as pd
+
+
+def DETCONSTSORT(
+    current_ranking_df, item_group_dict, current_ranking_scores_df, distribution, k
 ):
     """
-    DetConSort reranking algorithm.
-    :param current_ranking: Numpy array of items to rerank.
-    :param current_group_ids: Numpy array of group ids corresponding to the current_ranking.
-    :param current_ranking_scores: Numpy array of scores corresponding to the current_ranking.
+    DetConstSort reranking algorithm.
+    :param current_ranking_df: Pandas dataframe of ranking to be reranked.
+    :param item_group_dict: Dictionary of items (keys) and their group membership (values).
+    :param current_ranking_scores_df: Pandas dataframe of relevance scores associated with each item in the ranking.
     :param distribution: Numpy array of the target distribution "p" in the paper. Ex. [.5, .5] is a fifty-fifty split.
-    :param k: How long the returned ranking should be.
-    :return: reranking, Numpy array of item, reranking_ids, Numpy array of group ids for reranking, Numpy array of scores for reranking,
+    :param k: Int, how long the returned ranking should be.
+    :return: reranking, Pandas dataframe of items,item_group_reranked_dict, dictionary of items and group membership,  Pandas dataframe  of scores for reranking,
     """
+
+    # Convert dataframes to numpy arrays
+    current_ranking = current_ranking_df[0].to_numpy()
+    current_group_ids = np.asarray([item_group_dict[i] for i in current_ranking])
+    current_ranking_scores = current_ranking_scores_df[0].to_numpy()
 
     # score_list is <group id>  <score> and <rank> <startrank> <id>
     score_list = [
@@ -50,7 +61,6 @@ def DETCONSORT(
         ]  # to be initialized
 
     while last_empty_indx <= k:
-
         if last_empty_indx == len(score_list):
             break
 
@@ -103,19 +113,24 @@ def DETCONSORT(
     reranking_ids = np.asarray(
         [current_group_ids[current_rank.index(item)] for item in reranking]
     )
-    return reranking, reranking_ids, reranking_scores
+    item_group_reranked_dict = dict(zip(reranking, reranking_ids))
+    return (
+        pd.DataFrame(reranking),
+        item_group_reranked_dict,
+        pd.DataFrame(reranking_scores),
+    )
 
 
 def getdist(p):
     # Given a list, return the true protected attr dist as a dictionary
     d = {}
-    for person in p:
-        if person["real_attr"] not in d:
-            d[person["real_attr"]] = 1
+    for item in p:
+        if item["g"] not in d:
+            d[item["g"]] = 1
         else:
-            d[person["real_attr"]] += 1
-    for attr in d:
-        d[attr] = d[attr] / len(p)
+            d[item["g"]] += 1
+    for a in d:
+        d[a] = d[a] / len(p)
     return d
 
 

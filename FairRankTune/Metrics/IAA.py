@@ -1,30 +1,49 @@
-import numpy as np
+import pandas as pd
 from FairRankTune.Metrics.ComboUtil import *
+
 # Script to calculate Inequity of Amortized Attention Fair Ranking Metric.
 # References: Biega, A.J., Gummadi, K.P., & Weikum, G. (2018). Equity of Attention: Amortizing Individual Fairness in Rankings.
 # The 41st International ACM SIGIR Conference on Research & Development in Information Retrieval.
-def IAA(ranking, relevance):
+
+
+def IAA(ranking_df, relevance_df):
     """
-    Calculate IAA score (Biega et. al)
-    :param ranking: Numpy array of ranking methods
-    :param relevance: Numpy array of relevance scores
-    :return: IAA value, numpy array of group average exposure
+    Calculate Inequity of Amortized Attention (Biega et al.).
+    :param ranking_df: Pandas dataframe of ranking(s).
+    :param relevance_df: Pandas dataframe of relevance scores associated with each item in ranking(s).
+    :return: IAA value
     """
 
-    #check relevance is between 0 and 1
-    if np.any((relevance < 0) | (relevance > 1)):
-        assert("IAA requires that relevance score be between 0 and 1. ")
+    num_unique_rankings = len(ranking_df.columns)
+    for r in range(0, num_unique_rankings):
+        single_ranking = ranking_df[ranking_df.columns[r]]  # isolate ranking
+        single_ranking = np.array(
+            single_ranking[~pd.isnull(single_ranking)]
+        )  # drop any NaNs
+        assoc_rel = relevance_df[
+            relevance_df.columns[r]
+        ]  # isolate reelvance score for this ranking
+        assoc_rel = np.array(assoc_rel[~pd.isnull(assoc_rel)])  # drop any NaNs
+        if np.any((assoc_rel < 0) | (assoc_rel > 1)):
+            assert "IAA requires that relevance score be between 0 and 1."
+        attention = attention_at_position_array(len(single_ranking))
 
-    num_items = len(ranking)
-    attention = attention_at_position_array(num_items)
-    IAA = 0
-    for i in range(0, num_items):
-        att_of_item = attention[i]
-        rel_of_item = relevance[i]
+        attention_vals = []
+        relevance_vals = []
+        for i in range(0, len(single_ranking)):
+            attention_vals.append(attention[i])
+            relevance_vals.append(assoc_rel[i])
 
-    IAA = np.linalg.norm((att_of_item - rel_of_item), ord=1) #Eq. 1 in Biega et al.
-    return IAA
+        IAA = np.abs(
+            np.asarray(attention_vals) - np.asarray(relevance_vals)
+        ).sum()  # Eq. 1 in Biega et al.
+        return IAA
 
 
 def attention_at_position_array(num_items):
+    """
+    Calculate the attention associated with each position in the ranking.
+    :param num_items: Int, number of items to be ranked.
+    :return: Numpy array of attention scores.
+    """
     return np.array([(1 / (np.log2(i + 1))) for i in range(1, num_items + 1)])

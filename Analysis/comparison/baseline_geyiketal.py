@@ -74,7 +74,7 @@ for num_items in items:
         current_ranking_scores = np.random.rand(k)
         for trials in range(0, 200):
             dist_ = dcs_distributions[d] #use unfair target distribution
-            reranking, reranking_ids, reranking_scores = rt.DETCONSORT(_ranking, group_ids, current_ranking_scores, dist_, k)
+            reranking, reranking_ids, reranking_scores = rt.DETCONSTSORT(_ranking, group_ids, current_ranking_scores, dist_, k)
             #reranking_ids = [group_ids[item] for item in reranking]
             expdp, avg_exps = rt.EXP(reranking, reranking_ids, 'MinMaxRatio')
             ndkl = rt.NDKL(reranking, reranking_ids)
