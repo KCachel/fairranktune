@@ -122,7 +122,6 @@ def DETCONSTSORT(
 
 
 def getdist(p):
-    # Given a list, return the true protected attr dist as a dictionary
     d = {}
     for item in p:
         if item["g"] not in d:
