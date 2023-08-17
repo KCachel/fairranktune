@@ -1,10 +1,12 @@
-site_name: Documentation (Work in Progress)
+site_name: User Guide
+site_description: "A Python Library for Fairness-Aware Ranking Data Generation, Evaluation, and ReRanking."
 theme:
+  logo: assets/FairRankTune_blank_logo.png
   name: material
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
-    - toc.integrate
     - navigation.top
     - search.suggest
     - search.highlight
@@ -15,19 +17,20 @@ theme:
   palette:
     - scheme: default
       toggle:
-        icon: material/toggle-switch-off-outline 
+        icon: material/weather-sunny
         name: Switch to dark mode
-      primary: teal
-      accent: purple 
+      primary: amber
+      accent: pink 
     - scheme: slate 
       toggle:
-        icon: material/toggle-switch
+        icon: material/weather-night
         name: Switch to light mode    
-      primary: teal
-      accent: lime
+      primary: amber
+      accent: lightblue
 
 plugins:
   - social
+  - search
 
 extra:
   social:
