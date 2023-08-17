@@ -1,7 +1,7 @@
 # Home
 
 <div align="center">
-  <img src="https://repository-images.githubusercontent.com/268892956/750228ec-f3f2-465d-9c17-420c688ba2bc">
+  <img src="docs/assets/FairRankTune.png">
 </div>
 
 <p align="center">
