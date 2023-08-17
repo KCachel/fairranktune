@@ -1,14 +1,14 @@
 # Home
 
 <div align="center">
-  <img src="docs/assets/FairRankTune.png">
+  <img src="https://raw.githubusercontent.com/KCachel/FairRankTune/main/.github/images/FairRankTune.png">
 </div>
 
 <p align="center">
   <!-- Python -->
   <a href="https://www.python.org" alt="Python"><img src="https://badges.aleen42.com/src/python.svg"></a>
   <!-- Version -->
-  <a href="https://pypi.org/project/FairRankTune/"><img src="https://img.shields.io/pypi/v/ranx?color=light-green" alt="PyPI version"></a>
+  <a href="https://pypi.org/project/FairRankTune/"><img src="https://img.shields.io/pypi/v/FairRankTune?color=light-green" alt="PyPI version"></a>
   <!-- Docs -->
   <a href="https://kcachel.github.io/fairranktune"><img src="https://img.shields.io/badge/docs-passing-<COLOR>.svg" alt="Documentation Status"></a>
   <!-- Black -->
@@ -17,70 +17,87 @@
   <a href="https://www.tldrlegal.com/license/bsd-3-clause-license-revised"><img src="https://img.shields.io/badge/license-BSD3-blue" alt="License: BSD 3-Clause"></a>
 </p>
 
+## ⚡️ Introduction
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+[FairRankTune](https://github.com/KCachel/FairRankTune) is a  an open-source [Python](https://en.wikipedia.org/wiki/Python_(programming_language)) toolkit supporting end-to-end fair ranking workflows, analysis, auditing, and experimentation. FairRankTune provides researchers, practitioners, and educators with a self-contained module for generating ranked data, ranking strategies, and popular ranking-based fairness metrics.
 
-## Code Annotation Examples
+For a quick overview, follow the [Usage](#-usage) section.
 
-### Codeblocks
+For a in-depth overview, follow the [Examples](#-examples) section.
 
-Some `code` goes here.
 
-### Plain codeblock
+## ✨ Features
 
-A plain codeblock:
 
+### 🎨 Fairness-Aware Data Generation
+
+### 📏 Metrics
+
+### ⚖️ Fair Ranking Methods
+
+
+## 🔌 Requirements
+```bash
+python>=3.8
 ```
-Some code here
-def myfunction()
-// some comment
-```
+As of `v.0.0.1`, [FairRankTune](https://github.com/KCachel/FairRankTune) requires `python>=3.8`.
 
-#### Code for a specific language
+## 💾 Installation 
 
-Some more code with the `py` at the start:
-
-``` py
-import tensorflow as tf
-def whatever()
-```
-
-#### With a title
-
-``` py title="bubble_sort.py"
-def bubble_sort(items):
-    for i in range(len(items)):
-        for j in range(len(items) - 1 - i):
-            if items[j] > items[j + 1]:
-                items[j], items[j + 1] = items[j + 1], items[j]
+```bash
+pip install FairRankTune
 ```
 
-#### With line numbers
+## 💡 Usage
 
-``` py linenums="1"
-def bubble_sort(items):
-    for i in range(len(items)):
-        for j in range(len(items) - 1 - i):
-            if items[j] > items[j + 1]:
-                items[j], items[j + 1] = items[j + 1], items[j]
+### 🎨 Fairness-Aware Data Generation
+```python
+from FairRankTune import RankTune
 ```
 
-#### Highlighting lines
-
-``` py hl_lines="2 3"
-def bubble_sort(items):
-    for i in range(len(items)):
-        for j in range(len(items) - 1 - i):
-            if items[j] > items[j + 1]:
-                items[j], items[j + 1] = items[j + 1], items[j]
+### 📏 Metrics
+```python
+from FairRankTune import Metrics
 ```
 
-## Icons and Emojs
+### ⚖️ Fair Ranking Algorithms
+```python
+from FairRankTune import Rankers
+```
 
-:smile: 
+## 📖 Examples
 
-:fontawesome-regular-face-laugh-wink:
+Include links.
 
-:fontawesome-brands-twitter:{ .twitter }
+## 📚 Documentation
+Check out the [documentation](https://kcachel.github.io/FairRankTune) for more details and example notebooks.
 
-:octicons-heart-fill-24:{ .heart }
+
+## 🎓 Citation
+If you end up using [FairRankTune](https://github.com/KCachel/FairRankTune) for conducting the experiments in your work, please consider citing it:
+<details>
+  <summary>BibTeX</summary>
+  
+  ```bibtex
+  @misc{CachelFRT,
+    author    = {Kathleen Cachel},
+    title     = {FairRankTUne: A Python Library for Fair Ranking},
+    year = {2023},
+    publisher = {GitHub},
+    howpublished = {\url{https://github.com/KCachel/FairRankTune}}
+  }
+  ```
+</details>
+
+
+
+## 🎁 Feature Requests
+Would you like to see other functionality implemented? Please, open a [feature request](https://github.com/KCachel/FairRankTune/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFeature+Request%5D+title).
+
+
+## 🤘 Want to contribute?
+Would you like to contribute? Please, drop me an [e-mail](mailto:kathleen.cachel@gmail.com?subject=[GitHub]%20fairranktune).
+
+
+## 📄 License
+).
