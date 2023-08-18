@@ -31,19 +31,14 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 
 ### 🎨 Fairness-Aware Data Generation
 
+
+
+Please refer to the [Metrics documentation](https://kcachel.github.io/FairRankTune/Metrics/) for further details. 
+
 ### 📏 Metrics
 
 ```FairRankTune ``` provides several metrics for evaluating the fairness of ranked lists in the ```Metrics``` module. The table below provides a high-level overview of each metric. These metrics encompass a variety of fair ranking metrics, including both [group](https://en.wikipedia.org/wiki/Fairness_(machine_learning)#Group_Fairness_criteria) and [individual](https://en.wikipedia.org/wiki/Fairness_(machine_learning)#Individual_Fairness_criteria) fairness, along with both score-based and statistical parity metrics. 
 
->What is group, individual, score-based, and or statistical parity fairness? 
-
-*Group Fairness*: Measures if groups of items are being treated similiarly. For example, we might want to know if groups are making it to the top of ranking(s).
-
-*Individual Fairness*: Measures if similiar items are being treated similiarly. For example, we might want to know if items that are similiar are ranked in similiar positions in rankings.
-
-*Score-based Fairness*: Measures if exposure (or attention, clicks, views etc.) are proportional to item relevance or group relevance. For example, in the form of individual fairness, we might want to know if items that are similiar received similiar amounts of exposure in rankings. Or for group fairness, we might want to know if groups are click-on proportional to their relevance.
-
-*Statistical Parity Fairness*: A sub-tupe of *Group Fairness*, measures if groups receive a proportional share of the positive outcome; in ranking(s) the positive outcome can be the exposure or attention of the viewer or a share of top-ranked position. Statistical Parity is also known as Demographic Parity and explicitly does not use relevance scores. For example, we might want to know if groups receive comporable amounts of exposure.
 
 | **Metric** | **Abbreviation** | **Fairness (Group or Individual)** | **Score-based** | **Statistical Parity** | **Reference** |
 |---|:---:|:---:|:---:|:---:|:---:|
@@ -57,6 +52,8 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 | [Attribute Rank Parity](https://kcachel.github.io/FairRankTune/Metrics/#attribute-rank-parity-arp) | ARP | Group | No | Yes | [Cachel et al.](https://ieeexplore.ieee.org/document/9835646) |
 | [Normalized Discounted KL-Divergence](https://kcachel.github.io/FairRankTune/Metrics/#normalized-discounted-kl-divergence-ndkl) | NDKL | Group | No | Yes |[Geyik et al.](https://dl.acm.org/doi/10.1145/3292500.3330691)  |
 | [Inequity of Amortized Attention](https://kcachel.github.io/FairRankTune/Metrics/#inequity-of-amortized-attention-iaa) | IAA | Individual | Yes | No | [Biega et al.](https://dl.acm.org/doi/10.1145/3209978.3210063)  |
+
+Please refer to the [Metrics documentation](https://kcachel.github.io/FairRankTune/Metrics/) for further details. 
 
 ### ⚖️ Fair Ranking Methods
 

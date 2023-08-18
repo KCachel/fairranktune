@@ -1,5 +1,6 @@
 from FairRankTune.Metrics.ComboUtil import *
 import pandas as pd
+import copy
 
 # Script to calculate ARP metric, using Cachel et al implementation
 # Code References:  https://github.com/KCachel/MANI-Rank/blob/main/multi_fair/metrics.py
@@ -42,7 +43,7 @@ def FPR(ranking_df, item_group_dict):
             total_mixed_with_group = grp_sz * (
                 len(single_ranking) - grp_sz
             )  # denominator
-            fpr[i] += favored_over_other_grp / total_mixed_with_group
+            fpr[np.argwhere(unique_grps == i)[0, 0]] += favored_over_other_grp / total_mixed_with_group
 
     return fpr, unique_grps
 
@@ -55,7 +56,7 @@ def ARP(ranking_df, item_group_dict, combo):
     :param combo: String for the aggregation metric used in calculating the meta metric.
     :return: ARP value, Dictionary of group FPR scores (groups are keys).
     """
-    vals, unique_grps = np.asarray(FPR(ranking_df, item_group_dict))
+    vals, unique_grps = FPR(ranking_df, item_group_dict)
     if combo == "MinMaxRatio":
         return MinMaxRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinRatio":
@@ -91,11 +92,14 @@ def create_candidates_by_group_dict(candidates, item_group_dict):
     group_id_dict = {}
     candidate_grps = [item_group_dict[c] for c in candidates]
 
-    for var in np.unique(candidate_grps):
-        idx = np.where(candidate_grps == var)
-        group_id_dict[(var)] = [
-            item for item in candidates[idx].tolist()
-        ]  # make it a list of ints
+    grp_keys = np.unique(candidate_grps)
+    group_id_dict = dict.fromkeys(grp_keys, [])
+
+    for item in item_group_dict:
+        grp = item_group_dict[item]
+        curr = copy.deepcopy(group_id_dict[grp])
+        curr.append(item)
+        group_id_dict.update({grp: curr})
     return group_id_dict, candidate_grps
 
 

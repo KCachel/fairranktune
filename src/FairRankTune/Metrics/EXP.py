@@ -37,7 +37,7 @@ def EXP(ranking_df, item_group_dict, combo):
             grp_of_item = item_group_dict[item]
             exp_of_item = exp_vals[i]
             # update total group exp
-            grp_exposures[grp_of_item] += exp_of_item
+            grp_exposures[np.argwhere(unique_grps == grp_of_item)[0,0]] += exp_of_item
 
     vals = grp_exposures / grp_count_items
     if combo == "MinMaxRatio":
@@ -93,8 +93,9 @@ def EXPU(ranking_df, item_group_dict, relevance_df, combo):
             grp_of_item = item_group_dict[item]
             exp_of_item = exp_vals[i]
             # update total group exp
-            grp_exposures[grp_of_item] += exp_of_item
-            grp_relevances[grp_of_item] += rel_of_item
+            grp_id = np.argwhere(unique_grps == grp_of_item)[0,0]
+            grp_exposures[grp_id] += exp_of_item
+            grp_relevances[grp_id] += rel_of_item
 
     avg_exp = grp_exposures / grp_count_items
     avg_utility = grp_relevances / grp_count_items
@@ -159,8 +160,9 @@ def EXPRU(ranking_df, item_group_dict, relevance_df, ctr_df, combo):
             grp_of_item = item_group_dict[item]
             ctr_of_item = assoc_ctr[i]
             # update total group exp
-            grp_ctr[grp_of_item] += ctr_of_item
-            grp_relevances[grp_of_item] += rel_of_item
+            grp_id = np.argwhere(unique_grps == grp_of_item)[0,0]
+            grp_ctr[grp_id] += ctr_of_item
+            grp_relevances[grp_id] += rel_of_item
 
     avg_ctr = grp_ctr / grp_count_items
     avg_utility = grp_relevances / grp_count_items

@@ -2,12 +2,12 @@ import pandas as pd
 from FairRankTune.Metrics.ComboUtil import *
 
 
-# Script to calculate Exposure Rank Based Precision metrics
+# Script to calculate Exposure Rank Biased Precision metrics
 # References: Kirnap, Ö., Diaz, F., Biega, A.J., Ekstrand, M.D., Carterette, B., & Yilmaz, E. (2021).
 # Estimation of Fair Ranking Metrics with Incomplete Judgments. Proceedings of the Web Conference 2021.
 def ERBE(ranking_df, item_group_dict, decay, combo):
     """
-    Calculate Exposure Rank Based Precision Equality ERBE; where exposure should be equal for each group (Kirnap et al.).
+    Calculate Exposure Rank Biased Precision Equality ERBE; where exposure should be equal for each group (Kirnap et al.).
     :param ranking_df: Pandas dataframe of ranking(s).
     :param item_group_dict: Dictionary of items (keys) and their group membership (values).
     :param decay: Float, decay parameter for exposure based on the rank based precision metric.
@@ -32,7 +32,8 @@ def ERBE(ranking_df, item_group_dict, decay, combo):
             grp_of_item = item_group_dict[item]
             exp_of_item = exp_vals[i]
             # update total group exp
-            grp_exposures[grp_of_item] += exp_of_item
+            grp_id = np.argwhere(unique_grps == grp_of_item)[0, 0]
+            grp_exposures[grp_id] += exp_of_item
 
     Exposure_g = (1 - decay) * grp_exposures  # Eq. 2 in Kirnap et al.
     vals = Exposure_g
@@ -54,7 +55,7 @@ def ERBE(ranking_df, item_group_dict, decay, combo):
 
 def ERBP(ranking_df, item_group_dict, decay, combo):
     """
-    Calculate Exposure Rank Based Precision Proportionality ERBP; where exposure should be proportional to group size for each group (Kirnap et al.).
+    Calculate Exposure Rank Biased Precision Proportionality ERBP; where exposure should be proportional to group size for each group (Kirnap et al.).
     :param ranking_df: Pandas dataframe of ranking(s).
     :param item_group_dict: Dictionary of items (keys) and their group membership (values).
     :param decay: Float, decay parameter for exposure based on the rank based precision metric.
@@ -78,7 +79,8 @@ def ERBP(ranking_df, item_group_dict, decay, combo):
             grp_of_item = item_group_dict[item]
             exp_of_item = exp_vals[i]
             # update total group exp
-            grp_exposures[grp_of_item] += exp_of_item
+
+            grp_exposures[np.argwhere(unique_grps == grp_of_item)[0, 0]] += exp_of_item
 
     Exposure_g = (1 - decay) * grp_exposures  # Eq. 2 in Kirnap et al.
     vals = Exposure_g / grp_count_items
@@ -101,7 +103,7 @@ def ERBP(ranking_df, item_group_dict, decay, combo):
 
 def ERBR(ranking_df, item_group_dict, relevance_df, decay, combo):
     """
-    Calculate Exposure Rank Based Precision Proportional to Relevance ERBR; where exposure should be proportional to group relevance for each group (Kirnap et al.).
+    Calculate Exposure Rank Biased Precision Proportional to Relevance ERBR; where exposure should be proportional to group relevance for each group (Kirnap et al.).
     :param ranking_df: Pandas dataframe of ranking(s).
     :param item_group_dict: Dictionary of items (keys) and their group membership (values).
     :param relevance_df: Pandas dataframe of relevance scores associated with each item in ranking(s).
@@ -135,8 +137,9 @@ def ERBR(ranking_df, item_group_dict, relevance_df, decay, combo):
             grp_of_item = item_group_dict[item]
             exp_of_item = exp_vals[i]
             # update total group exp
-            grp_exposures[grp_of_item] += exp_of_item
-            grp_relevances[grp_of_item] += rel_of_item
+            grp_id = np.argwhere(unique_grps == grp_of_item)[0, 0]
+            grp_exposures[grp_id] += exp_of_item
+            grp_relevances[grp_id] += rel_of_item
 
     Exposure_g = (1 - decay) * grp_exposures  # Eq. 2 in Kirnap et al.
     vals = Exposure_g / grp_relevances
@@ -158,7 +161,7 @@ def ERBR(ranking_df, item_group_dict, relevance_df, decay, combo):
 
 def exp_rbp_at_position_array(num_items, decay):
     """
-    Determine the exposure (based on Rank Based Precision) value associate with each position.
+    Determine the exposure (based on Rank Biased Precision) value associate with each position.
     :param num_items: Int, number of items being ranked.
     :param decay: Float, decay parameter for exposure based on the rank based precision metric.
     :return: Numpy array of exposure values.

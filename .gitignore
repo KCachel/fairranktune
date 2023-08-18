@@ -137,3 +137,4 @@ testing_script.py
 /dist
 /assets
 /env
+src/test.py

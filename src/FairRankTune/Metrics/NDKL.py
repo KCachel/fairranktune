@@ -35,7 +35,10 @@ def NDKL(ranking_df, item_group_dict):
     single_ranking = np.array(
         single_ranking[~pd.isnull(single_ranking)]
     )  # drop any NaNs
-    group_ids = np.asarray([item_group_dict[c] for c in single_ranking])
+
+    group_ids = [item_group_dict[c] for c in single_ranking]
+    unique_grps = np.unique(group_ids)
+    group_ids = np.asarray([np.argwhere(unique_grps == grp_of_item)[0,0] for grp_of_item in group_ids])
     num_groups = np.max(group_ids)
     num_items = len(group_ids)
 

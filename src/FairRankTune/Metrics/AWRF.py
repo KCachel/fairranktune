@@ -37,7 +37,7 @@ def AWRF(ranking_df, item_group_dict, p, combo):
             grp_of_item = item_group_dict[item]
             attn_of_item = attn_vals[i]
             # update total group attention
-            grp_attention[grp_of_item] += attn_of_item
+            grp_attention[np.argwhere(unique_grps == grp_of_item)[0,0]] += attn_of_item
 
     vals = grp_attention / grp_count_items
 
