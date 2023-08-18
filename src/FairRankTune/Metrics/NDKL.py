@@ -7,7 +7,7 @@ import pandas as pd
 # In Proceedings of the 25th acm sigkdd international conference on knowledge discovery & data mining (pp. 2221-2231).
 
 
-def kl_divergence(p, q):
+def __kl_divergence(p, q):
     """
     Calculate KL-Divergence between P and Q, with epsilon to avoid divide by zero.
     :param p: Numpy array p distribution.
@@ -38,23 +38,26 @@ def NDKL(ranking_df, item_group_dict):
 
     group_ids = [item_group_dict[c] for c in single_ranking]
     unique_grps = np.unique(group_ids)
-    group_ids = np.asarray([np.argwhere(unique_grps == grp_of_item)[0,0] for grp_of_item in group_ids])
+    group_ids = np.asarray(
+        [np.argwhere(unique_grps == grp_of_item)[0, 0] for grp_of_item in group_ids]
+    )
     num_groups = np.max(group_ids)
     num_items = len(group_ids)
 
-    dr = distributions(group_ids, num_groups)  # Distributions per group
-    Z = Z_Vector(num_items)  # Array of Z scores
+    dr = __distributions(group_ids, num_groups)  # Distributions per group
+    Z = __Z_Vector(num_items)  # Array of Z scores
 
     # Eq. 4 in Geyik et al.
     return (1 / np.sum(Z)) * np.sum(
         [
-            Z[i] * kl_divergence(distributions(group_ids[0 : i + 1], num_groups), dr)
+            Z[i]
+            * __kl_divergence(__distributions(group_ids[0 : i + 1], num_groups), dr)
             for i in range(0, num_items)
         ]
     )
 
 
-def distributions(ranking, num_groups):
+def __distributions(ranking, num_groups):
     """
     Calculate the proportion of each group
     :param ranking: Numpy array of group id represented in the ranking.
@@ -66,7 +69,7 @@ def distributions(ranking, num_groups):
     )
 
 
-def Z_Vector(k):
+def __Z_Vector(k):
     """
     Calculate Z score
     :param k: Int, position of ranking.

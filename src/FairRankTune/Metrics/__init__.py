@@ -4,3 +4,4 @@ from FairRankTune.Metrics.AWRF import *
 from FairRankTune.Metrics.EXP import *
 from FairRankTune.Metrics.ERB import *
 from FairRankTune.Metrics.IAA import *
+from FairRankTune.Metrics.ComboUtil import *

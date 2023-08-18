@@ -91,9 +91,9 @@ def DETCONSTSORT(
                     and maxIndices[start - 1] >= start
                     and rankedScoreList[start - 1][0] < rankedScoreList[start][0]
                 ):
-                    swap(rankedScoreList, start - 1, start)
-                    swap(maxIndices, start - 1, start)
-                    swap(constructed_ranking_group_ids, start - 1, start)
+                    __swap(rankedScoreList, start - 1, start)
+                    __swap(maxIndices, start - 1, start)
+                    __swap(constructed_ranking_group_ids, start - 1, start)
                     start -= 1
                 num_items_per_group[item[0]] += 1
                 last_empty_indx += 1
@@ -121,19 +121,19 @@ def DETCONSTSORT(
     )
 
 
-def getdist(p):
-    d = {}
-    for item in p:
-        if item["g"] not in d:
-            d[item["g"]] = 1
-        else:
-            d[item["g"]] += 1
-    for a in d:
-        d[a] = d[a] / len(p)
-    return d
+# def __getdist(p):
+#     d = {}
+#     for item in p:
+#         if item["g"] not in d:
+#             d[item["g"]] = 1
+#         else:
+#             d[item["g"]] += 1
+#     for a in d:
+#         d[a] = d[a] / len(p)
+#     return d
 
 
-def swap(temp_list, pos_i, pos_j):
+def __swap(temp_list, pos_i, pos_j):
     temp = temp_list[pos_i]
     temp_list[pos_i] = temp_list[pos_j]
     temp_list[pos_j] = temp

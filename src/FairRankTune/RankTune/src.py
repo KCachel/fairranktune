@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 
-def CheckFull(phi):
+def __CheckFull(phi):
     """
     Function to error check phi parameter.
     :param phi: Float in range [0,1].
@@ -16,7 +16,7 @@ def CheckFull(phi):
         raise ValueError("Please input phi greater than or equal to 0")
 
 
-def CheckDistributions(group_proportions, num_items, phi):
+def __CheckDistributions(group_proportions, num_items, phi):
     """
     Function to error check distribution input.
     :param item_ids: Numpy array of ints representing item ids.
@@ -37,7 +37,7 @@ def CheckDistributions(group_proportions, num_items, phi):
         raise TypeError("Input num_items must be int")
 
 
-def MakeRank(item_ids, group_ids, phi):
+def __MakeRank(item_ids, group_ids, phi):
     """
     Function for core RankTune fairness-aware ranked list generation.
     :param item_ids: Numpy array of item ids.
@@ -110,7 +110,7 @@ def GenFromGroups(group_proportions, num_items, phi, r_cnt):
     :param r_cnt: Int, number of rankings to generate.
     :return: ranking_df - Pandas dataframe of generated ranking(s),  item_group_dict -  Dictionary of items (keys) and their group membership (values).
     """
-    CheckDistributions(group_proportions, num_items, phi)
+    __CheckDistributions(group_proportions, num_items, phi)
     item_ids = np.arange(0, num_items)
     group_ids = np.empty(0, dtype=int)
     for g in range(0, len(group_proportions)):
@@ -121,9 +121,9 @@ def GenFromGroups(group_proportions, num_items, phi, r_cnt):
     # Make item_group_dict
     item_group_dict = dict(zip(item_ids.tolist(), group_ids.tolist()))
 
-    items = MakeRank(item_ids, group_ids, phi)
+    items = __MakeRank(item_ids, group_ids, phi)
     for i in range(0, r_cnt - 1):
-        items_next = MakeRank(item_ids, group_ids, phi)
+        items_next = __MakeRank(item_ids, group_ids, phi)
         items = np.column_stack((items, items_next))
 
     ranking_df = pd.DataFrame(items)
@@ -140,7 +140,7 @@ def ScoredGenFromGroups(group_proportions, num_items, phi, r_cnt, score_dist):
     :param score_dist: String, either "uniform" or "normal for generating scores.
     :return: ranking_df - Pandas dataframe of generated ranking(s),  item_group_dict -  Dictionary of items (keys) and their group membership (values), scores-df - Pandas dataframe of generates scores.
     """
-    CheckDistributions(group_proportions, num_items, phi)
+    __CheckDistributions(group_proportions, num_items, phi)
     item_ids = np.arange(0, num_items)
     group_ids = np.empty(0, dtype=int)
     for g in range(0, len(group_proportions)):
@@ -160,9 +160,9 @@ def ScoredGenFromGroups(group_proportions, num_items, phi, r_cnt, score_dist):
         for i in range(0, r_cnt - 1):
             scores_next = np.random.uniform(0, 1, size=len(item_ids))
             scores = np.column_stack((scores, scores_next))
-    items = MakeRank(item_ids, group_ids, phi)
+    items = __MakeRank(item_ids, group_ids, phi)
     for i in range(0, r_cnt - 1):
-        items_next = MakeRank(item_ids, group_ids, phi)
+        items_next = __MakeRank(item_ids, group_ids, phi)
         items = np.column_stack((items, items_next))
 
     ranking_df = pd.DataFrame(items)
@@ -179,13 +179,13 @@ def GenFromItems(item_group_dict, phi, r_cnt):
     :param r_cnt: Int, number of rankings to generate.
     :return: ranking_df - Pandas dataframe of generated ranking(s),  item_group_dict -  Dictionary of items (keys) and their group membership (values), scores-df - Pandas dataframe of generates scores.
     """
-    CheckFull(phi)
+    __CheckFull(phi)
     item_ids = list(item_group_dict.keys())
     group_ids = np.asarray([item_group_dict[i] for i in item_ids])
 
-    items = MakeRank(np.asarray(item_ids), group_ids, phi)
+    items = __MakeRank(np.asarray(item_ids), group_ids, phi)
     for i in range(0, r_cnt - 1):
-        items_next = MakeRank(np.asarray(item_ids), group_ids, phi)
+        items_next = __MakeRank(np.asarray(item_ids), group_ids, phi)
         items = np.column_stack((items, items_next))
 
     ranking_df = pd.DataFrame(items)
@@ -202,7 +202,7 @@ def ScoredGenFromItems(item_group_dict, phi, r_cnt, score_dist):
     :param score_dist: String, either "uniform" or "normal for generating scores.
     :return: ranking_df - Pandas dataframe of generated ranking(s),  item_group_dict -  Dictionary of items (keys) and their group membership (values), scores-df - Pandas dataframe of generates scores.
     """
-    CheckFull(phi)
+    __CheckFull(phi)
     item_ids = item_group_dict.keys()
     group_ids = np.asarray([item_group_dict[i] for i in item_ids])
     if score_dist == "normal":
@@ -215,9 +215,9 @@ def ScoredGenFromItems(item_group_dict, phi, r_cnt, score_dist):
         for i in range(0, r_cnt - 1):
             scores_next = np.random.uniform(0, 1, size=len(item_ids))
             scores = np.column_stack((scores, scores_next))
-    items = MakeRank(np.asarray(item_ids), group_ids, phi)
+    items = __MakeRank(np.asarray(item_ids), group_ids, phi)
     for i in range(0, r_cnt - 1):
-        items_next = MakeRank(np.asarray(item_ids), group_ids, phi)
+        items_next = __MakeRank(np.asarray(item_ids), group_ids, phi)
         items = np.column_stack((items, items_next))
 
     ranking_df = pd.DataFrame(items)

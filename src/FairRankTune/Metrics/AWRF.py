@@ -1,5 +1,13 @@
 import pandas as pd
-from FairRankTune.Metrics.ComboUtil import *
+from FairRankTune.Metrics.ComboUtil import (
+    __MinMaxRatio,
+    __MaxMinRatio,
+    __MaxMinDiff,
+    __MaxAbsDiff,
+    __MeanAbsDev,
+    __LTwo,
+    __Variance,
+)
 
 # Script to calculate AWRF metric
 # References: Sapiezynski, P., Zeng, W., E Robertson, R., Mislove, A., & Wilson, C. (2019, May).
@@ -31,33 +39,33 @@ def AWRF(ranking_df, item_group_dict, p, combo):
             single_ranking[~pd.isnull(single_ranking)]
         )  # drop any NaNs
         num_items = len(single_ranking)
-        attn_vals = attention_vector(num_items, p)
+        attn_vals = __attention_vector(num_items, p)
         for i in range(0, len(single_ranking)):
             item = single_ranking[i]
             grp_of_item = item_group_dict[item]
             attn_of_item = attn_vals[i]
             # update total group attention
-            grp_attention[np.argwhere(unique_grps == grp_of_item)[0,0]] += attn_of_item
+            grp_attention[np.argwhere(unique_grps == grp_of_item)[0, 0]] += attn_of_item
 
     vals = grp_attention / grp_count_items
 
     if combo == "MinMaxRatio":
-        return MinMaxRatio(vals), dict(zip(unique_grps, vals))
+        return __MinMaxRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinRatio":
-        return MaxMinRatio(vals), dict(zip(unique_grps, vals))
+        return __MaxMinRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinDiff":
-        return MaxMinDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxMinDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MaxAbsDiff":
-        return MaxAbsDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxAbsDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MeanAbsDev":
-        return MeanAbsDev(vals), dict(zip(unique_grps, vals))
+        return __MeanAbsDev(vals), dict(zip(unique_grps, vals))
     if combo == "LTwo":
-        return LTwo(vals), dict(zip(unique_grps, vals))
+        return __LTwo(vals), dict(zip(unique_grps, vals))
     if combo == "Variance":
-        return Variance(vals), dict(zip(unique_grps, vals))
+        return __Variance(vals), dict(zip(unique_grps, vals))
 
 
-def attention_vector(num_items, p):
+def __attention_vector(num_items, p):
     """
     Determine the attention value associate with each position.
     :param num_items: Int, number of items being ranked.

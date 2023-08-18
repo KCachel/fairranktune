@@ -1,5 +1,14 @@
 import pandas as pd
-from FairRankTune.Metrics.ComboUtil import *
+import numpy as np
+from FairRankTune.Metrics.ComboUtil import (
+    __MinMaxRatio,
+    __MaxMinRatio,
+    __MaxMinDiff,
+    __MaxAbsDiff,
+    __MeanAbsDev,
+    __LTwo,
+    __Variance,
+)
 
 # Script to calculate Exposure-based metrics
 # References: Singh, A., & Joachims, T. (2018, July). Fairness of exposure in rankings.
@@ -24,7 +33,7 @@ def EXP(ranking_df, item_group_dict, combo):
     )
     num_items = len(list(item_group_dict.keys()))
     num_unique_rankings = len(ranking_df.columns)
-    exp_vals = exp_at_position_array(num_items)
+    exp_vals = __exp_at_position_array(num_items)
     grp_exposures = np.zeros_like(unique_grps, dtype=np.float64)
 
     for r in range(0, num_unique_rankings):
@@ -37,23 +46,23 @@ def EXP(ranking_df, item_group_dict, combo):
             grp_of_item = item_group_dict[item]
             exp_of_item = exp_vals[i]
             # update total group exp
-            grp_exposures[np.argwhere(unique_grps == grp_of_item)[0,0]] += exp_of_item
+            grp_exposures[np.argwhere(unique_grps == grp_of_item)[0, 0]] += exp_of_item
 
     vals = grp_exposures / grp_count_items
     if combo == "MinMaxRatio":
-        return MinMaxRatio(vals), dict(zip(unique_grps, vals))
+        return __MinMaxRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinRatio":
-        return MaxMinRatio(vals), dict(zip(unique_grps, vals))
+        return __MaxMinRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinDiff":
-        return MaxMinDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxMinDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MaxAbsDiff":
-        return MaxAbsDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxAbsDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MeanAbsDev":
-        return MeanAbsDev(vals), dict(zip(unique_grps, vals))
+        return __MeanAbsDev(vals), dict(zip(unique_grps, vals))
     if combo == "LTwo":
-        return LTwo(vals), dict(zip(unique_grps, vals))
+        return __LTwo(vals), dict(zip(unique_grps, vals))
     if combo == "Variance":
-        return Variance(vals), dict(zip(unique_grps, vals))
+        return __Variance(vals), dict(zip(unique_grps, vals))
 
 
 def EXPU(ranking_df, item_group_dict, relevance_df, combo):
@@ -70,7 +79,7 @@ def EXPU(ranking_df, item_group_dict, relevance_df, combo):
     )
     num_items = len(list(item_group_dict.keys()))
     num_unique_rankings = len(ranking_df.columns)
-    exp_vals = exp_at_position_array(num_items)
+    exp_vals = __exp_at_position_array(num_items)
     grp_exposures = np.zeros_like(unique_grps, dtype=np.float64)
     grp_relevances = np.zeros_like(unique_grps, dtype=np.float64)
 
@@ -93,7 +102,7 @@ def EXPU(ranking_df, item_group_dict, relevance_df, combo):
             grp_of_item = item_group_dict[item]
             exp_of_item = exp_vals[i]
             # update total group exp
-            grp_id = np.argwhere(unique_grps == grp_of_item)[0,0]
+            grp_id = np.argwhere(unique_grps == grp_of_item)[0, 0]
             grp_exposures[grp_id] += exp_of_item
             grp_relevances[grp_id] += rel_of_item
 
@@ -101,19 +110,19 @@ def EXPU(ranking_df, item_group_dict, relevance_df, combo):
     avg_utility = grp_relevances / grp_count_items
     vals = avg_exp / avg_utility
     if combo == "MinMaxRatio":
-        return MinMaxRatio(vals), dict(zip(unique_grps, vals))
+        return __MinMaxRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinRatio":
-        return MaxMinRatio(vals), dict(zip(unique_grps, vals))
+        return __MaxMinRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinDiff":
-        return MaxMinDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxMinDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MaxAbsDiff":
-        return MaxAbsDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxAbsDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MeanAbsDev":
-        return MeanAbsDev(vals), dict(zip(unique_grps, vals))
+        return __MeanAbsDev(vals), dict(zip(unique_grps, vals))
     if combo == "LTwo":
-        return LTwo(vals), dict(zip(unique_grps, vals))
+        return __LTwo(vals), dict(zip(unique_grps, vals))
     if combo == "Variance":
-        return Variance(vals), dict(zip(unique_grps, vals))
+        return __Variance(vals), dict(zip(unique_grps, vals))
 
 
 def EXPRU(ranking_df, item_group_dict, relevance_df, ctr_df, combo):
@@ -160,7 +169,7 @@ def EXPRU(ranking_df, item_group_dict, relevance_df, ctr_df, combo):
             grp_of_item = item_group_dict[item]
             ctr_of_item = assoc_ctr[i]
             # update total group exp
-            grp_id = np.argwhere(unique_grps == grp_of_item)[0,0]
+            grp_id = np.argwhere(unique_grps == grp_of_item)[0, 0]
             grp_ctr[grp_id] += ctr_of_item
             grp_relevances[grp_id] += rel_of_item
 
@@ -168,22 +177,22 @@ def EXPRU(ranking_df, item_group_dict, relevance_df, ctr_df, combo):
     avg_utility = grp_relevances / grp_count_items
     vals = avg_ctr / avg_utility
     if combo == "MinMaxRatio":
-        return MinMaxRatio(vals), dict(zip(unique_grps, vals))
+        return __MinMaxRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinRatio":
-        return MaxMinRatio(vals), dict(zip(unique_grps, vals))
+        return __MaxMinRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinDiff":
-        return MaxMinDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxMinDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MaxAbsDiff":
-        return MaxAbsDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxAbsDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MeanAbsDev":
-        return MeanAbsDev(vals), dict(zip(unique_grps, vals))
+        return __MeanAbsDev(vals), dict(zip(unique_grps, vals))
     if combo == "LTwo":
-        return LTwo(vals), dict(zip(unique_grps, vals))
+        return __LTwo(vals), dict(zip(unique_grps, vals))
     if combo == "Variance":
-        return Variance(vals), dict(zip(unique_grps, vals))
+        return __Variance(vals), dict(zip(unique_grps, vals))
 
 
-def exp_at_position_array(num_items):
+def __exp_at_position_array(num_items):
     """
     Function to calculate the exposure associated with each position in the ranking.
     :param num_items: Int, number of items to be ranked.

@@ -26,7 +26,7 @@ def IAA(ranking_df, relevance_df):
         assoc_rel = np.array(assoc_rel[~pd.isnull(assoc_rel)])  # drop any NaNs
         if np.any((assoc_rel < 0) | (assoc_rel > 1)):
             assert "IAA requires that relevance score be between 0 and 1."
-        attention = attention_at_position_array(len(single_ranking))
+        attention = __attention_at_position_array(len(single_ranking))
 
         attention_vals = []
         relevance_vals = []
@@ -40,7 +40,7 @@ def IAA(ranking_df, relevance_df):
         return IAA
 
 
-def attention_at_position_array(num_items):
+def __attention_at_position_array(num_items):
     """
     Calculate the attention associated with each position in the ranking.
     :param num_items: Int, number of items to be ranked.

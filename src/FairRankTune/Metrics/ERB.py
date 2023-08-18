@@ -1,5 +1,13 @@
 import pandas as pd
-from FairRankTune.Metrics.ComboUtil import *
+from FairRankTune.Metrics.ComboUtil import (
+    __MinMaxRatio,
+    __MaxMinRatio,
+    __MaxMinDiff,
+    __MaxAbsDiff,
+    __MeanAbsDev,
+    __LTwo,
+    __Variance,
+)
 
 
 # Script to calculate Exposure Rank Biased Precision metrics
@@ -26,7 +34,7 @@ def ERBE(ranking_df, item_group_dict, decay, combo):
         single_ranking = np.array(
             single_ranking[~pd.isnull(single_ranking)]
         )  # drop any NaNs
-        exp_vals = exp_rbp_at_position_array(len(single_ranking), decay)
+        exp_vals = __exp_rbp_at_position_array(len(single_ranking), decay)
         for i in range(0, len(single_ranking)):
             item = single_ranking[i]
             grp_of_item = item_group_dict[item]
@@ -38,19 +46,19 @@ def ERBE(ranking_df, item_group_dict, decay, combo):
     Exposure_g = (1 - decay) * grp_exposures  # Eq. 2 in Kirnap et al.
     vals = Exposure_g
     if combo == "MinMaxRatio":
-        return MinMaxRatio(vals), dict(zip(unique_grps, vals))
+        return __MinMaxRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinRatio":
-        return MaxMinRatio(vals), dict(zip(unique_grps, vals))
+        return __MaxMinRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinDiff":
-        return MaxMinDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxMinDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MaxAbsDiff":
-        return MaxAbsDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxAbsDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MeanAbsDev":
-        return MeanAbsDev(vals), dict(zip(unique_grps, vals))
+        return __MeanAbsDev(vals), dict(zip(unique_grps, vals))
     if combo == "LTwo":
-        return LTwo(vals), dict(zip(unique_grps, vals))
+        return __LTwo(vals), dict(zip(unique_grps, vals))
     if combo == "Variance":
-        return Variance(vals), dict(zip(unique_grps, vals))
+        return __Variance(vals), dict(zip(unique_grps, vals))
 
 
 def ERBP(ranking_df, item_group_dict, decay, combo):
@@ -73,7 +81,7 @@ def ERBP(ranking_df, item_group_dict, decay, combo):
         single_ranking = np.array(
             single_ranking[~pd.isnull(single_ranking)]
         )  # drop any NaNs
-        exp_vals = exp_rbp_at_position_array(len(single_ranking), decay)
+        exp_vals = __exp_rbp_at_position_array(len(single_ranking), decay)
         for i in range(0, len(single_ranking)):
             item = single_ranking[i]
             grp_of_item = item_group_dict[item]
@@ -86,19 +94,19 @@ def ERBP(ranking_df, item_group_dict, decay, combo):
     vals = Exposure_g / grp_count_items
 
     if combo == "MinMaxRatio":
-        return MinMaxRatio(vals), dict(zip(unique_grps, vals))
+        return __MinMaxRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinRatio":
-        return MaxMinRatio(vals), dict(zip(unique_grps, vals))
+        return __MaxMinRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinDiff":
-        return MaxMinDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxMinDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MaxAbsDiff":
-        return MaxAbsDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxAbsDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MeanAbsDev":
-        return MeanAbsDev(vals), dict(zip(unique_grps, vals))
+        return __MeanAbsDev(vals), dict(zip(unique_grps, vals))
     if combo == "LTwo":
-        return LTwo(vals), dict(zip(unique_grps, vals))
+        return __LTwo(vals), dict(zip(unique_grps, vals))
     if combo == "Variance":
-        return Variance(vals), dict(zip(unique_grps, vals))
+        return __Variance(vals), dict(zip(unique_grps, vals))
 
 
 def ERBR(ranking_df, item_group_dict, relevance_df, decay, combo):
@@ -130,7 +138,7 @@ def ERBR(ranking_df, item_group_dict, relevance_df, decay, combo):
         assoc_rel = np.array(assoc_rel[~pd.isnull(assoc_rel)])  # drop any NaNs
         if np.any((assoc_rel != 0) | (assoc_rel != 1)):
             assert "Exposure Rank Based Precision Proportional to Relevance (ERBR) requires relevance scores to be either 0 (not relevant) or 1 (relevant). "
-        exp_vals = exp_rbp_at_position_array(len(single_ranking), decay)
+        exp_vals = __exp_rbp_at_position_array(len(single_ranking), decay)
         for i in range(0, len(single_ranking)):
             item = single_ranking[i]
             rel_of_item = assoc_rel[i]
@@ -144,22 +152,22 @@ def ERBR(ranking_df, item_group_dict, relevance_df, decay, combo):
     Exposure_g = (1 - decay) * grp_exposures  # Eq. 2 in Kirnap et al.
     vals = Exposure_g / grp_relevances
     if combo == "MinMaxRatio":
-        return MinMaxRatio(vals), dict(zip(unique_grps, vals))
+        return __MinMaxRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinRatio":
-        return MaxMinRatio(vals), dict(zip(unique_grps, vals))
+        return __MaxMinRatio(vals), dict(zip(unique_grps, vals))
     if combo == "MaxMinDiff":
-        return MaxMinDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxMinDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MaxAbsDiff":
-        return MaxAbsDiff(vals), dict(zip(unique_grps, vals))
+        return __MaxAbsDiff(vals), dict(zip(unique_grps, vals))
     if combo == "MeanAbsDev":
-        return MeanAbsDev(vals), dict(zip(unique_grps, vals))
+        return __MeanAbsDev(vals), dict(zip(unique_grps, vals))
     if combo == "LTwo":
-        return LTwo(vals), dict(zip(unique_grps, vals))
+        return __LTwo(vals), dict(zip(unique_grps, vals))
     if combo == "Variance":
-        return Variance(vals), dict(zip(unique_grps, vals))
+        return __Variance(vals), dict(zip(unique_grps, vals))
 
 
-def exp_rbp_at_position_array(num_items, decay):
+def __exp_rbp_at_position_array(num_items, decay):
     """
     Determine the exposure (based on Rank Biased Precision) value associate with each position.
     :param num_items: Int, number of items being ranked.

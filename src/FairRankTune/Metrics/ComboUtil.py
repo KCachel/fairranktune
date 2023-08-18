@@ -2,7 +2,7 @@
 import numpy as np
 
 
-def MinMaxRatio(vals):
+def __MinMaxRatio(vals):
     """
     Agg via min max ratio.
     :param vals: Numpy array of group level metrics.
@@ -11,7 +11,7 @@ def MinMaxRatio(vals):
     return np.min(vals) / np.max(vals)
 
 
-def MaxMinRatio(vals):
+def __MaxMinRatio(vals):
     """
     Agg via max min ratio
     :param vals: Numpy array of group level metrics.
@@ -20,7 +20,7 @@ def MaxMinRatio(vals):
     return np.max(vals) / np.min(vals)
 
 
-def MaxMinDiff(vals):
+def __MaxMinDiff(vals):
     """
     Agg via max min difference.
     :param vals: Numpy array of group level metrics.
@@ -29,7 +29,7 @@ def MaxMinDiff(vals):
     return np.max(vals) - np.min(vals)
 
 
-def MaxAbsDiff(vals):
+def __MaxAbsDiff(vals):
     """
     Agg via max absolute difference.
     :param vals: Numpy array of group level metrics.
@@ -45,7 +45,7 @@ def MaxAbsDiff(vals):
     return val
 
 
-def MeanAbsDev(vals):
+def __MeanAbsDev(vals):
     """
     Agg via mean absolute difference,
     :param vals: Numpy array of group level metrics.
@@ -55,7 +55,7 @@ def MeanAbsDev(vals):
     return val
 
 
-def LTwo(vals):
+def __LTwo(vals):
     """
     Agg via L2 norm.
     :param vals: Numpy array of group level metrics.
@@ -64,7 +64,7 @@ def LTwo(vals):
     return np.linalg.norm(vals, 2)
 
 
-def Variance(vals):
+def __Variance(vals):
     """
     Agg via variance.
     :param vals: Numpy array of group level metrics.

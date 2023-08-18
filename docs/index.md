@@ -79,8 +79,21 @@ from FairRankTune import RankTune
 
 ### 📏 Metrics
 ```python
-from FairRankTune import Metrics
+import FairRankTune as frt
+import pandas as pd
+import numpy as np
+ranking_df = pd.DataFrame(["Joe", "Jack", "Nick", "David", "Mark", "Josh", "Dave",
+                          "Bella", "Heidi", "Amy"])
+item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W", Mark= "M", Josh= "M", Dave= "M", Jack= "M", Nick= "M")
+#Calculate EXP with a MaxMinDiff
+EXP, avg_exposures = frt.Metrics.EXP(ranking_df, item_group_dict, 'MaxMinDiff')
+print("EXP: ", EXP, "avg_exposures: ", avg_exposures)
 ```
+Output:
+```python
+>>> EXP:  0.21786100126614577 avg_exposures:  {'M': 0.5197142341886783, 'W': 0.3018532329225326}
+```
+
 
 ### ⚖️ Fair Ranking Algorithms
 ```python
