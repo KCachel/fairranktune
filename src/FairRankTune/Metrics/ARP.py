@@ -9,6 +9,7 @@ from FairRankTune.Metrics.ComboUtil import (
 )
 import pandas as pd
 import copy
+import numpy as np
 
 # Script to calculate ARP metric, using Cachel et al implementation
 # Code References:  https://github.com/KCachel/MANI-Rank/blob/main/multi_fair/metrics.py

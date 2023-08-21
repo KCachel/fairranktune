@@ -17,7 +17,7 @@
   <a href="https://www.tldrlegal.com/license/bsd-3-clause-license-revised"><img src="https://img.shields.io/badge/license-BSD3-blue" alt="License: BSD 3-Clause"></a>
 </p>
 
-## ⚡️ Introduction
+## 📍 Introduction
 
 [FairRankTune](https://github.com/KCachel/FairRankTune) is a  an open-source [Python](https://en.wikipedia.org/wiki/Python_(programming_language)) toolkit supporting end-to-end fair ranking workflows, analysis, auditing, and experimentation. FairRankTune provides researchers, practitioners, and educators with a self-contained module for generating ranked data, ranking strategies, and popular ranking-based fairness metrics.
 
@@ -29,7 +29,7 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 ## ✨ Features
 
 
-### 🎨 Fairness-Aware Data Generation
+### 🎨 Fairness-Aware Ranked Data Generation
 
 
 
@@ -72,10 +72,59 @@ pip install FairRankTune
 
 ## 💡 Usage
 
-### 🎨 Fairness-Aware Data Generation
+
+
+### 🎨 Fairness-Aware Ranked Data Generation
+
+Generating with only group proportions (no specific items).
 ```python
-from FairRankTune import RankTune
+import FairRankTune as frt
+import pandas as pd
+import numpy as np
+import random
+random.seed(10)
+
+#Generate a ranked list from a distribution of groups
+group_proportions = np.asarray([.2, .3, .5]) #20% one group, 30% another, and last group is 50%
+num_items = 1000 #generate a ranked list of 100 items
+r_cnt = 2 #generate 2 ranked lists
+phi = .2 # less representative (fair) - 0 = unfiar and 1 = representative
+ranking_df, item_group_dict = frt.RankTune.GenFromGroups(group_proportions, num_items, phi, r_cnt)
+
+#Validate this set is unfair
+EXP, avg_exposures = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
+print("EXP (MinMaxRatio is most fair at 1): ", EXP, "avg_exposures: ", avg_exposures)
 ```
+Output:
+```python
+>>> EXP (MinMaxRatio is most fair at 1):  0.655362083198234 avg_exposures:  {0: 0.32953826536975084, 1: 0.240973236109756, 2: 0.21596688408625234}
+```
+
+Generating with a known item set.
+```python
+import FairRankTune as frt
+import pandas as pd
+import numpy as np
+import random
+random.seed(10)
+
+#Generate a ranked list from a known item set
+item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W", Jill= "W", Josh= "M", Kate= "W", Tiffany= "W", Nick= "M")
+r_cnt = 1 #generate 1 ranked list
+phi = .2 # less representative (fair) - 0 = unfair and 1 = representative
+ranking_df, item_group_dict = frt.RankTune.GenFromItems(item_group_dict, phi, r_cnt)
+
+#Validate this set is unfair
+EXP, avg_exposures = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
+print("EXP (MinMaxRatio is most fair at 1): ", EXP, "avg_exposures: ", avg_exposures)
+```
+
+Output:
+```python
+>>> EXP (MinMaxRatio is most fair at 1):  0.5158099476966725 avg_exposures:  {'M': 0.6404015779112127, 'W': 0.33032550440724917}
+```
+
+
 
 ### 📏 Metrics
 ```python
@@ -126,11 +175,11 @@ If you end up using [FairRankTune](https://github.com/KCachel/FairRankTune) for 
 
 
 
-## 🎁 Feature Requests
-Would you like to see other functionality implemented? Please, open a [feature request](https://github.com/KCachel/FairRankTune/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFeature+Request%5D+title).
+## ⁉️ Feature Requests
+We believe in open-source community driven software. Would you like to see other functionality implemented? Please, open a [feature request](https://github.com/KCachel/FairRankTune/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFeature+Request%5D+title). Is there a bug or issue ? Please, open a [github issue](https://github.com/KCachel/FairRankTune/issues/new).
 
 
-## 🤘 Want to contribute?
+## 👋 Want to contribute?
 Would you like to contribute? Please, send me an [e-mail](mailto:kathleen.cachel@gmail.com?subject=[GitHub]%20fairranktune).
 
 

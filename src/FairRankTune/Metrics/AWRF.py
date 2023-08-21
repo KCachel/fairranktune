@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from FairRankTune.Metrics.ComboUtil import (
     __MinMaxRatio,
     __MaxMinRatio,

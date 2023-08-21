@@ -130,7 +130,7 @@ def GenFromGroups(group_proportions, num_items, phi, r_cnt):
     return ranking_df, item_group_dict
 
 
-def ScoredGenFromGroups(group_proportions, num_items, phi, r_cnt, score_dist):
+def ScoredGenFromGroups(group_proportions, num_items, phi, r_cnt, score_dist, seed):
     """
     RankTune method generating data from group proportions (as opposed to actual items), and random relevance scores assigned to items.
     :param group_proportions: Numpy array of group_proportions.
@@ -138,11 +138,13 @@ def ScoredGenFromGroups(group_proportions, num_items, phi, r_cnt, score_dist):
     :param phi: Float, Representativeness in range [0,1]; where 0 is unfair and 1 is most fair and representative.
     :param r_cnt: Int, number of rankings to generate.
     :param score_dist: String, either "uniform" or "normal for generating scores.
+    :param seed: Random seed value for reproducibility.
     :return: ranking_df - Pandas dataframe of generated ranking(s),  item_group_dict -  Dictionary of items (keys) and their group membership (values), scores-df - Pandas dataframe of generates scores.
     """
     __CheckDistributions(group_proportions, num_items, phi)
     item_ids = np.arange(0, num_items)
     group_ids = np.empty(0, dtype=int)
+    np.random.seed(seed)  # for reproducibility
     for g in range(0, len(group_proportions)):
         group_ids = np.hstack(
             (group_ids, np.tile(int(g), int(num_items * group_proportions[g])))
@@ -192,7 +194,7 @@ def GenFromItems(item_group_dict, phi, r_cnt):
     return ranking_df, item_group_dict
 
 
-def ScoredGenFromItems(item_group_dict, phi, r_cnt, score_dist):
+def ScoredGenFromItems(item_group_dict, phi, r_cnt, score_dist, seed):
     """
     RankTune method generating data from known items with group membership, and random relevance scores assigned to items.
     :param item_group_dict: Dictionary of items (keys) and their group membership (values).
@@ -200,11 +202,13 @@ def ScoredGenFromItems(item_group_dict, phi, r_cnt, score_dist):
     :param phi: Float, Representativeness in range [0,1]; where 0 is unfair and 1 is most fair and representative.
     :param r_cnt: Int, number of rankings to generate.
     :param score_dist: String, either "uniform" or "normal for generating scores.
+    :param seed: Random seed value for reproducibility.
     :return: ranking_df - Pandas dataframe of generated ranking(s),  item_group_dict -  Dictionary of items (keys) and their group membership (values), scores-df - Pandas dataframe of generates scores.
     """
     __CheckFull(phi)
-    item_ids = item_group_dict.keys()
+    item_ids = list(item_group_dict.keys())
     group_ids = np.asarray([item_group_dict[i] for i in item_ids])
+    np.random.seed(seed)  # for reproducibility
     if score_dist == "normal":
         scores = np.random.standard_normal(size=len(item_ids))
         for i in range(0, r_cnt - 1):

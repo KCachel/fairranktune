@@ -17,7 +17,7 @@ def DETCONSTSORT(
     :param current_ranking_df: Pandas dataframe of ranking to be reranked.
     :param item_group_dict: Dictionary of items (keys) and their group membership (values).
     :param current_ranking_scores_df: Pandas dataframe of relevance scores associated with each item in the ranking.
-    :param distribution: Numpy array of the target distribution "p" in the paper. Ex. [.5, .5] is a fifty-fifty split.
+    :param distribution: Dictionary of group proportions (groups are keys). Ex. [.5, .5] is a fifty-fifty split.
     :param k: Int, how long the returned ranking should be.
     :return: reranking, Pandas dataframe of items,item_group_reranked_dict, dictionary of items and group membership,  Pandas dataframe  of scores for reranking,
     """
@@ -104,7 +104,7 @@ def DETCONSTSORT(
 
     for i in range(0, k):
         item = rankedScoreList[i]
-        K_items.append(int(item[4]))
+        K_items.append(item[4])
         K_scores.append(item[0])
 
     reranking = np.asarray(K_items)
@@ -119,18 +119,6 @@ def DETCONSTSORT(
         item_group_reranked_dict,
         pd.DataFrame(reranking_scores),
     )
-
-
-# def __getdist(p):
-#     d = {}
-#     for item in p:
-#         if item["g"] not in d:
-#             d[item["g"]] = 1
-#         else:
-#             d[item["g"]] += 1
-#     for a in d:
-#         d[a] = d[a] / len(p)
-#     return d
 
 
 def __swap(temp_list, pos_i, pos_j):

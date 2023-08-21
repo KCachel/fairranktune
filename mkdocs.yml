@@ -4,15 +4,16 @@ theme:
   logo: assets/FairRankTune_blank_logo.png
   name: material
   features:
-    - navigation.tabs
-    - navigation.tabs.sticky
     - navigation.sections
     - navigation.top
+    - navigation.indexes
+    - toc.follow
     - search.suggest
     - search.highlight
     - content.tabs.link
     - content.code.annotation
     - content.code.copy
+
   language: en
   palette:
     - scheme: default
@@ -58,3 +59,10 @@ extra_javascript:
   - javascripts/mathjax.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - 'index.md'
+  - 'RankTune.md'
+  - 'Metrics.md'
+  - 'Rankers.md'
+  - 'Examples.md'
