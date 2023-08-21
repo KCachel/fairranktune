@@ -96,23 +96,24 @@ def __MakeRank(item_ids, group_ids, phi):
             resulting_ranking.append(items_in_each_group_id[grp_2_add].pop())
             grp_count[grp_2_add] -= 1
 
-    item_numpy = np.asarray(item_ids)
-    # ranking_group_ids = [group_ids[np.argwhere(item_numpy == i)[0][0]] for i in resulting_ranking]
     return np.asarray(resulting_ranking)
 
 
-def GenFromGroups(group_proportions, num_items, phi, r_cnt):
+def GenFromGroups(group_proportions, num_items, phi, r_cnt, seed):
     """
     RankTune method generating data from group proportions (as opposed to actual items).
     :param group_proportions: Numpy array of group_proportions.
     :param num_items: Int, number of items in ranking(s).
     :param phi: Float, Representativeness in range [0,1]; where 0 is unfair and 1 is most fair and representative.
     :param r_cnt: Int, number of rankings to generate.
+    :param seed: Random seed value for reproducibility.
     :return: ranking_df - Pandas dataframe of generated ranking(s),  item_group_dict -  Dictionary of items (keys) and their group membership (values).
     """
     __CheckDistributions(group_proportions, num_items, phi)
     item_ids = np.arange(0, num_items)
     group_ids = np.empty(0, dtype=int)
+    np.random.seed(seed)  # For reproducibility
+    random.seed(seed)
     for g in range(0, len(group_proportions)):
         group_ids = np.hstack(
             (group_ids, np.tile(int(g), int(num_items * group_proportions[g])))
@@ -144,7 +145,8 @@ def ScoredGenFromGroups(group_proportions, num_items, phi, r_cnt, score_dist, se
     __CheckDistributions(group_proportions, num_items, phi)
     item_ids = np.arange(0, num_items)
     group_ids = np.empty(0, dtype=int)
-    np.random.seed(seed)  # for reproducibility
+    np.random.seed(seed)  # For reproducibility
+    random.seed(seed)
     for g in range(0, len(group_proportions)):
         group_ids = np.hstack(
             (group_ids, np.tile(int(g), int(num_items * group_proportions[g])))
@@ -153,14 +155,14 @@ def ScoredGenFromGroups(group_proportions, num_items, phi, r_cnt, score_dist, se
     # Make item_group_dict
     item_group_dict = dict(zip(item_ids.tolist(), group_ids.tolist()))
     if score_dist == "normal":
-        scores = np.random.standard_normal(size=len(item_ids))
+        scores = -np.sort(-np.random.standard_normal(size=len(item_ids)))
         for i in range(0, r_cnt - 1):
-            scores_next = np.random.standard_normal(size=len(item_ids))
+            scores_next = -np.sort(-np.random.standard_normal(size=len(item_ids)))
             scores = np.column_stack((scores, scores_next))
     elif score_dist == "uniform":
-        scores = np.random.uniform(0, 1, size=len(item_ids))
+        scores = -np.sort(-np.random.uniform(0, 1, size=len(item_ids)))
         for i in range(0, r_cnt - 1):
-            scores_next = np.random.uniform(0, 1, size=len(item_ids))
+            scores_next = -np.sort(-np.random.uniform(0, 1, size=len(item_ids)))
             scores = np.column_stack((scores, scores_next))
     items = __MakeRank(item_ids, group_ids, phi)
     for i in range(0, r_cnt - 1):
@@ -172,19 +174,21 @@ def ScoredGenFromGroups(group_proportions, num_items, phi, r_cnt, score_dist, se
     return ranking_df, item_group_dict, scores_df
 
 
-def GenFromItems(item_group_dict, phi, r_cnt):
+def GenFromItems(item_group_dict, phi, r_cnt, seed):
     """
     RankTune method generating data from known items with group membership.
     :param item_group_dict: Dictionary of items (keys) and their group membership (values).
     :param num_items: Int, number of items in ranking(s).
     :param phi: Float, Representativeness in range [0,1]; where 0 is unfair and 1 is most fair and representative.
     :param r_cnt: Int, number of rankings to generate.
+    :param seed: Random seed value for reproducibility.
     :return: ranking_df - Pandas dataframe of generated ranking(s),  item_group_dict -  Dictionary of items (keys) and their group membership (values), scores-df - Pandas dataframe of generates scores.
     """
     __CheckFull(phi)
     item_ids = list(item_group_dict.keys())
     group_ids = np.asarray([item_group_dict[i] for i in item_ids])
-
+    np.random.seed(seed)  # For reproducibility
+    random.seed(seed)
     items = __MakeRank(np.asarray(item_ids), group_ids, phi)
     for i in range(0, r_cnt - 1):
         items_next = __MakeRank(np.asarray(item_ids), group_ids, phi)
@@ -208,16 +212,17 @@ def ScoredGenFromItems(item_group_dict, phi, r_cnt, score_dist, seed):
     __CheckFull(phi)
     item_ids = list(item_group_dict.keys())
     group_ids = np.asarray([item_group_dict[i] for i in item_ids])
-    np.random.seed(seed)  # for reproducibility
+    np.random.seed(seed)  # For reproducibility
+    random.seed(seed)
     if score_dist == "normal":
-        scores = np.random.standard_normal(size=len(item_ids))
+        scores = -np.sort(-np.random.standard_normal(size=len(item_ids)))
         for i in range(0, r_cnt - 1):
-            scores_next = np.random.standard_normal(size=len(item_ids))
+            scores_next = -np.sort(-np.random.standard_normal(size=len(item_ids)))
             scores = np.column_stack((scores, scores_next))
     elif score_dist == "uniform":
-        scores = np.random.uniform(0, 1, size=len(item_ids))
+        scores = -np.sort(-np.random.uniform(0, 1, size=len(item_ids)))
         for i in range(0, r_cnt - 1):
-            scores_next = np.random.uniform(0, 1, size=len(item_ids))
+            scores_next = -np.sort(-np.random.uniform(0, 1, size=len(item_ids)))
             scores = np.column_stack((scores, scores_next))
     items = __MakeRank(np.asarray(item_ids), group_ids, phi)
     for i in range(0, r_cnt - 1):

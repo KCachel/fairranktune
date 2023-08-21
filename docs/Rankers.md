@@ -1,7 +1,7 @@
 # Rankers
 
 ## Fair Ranking Algorithms
-```FairRankTUne``` provides [fair ranking algorithms](#supported-fair-ranking-algorithms) in the ```Rankers``` module. These fair ranking algorithms can be used to re-rank a given ranking with the objective of making the resulting ranking fair. 
+```FairRankTune``` provides [fair ranking algorithms](#supported-fair-ranking-algorithms) in the ```Rankers``` module. These fair ranking algorithms can be used to re-rank a given ranking with the objective of making the resulting ranking fair. 
 
 
 ## Supported Fair Ranking Algorithms
@@ -31,7 +31,7 @@ seed = 2 #For reproducability
 epsilon = .6 
 reranking_df, item_group_d, reranking_scores = frt.Rankers.EPSILONGREEDY(ranking_df, item_group_dict, scores_df, epsilon, seed)
 
-#Calculate EXP with a MinMaxRatio post DetConstSort
+#Calculate EXP with a MinMaxRatio post Epsilon-Greedy
 EXP, avg_exposures= frt.Metrics.EXP(reranking_df, item_group_d, 'MinMaxRatio')
 print("EXP after Epsilon-Greedy: ", EXP, "avg_exposures after Epsilon-Greedy: ", avg_exposures)
 ```

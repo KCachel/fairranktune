@@ -31,9 +31,10 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 
 ### 🎨 Fairness-Aware Ranked Data Generation
 
+```RankTune``` is a pseudo-stochastic data generation method for creating fairness-aware ranked lists using the fairness concept of statistical parity. Inlcuded in the ```RankTune``` module, it creates ranking(s) based on the ```phi``` representativeness parameter. When ```phi = 0``` then the generated ranked list(s) does not represent groups fairly, and as ```phi``` increases groups are represented more and more fairly; thus ```phi = 1``` groups are fairly represented. RankTune uses a [pseudo-random process](https://kcachel.github.io/FairRankTune/RankTune/#how-does-it-work) to generate fairness-aware ranked data. RankTune can generate ranked data from [user provided group sizes](https://kcachel.github.io/FairRankTune/RankTune/#using-group-sizes), from [existing datasets](https://kcachel.github.io/FairRankTune/RankTune/#using-an-existing-dataset), along with [producing relevance scores](https://kcachel.github.io/FairRankTune/RankTune/#generating-scores-with-the-ranking) accompanying the ranked list(s). 
 
 
-Please refer to the [Metrics documentation](https://kcachel.github.io/FairRankTune/Metrics/) for further details. 
+Please refer to the [documentation](https://kcachel.github.io/FairRankTune/RankTune/) for additional information. 
 
 ### 📏 Metrics
 
@@ -57,6 +58,9 @@ Please refer to the [Metrics documentation](https://kcachel.github.io/FairRankTu
 
 ### ⚖️ Fair Ranking Methods
 
+```FairRankTune``` provides several [fair ranking algorithms](https://kcachel.github.io/FairRankTune/Rankers/#supported-fair-ranking-algorithms) in the ```Rankers``` module. The [DetConstSort](https://kcachel.github.io/FairRankTune/Rankers/#detconstsort-re-ranker) and [Epsilon-Greedy](https://kcachel.github.io/FairRankTune/Rankers/#epsilon-greedy-re-ranker) fair ranking algorithms can be used to re-rank a given ranking with the objective of making the resulting ranking fair. 
+
+Please refer to the [documentation](https://kcachel.github.io/FairRankTune/Metrics/) for further details. 
 
 ## 🔌 Requirements
 ```bash
@@ -76,55 +80,63 @@ pip install FairRankTune
 
 ### 🎨 Fairness-Aware Ranked Data Generation
 
-Generating with only group proportions (no specific items).
-```python
+
+```RankTune``` can be used to generate ranking(s) from ```group_proportions```, a numpy array with each group's proportion of the total items,```num_items```, by using the ```GenFromGroups()``` function.
+
+```python title="GenFromGroups() function" hl_lines="12"
 import FairRankTune as frt
-import pandas as pd
 import numpy as np
-import random
-random.seed(10)
-
-#Generate a ranked list from a distribution of groups
-group_proportions = np.asarray([.2, .3, .5]) #20% one group, 30% another, and last group is 50%
-num_items = 1000 #generate a ranked list of 100 items
-r_cnt = 2 #generate 2 ranked lists
-phi = .2 # less representative (fair) - 0 = unfiar and 1 = representative
-ranking_df, item_group_dict = frt.RankTune.GenFromGroups(group_proportions, num_items, phi, r_cnt)
-
-#Validate this set is unfair
-EXP, avg_exposures = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
-print("EXP (MinMaxRatio is most fair at 1): ", EXP, "avg_exposures: ", avg_exposures)
-```
-Output:
-```python
->>> EXP (MinMaxRatio is most fair at 1):  0.655362083198234 avg_exposures:  {0: 0.32953826536975084, 1: 0.240973236109756, 2: 0.21596688408625234}
-```
-
-Generating with a known item set.
-```python
-import FairRankTune as frt
 import pandas as pd
-import numpy as np
-import random
-random.seed(10)
+from FairRankTune import RankTune, Metrics
 
-#Generate a ranked list from a known item set
-item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W", Jill= "W", Josh= "M", Kate= "W", Tiffany= "W", Nick= "M")
-r_cnt = 1 #generate 1 ranked list
-phi = .2 # less representative (fair) - 0 = unfair and 1 = representative
-ranking_df, item_group_dict = frt.RankTune.GenFromItems(item_group_dict, phi, r_cnt)
+#Generate a biased (phi = 0.1) ranking of 1000 items, with four groups of 100, 200, 300, and 400 items each.
+group_proportions = np.asarray([.1, .2, .3, .4]) #Array of group proportions
+num_items = 1000 #1000 items to be in the generated ranking
+phi = 0.1
+r_cnt = 1 #Generate 1 ranking
+seed = 10 #For reproducability
+ranking_df, item_group_dict = frt.RankTune.GenFromGroups(group_proportions, num_items, phi, r_cnt, seed)
 
-#Validate this set is unfair
-EXP, avg_exposures = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
-print("EXP (MinMaxRatio is most fair at 1): ", EXP, "avg_exposures: ", avg_exposures)
+#Calculate EXP with a MinMaxRatio
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
+print("EXP of generated ranking: ", EXP_minmax, "avg_exposures: ", avg_exposures_minmax)
 ```
 
 Output:
 ```python
->>> EXP (MinMaxRatio is most fair at 1):  0.5158099476966725 avg_exposures:  {'M': 0.6404015779112127, 'W': 0.33032550440724917}
+EXP of generated ranking:  0.511665941043515 avg_exposures:  {0: 0.20498798214669187, 1: 0.13126425437156242, 2: 0.11461912123646827, 3: 0.10488536878769836}
+```
+Can confirm this is an unfair ranking by the low EXP value.
+
+
+```RankTune``` can be used to generate ranking(s) from ```item_group_dict```, a dictionary of items where the keys are each item's group by using the ```GenFromItems()``` function.
+
+
+```python title="GenFromItems() function" hl_lines="11"
+import FairRankTune as frt
+import numpy as np
+import pandas as pd
+from FairRankTune import RankTune, Metrics
+
+#Generate a biased (phi = 0.1) ranking
+item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W", Jill= "W", Jane= "W", Dave= "M", Nancy= "W", Nick= "M")
+phi = 0.1
+r_cnt = 1 #Generate 1 ranking
+seed = 10 #For reproducability
+ranking_df, item_group_dict = frt.RankTune.GenFromItems(item_group_dict, phi, r_cnt, seed)
+
+#Calculate EXP with a MinMaxRatio
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
+print("EXP of generated ranking: ", EXP_minmax, "avg_exposures: ", avg_exposures_minmax)
 ```
 
+Output:
+```python
+EXP of generated ranking:  0.5158099476966725 avg_exposures:  {'M': 0.6404015779112127, 'W': 0.33032550440724917}
+```
+We can confirm this is a biased ranking base don the low EXP score and large difference in average exposure between the 'M' and 'W' groups.
 
+For further detail on how to use ```RankTune``` to generate relevance scores see the [RankTune documentation](https://kcachel.github.io/FairRankTune/RankTune/).
 
 ### 📏 Metrics
 ```python
@@ -145,9 +157,39 @@ Output:
 
 
 ### ⚖️ Fair Ranking Algorithms
-```python
-from FairRankTune import Rankers
+
+```python title="Epsilon-Greedy Algorithm" 
+import FairRankTune as frt
+import numpy as np
+import pandas as pd
+from FairRankTune import RankTune, Metrics
+import random
+
+#Generate a biased (phi = 0) ranking of 1000 items, with two groups of 100 and 900 items each.
+seed = 2 #For reproducability
+ranking_df, item_group_dict, scores_df = frt.RankTune.ScoredGenFromGroups(np.asarray([.1, .9]),  1000, 0, 1, 'uniform', seed)
+
+#Calculate EXP with a MinMaxRatio
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
+print("EXP before Epsilon-Greedy: ", EXP_minmax, "avg_exposures before Epsilon-Greedy: ", avg_exposures_minmax)
+
+
+#Rerank using Epsilon-Greedy
+seed = 2 #For reproducability
+epsilon = .6 
+reranking_df, item_group_d, reranking_scores = frt.Rankers.EPSILONGREEDY(ranking_df, item_group_dict, scores_df, epsilon, seed)
+
+#Calculate EXP with a MinMaxRatio post Epsilon-Greedy
+EXP, avg_exposures= frt.Metrics.EXP(reranking_df, item_group_d, 'MinMaxRatio')
+print("EXP after Epsilon-Greedy: ", EXP, "avg_exposures after Epsilon-Greedy: ", avg_exposures)
 ```
+
+Output:
+```python
+EXP before Epsilon-Greedy:  0.5420744267551784 avg_exposures before Epsilon-Greedy:  {0: 0.2093867087428094, 1: 0.11350318011191189}
+EXP after Epsilon-Greedy:  0.7689042373241246 avg_exposures after Epsilon-Greedy:  {0: 0.15541589156986096, 1: 0.1194999375755728}
+```
+We can see that the EXP fairness score improved from running Epsilon-Greedy. For more usage examples please see the [documentation](https://kcachel.github.io/FairRankTune/Rankers/).
 
 ## 📖 Examples
 
@@ -184,4 +226,4 @@ Would you like to contribute? Please, send me an [e-mail](mailto:kathleen.cachel
 
 
 ## 📄 License
-).
+[FairRankTune](https://github.com/KCachel/FairRankTune) is open-sourced software licensed under the [BSD-3-Clause](https://github.com/KCachel/FairRankTune/blob/main/LICENSE) license.

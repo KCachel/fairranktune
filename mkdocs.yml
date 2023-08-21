@@ -1,5 +1,5 @@
 site_name: FairRankTune User Guide
-site_description: "A Python Library for Fairness-Aware Ranking Data Generation, Evaluation, and ReRanking."
+site_description: "A Python Library for Fairness-Aware Ranking Data Generation, Evaluation, and Re-Ranking."
 theme:
   logo: assets/FairRankTune_blank_logo.png
   name: material
@@ -20,8 +20,8 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Switch to dark mode
-      primary: blue grey
-      accent: pink 
+      primary: purple
+      accent: lightblue 
     - scheme: slate 
       toggle:
         icon: material/weather-night
