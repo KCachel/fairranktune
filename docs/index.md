@@ -193,7 +193,13 @@ We can see that the EXP fairness score improved from running Epsilon-Greedy. For
 
 ## 📖 Examples
 
-Include links.
+
+| Topic | Link |
+| :--- | :---|
+| Quickstart | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/1_quickstart.ipynb) |
+| RankTune Overview | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/2_ranktune.ipynb) |
+
+
 
 ## 📚 Documentation
 Check out the [documentation](https://kcachel.github.io/FairRankTune) for more details and example notebooks.
