@@ -199,6 +199,8 @@ We can see that the EXP fairness score improved from running Epsilon-Greedy. For
 | Quickstart | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/1_quickstart.ipynb) |
 | RankTune Overview | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/2_ranktune.ipynb) |
 | RankTune Augmenting Datasets | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/3_ranktune_augment.ipynb) |
+| Statistical Parity Metrics | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/4_statisticalparitymetrics.ipynb) |
+| Stcore-based (Group & Individual) Metrics | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/5_scorebasedmetrics.ipynb) |
 
 
 
@@ -207,7 +209,7 @@ Check out the [documentation](https://kcachel.github.io/FairRankTune) for more d
 
 
 ## 🎓 Citation
-If you end up using [FairRankTune](https://github.com/KCachel/FairRankTune) for conducting the experiments in your work, please consider citing it:
+If you end up using [FairRankTune](https://github.com/KCachel/FairRankTune) in your work, please consider citing it:
 <details>
   <summary>BibTeX</summary>
   

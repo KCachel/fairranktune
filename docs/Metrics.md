@@ -143,7 +143,7 @@ series = {CIKM '20}
 
 EXPU assesses if groups receive exposure proportional to their relevance in the ranking(s). This is a fotm of group fairness that considers the scores (relevances) associated with items. The per-group metric is the ratio of group average exposure and group average utility, whereby group average exposure is measured exactly as in [EXP](#group-exposure-exp). Group average utility for group $g_j$ is $avgutil(\tau,g_j) = \sum_{\forall x \in g_{j}}x_i^{util_{\tau}}/|g_{j}|$, where $x_i^{util_{\tau}}$ is the utility (or relevance score) for candidate $x_i$ in ranking $\tau$.  The range of EXPU and its "most fair" value depends on the [per-group aggregation](#modular-metric-implementation) ```combo``` variable. 
 
-[Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) refer to EXPU as "Disparate Treatment", as pointed out by Raj et al. this terminology, is inconsistent with the use of these terms in the broader algorithmic fairness literature, thus ```FairRankTune``` uses the term "Exposure Utility" a introduced in Raj et al.
+[Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) refer to EXPU as "Disparate Treatment", as pointed out by Raj et al. this terminology, is inconsistent with the use of these terms in the broader algorithmic fairness literature, thus ```FairRankTune``` uses the term "Exposure Utility" a introduced in [Raj et al.}(https://dl.acm.org/doi/10.1145/3477495.3532018).
 
 Usage:
 
@@ -180,9 +180,9 @@ series = {KDD '18}
 
 ### Exposure Realized Utility (EXPRU)
 
-EXPRU assesses if groups are click-on proportional to their relevance in the ranking(s). This is a form of group fairness that considers the scores (relevances) associated with items. The per-group metric is the ratio of group average click-through rate and group average utility, whereby  group average utility is measured exactly as in EXPU. The average click-through rate for group $g_j$ is $avgctr(\tau,g_j) = \sum_{\forall x \in g_{j}}x_i^{ctr_{\tau}}/|g_{j}|$, where $x_i^{ctr_{\tau}}$ is the click-through rate for candidate $x_i$ in ranking $\tau$.  The range of EXPRU and its "most fair" value depends on the [per-group aggregation](#modular-metric-implementation) ```combo``` variable. 
+EXPRU assesses if groups are click-on proportional to their relevance in the ranking(s). This is a form of group fairness that considers the scores (relevances) associated with items. The per-group metric is the ratio of group average click-through rate and group average utility, whereby  group average utility is measured exactly as in EXPU. The average click-through rate for group $g_j$ in $\tau$ is $avgctr(\tau,g_j) = \sum_{\forall x \in g_{j}}x_i^{ctr_{\tau}}/|g_{j}|$, where $x_i^{ctr_{\tau}}$ is the click-through rate for candidate $x_i$ in ranking $\tau$.  The range of EXPRU and its "most fair" value depends on the [per-group aggregation](#modular-metric-implementation) ```combo``` variable. 
 
-[Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) refer to EXPU as "Disparate Impact", as pointed out by Raj et al. this terminology, is inconsistent with the use of these terms in the broader algorithmic fairness literature, thus ```FairRankTune``` uses the term "Exposure Realized Utility" a introduced in Raj et al.
+[Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) refer to EXPRU as "Disparate Impact", as pointed out by Raj et al. this terminology, is inconsistent with the use of these terms in the broader algorithmic fairness literature, thus ```FairRankTune``` uses the term "Exposure Realized Utility" a introduced in [Raj et al.](https://dl.acm.org/doi/10.1145/3477495.3532018).
 
 Usage:
 ```python
@@ -291,7 +291,7 @@ series = {WWW '21}
 ```
 </details>
 
-### Exposue Rank Biased Precision Proportionality (ERBP)
+### Exposure Rank Biased Precision Proportionality (ERBP)
 
 ERBP assesses if groups receive exposure proportional to their size whereby exposure is based on the Rank Biased Precision metric) This metric does not consider relevances or scores associate with items. Exposure in ERBE is determined differently compared to [exposure (EXP)](#group-exposure-exp). Specifically this calculation is based on the [Rank Biased Precision (RBP) metric](https://dl.acm.org/doi/10.1145/1416950.1416952).  The per-group metric is the group average exposure, whereby exposure is measured exactly as in [ERBE](#exposure-rank-biased-precision-equality-erbe). Group average exposure for group $g_j$ is $avgexpRBP(\tau,g_j) = (1 - \gamma) \sum_{\forall x \in g_{j}}exposureRBP(\tau,x_i)/|g_{j}|$.  The range of ERBP and its "most fair" value depends on the [per-group aggregation](#modular-metric-implementation) ```combo``` variable. 
 
@@ -364,7 +364,7 @@ series = {WWW '21}
 
 ### Attribute Rank Parity (ARP)
 
-ARP compares the number of mixed pairs won by groups in the ranking(s) and does not consider relevances or scores associate with items. It aligns with the fairness concept of statistical parity. ARP decomposes the ranking into pairwise comparisons, a mixed pair contains items from two different groups, the item "on top" is said to "win" the pair. The per-group metric is the average mixed pairs won by each group, calculated as $avgpairs(\tau, g_i) = \# ~mixedpairswon(g_i) / \# totalmixedpairs(g_i)$.  The range of ARP and its "most fair" value depends on the [per-group aggregation](#modular-metric-implementation) ```combo``` variable. 
+ARP compares the number of mixed pairs won by groups in the ranking(s) and does not consider relevances or scores associate with items. It aligns with the fairness concept of statistical parity. ARP decomposes the ranking into pairwise comparisons, a mixed pair contains items from two different groups, the item "on top" is said to "win" the pair. The per-group metric is the average mixed pairs won by each group, calculated as $avgpairs(\tau, g_i) = \# ~mixedpairswon(g_i) / \# totalmixedpairs(g_i)$ in ranking $\tau$.  The range of ARP and its "most fair" value depends on the [per-group aggregation](#modular-metric-implementation) ```combo``` variable. 
 
 Usage:
 ```python
@@ -396,7 +396,7 @@ Citation:
 
 NDKL asseses the representation of groups in dsicrete prefixes of the ranking. It does not considers the relevance or scores associated with items. It aligns with the fairness cocnept of statistical parity and is assess on a single ranking. The NDKL of ranking $\tau$ with respect to groups $G$ is defined as:
 $\frac{1}{Z}\sum^{|X|}_{i = 1}\frac{1}{log_{2}(i +1 )}d_{KL}(D_{\tau_i} || D_{X})$
-where $d_{KL}(D_{\tau_i} || D_{X})$ is the [KL-divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) score of the group proportions of the first $i$ positions in $\tau$ and the group proportions of the item set $X$ and $Z = \sum_{i = 1}^{| \tau |} \frac{1}{log_2(i + 1)}$. NDKL is ranges from 0 to $\inf$, and is most fair at 0.
+where $d_{KL}(D_{\tau_i} || D_{X})$ is the [KL-divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) score of the group proportions of the first $i$ positions in $\tau$ and the group proportions of the item set $X$ and $Z = \sum_{i = 1}^{| \tau |} \frac{1}{log_2(i + 1)}$. NDKL ranges from 0 to $\infty$, and is most fair at 0.
 
 Usage:
 ```python
@@ -431,12 +431,12 @@ series = {KDD '19}
 
 ### Inequity of Amortized Attention (IAA)
 
-IAA assess if a series of rankings is individually fair; meaning items are given attention similiar to their relevance. IAA measures the difference, via the $L_1$ norm between the cumulative attention and cumulative relevance of items in the rankings. Whereby the attention of an item $x_i$ in ranking $\tau$ is $attention(\tau,x_i) = 1 / log_2(\tau(x_i)+1))$ and the relevance of an item is a $[0 - 1]$-normalized score. IAA is ranges from 0 to $\inf$, and is most fair at 0.
+IAA assess if a series of rankings is individually fair; meaning items are given attention similiar to their relevance. IAA measures the difference, via the $L_1$ norm between the cumulative attention and cumulative relevance of items in the rankings. Whereby the attention of an item $x_i$ in ranking $\tau$ is $attention(\tau,x_i) = 1 / log_2(\tau(x_i)+1))$ and the relevance of an item is a $[0 - 1]$-normalized score. IAA is ranges from 0 to $\infty$, and is most fair at 0.
 
 Usage:
 ```python
 #Calculate IAA
-IAA = IAA(ranking_df, relevance_df)
+IAA = frt.Metrics.IAA(ranking_df, relevance_df)
 ```
 Note that the relevance scores associated with the rankings in ```relevance_df``` must be between 0 and 1. The returned object is a float specifying the IAA value.
 
