@@ -7,7 +7,7 @@
 ## Supported Fair Ranking Algorithms
 
 ### Epsilon-Greedy Re-Ranker
-Epsilon-Greedy takes as input a ranking and repeatedly swaps pairs of items so that each item has probability $\epsilon$ (```epsilon```) of swapping with a random item below it. It does not require a specific notion of fairness or prior knowledge of group distributions. It does use random swapping, thus it is recommended to set a random seed for reproducability. To learn more see [Feng et al.](https://doi.org/10.1609/aaai.v36i11.21445) where it was introduced to improve group fairness.
+Epsilon-Greedy takes as input a ranking and repeatedly swaps pairs of items so that each item has probability $\epsilon$ (```epsilon```) of swapping with a random item below it. It does not require a specific notion of fairness or prior knowledge of group distributions. It does use random swapping, thus it is recommended to set a random seed for reproducibility. To learn more see [Feng et al.](https://doi.org/10.1609/aaai.v36i11.21445) where it was introduced to improve group fairness.
 
 Usage:
 ```python
@@ -18,8 +18,11 @@ from FairRankTune import RankTune, Metrics
 import random
 
 #Generate a biased (phi = 0) ranking of 1000 items, with two groups of 100 and 900 items each.
-seed = 2 #For reproducability
-ranking_df, item_group_dict, scores_df = frt.RankTune.ScoredGenFromGroups(np.asarray([.1, .9]),  1000, 0, 1, 'uniform', seed)
+group_proportions = np.asarray([.1, .9]) #Array of group proportions
+num_items = 1000 #1000 items to be in the generated ranking
+phi = 0 #Biased ranking
+r_cnt = 1 #Generate 1 ranking
+ranking_df, item_group_dict, scores_df = frt.RankTune.ScoredGenFromGroups(group_proportions,  num_items, phi, r_cnt, 'uniform', seed)
 
 #Calculate EXP with a MinMaxRatio
 EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
@@ -27,7 +30,7 @@ print("EXP before Epsilon-Greedy: ", EXP_minmax, "avg_exposures before Epsilon-G
 
 
 #Rerank using Epsilon-Greedy
-seed = 2 #For reproducability
+seed = 2 #For reproducibility
 epsilon = .6 
 reranking_df, item_group_d, reranking_scores = frt.Rankers.EPSILONGREEDY(ranking_df, item_group_dict, scores_df, epsilon, seed)
 
@@ -41,7 +44,7 @@ Output:
 EXP before Epsilon-Greedy:  0.5420744267551784 avg_exposures before Epsilon-Greedy:  {0: 0.2093867087428094, 1: 0.11350318011191189}
 EXP after Epsilon-Greedy:  0.7689042373241246 avg_exposures after Epsilon-Greedy:  {0: 0.15541589156986096, 1: 0.1194999375755728}
 ```
-```epsilon``` must be between $[0,1]$ and a ```seed``` is passed for reproducability.
+```epsilon``` must be between $[0,1]$ and a ```seed``` is passed for reproducibility.
 
 Citation:
 <details>
@@ -62,7 +65,7 @@ month={Jun.},
 </details>
 
 ### DetConstSort Re-Ranker
-DetConstSort takes as input a given ranking, and re-ranks items in it to create a top-k fair ranking. Fairness is achieved by setting the ```distribution``` dictionary.  In ```distribution``` they keys are group identifiers and the value is the desired group proportion. For any particular position k and for any group ```g```, DetConstSort ensures that group occurs $\lfloor$ ```distribution[g]``` $*k \rfloor$ in the resulting ranking. DetConstSort algorithm also tries improve the utility of the ranking by ensuring that items with better scores are placed higher in the ranking so long as the ranking satisfies the feasibility criteria. To learn more see [Geyik et al.]().
+DetConstSort takes as input a given ranking, and re-ranks items in it to create a top-k fair ranking. Fairness is achieved by setting the ```distribution``` dictionary.  In ```distribution``` the keys are group identifiers and the value is the desired group proportion. For any particular position k and for any group ```g```, DetConstSort ensures that group occurs $\lfloor$ ```distribution[g]``` $*k \rfloor$ in the resulting ranking. DetConstSort algorithm also tries improve the utility of the ranking by ensuring that items with better scores are placed higher in the ranking so long as the ranking satisfies the feasibility criteria. To learn more see [Geyik et al.](https://dl.acm.org/doi/10.1145/3292500.3330691).
 
 
 Usage:

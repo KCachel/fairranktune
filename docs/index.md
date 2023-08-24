@@ -31,7 +31,7 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 
 ### 🎨 Fairness-Aware Ranked Data Generation
 
-```RankTune``` is a pseudo-stochastic data generation method for creating fairness-aware ranked lists using the fairness concept of statistical parity. Inlcuded in the ```RankTune``` module, it creates ranking(s) based on the ```phi``` representativeness parameter. When ```phi = 0``` then the generated ranked list(s) does not represent groups fairly, and as ```phi``` increases groups are represented more and more fairly; thus ```phi = 1``` groups are fairly represented. RankTune uses a [pseudo-random process](https://kcachel.github.io/FairRankTune/RankTune/#how-does-it-work) to generate fairness-aware ranked data. RankTune can generate ranked data from [user provided group sizes](https://kcachel.github.io/FairRankTune/RankTune/#using-group-sizes), from [existing datasets](https://kcachel.github.io/FairRankTune/RankTune/#using-an-existing-dataset), along with [producing relevance scores](https://kcachel.github.io/FairRankTune/RankTune/#generating-scores-with-the-ranking) accompanying the ranked list(s). 
+```RankTune``` is a pseudo-stochastic data generation method for creating fairness-aware ranked lists using the fairness concept of statistical parity. Included in the ```RankTune``` module, it creates ranking(s) based on the ```phi``` representativeness parameter. When ```phi = 0``` then the generated ranked list(s) does not represent groups fairly, and as ```phi``` increases groups are represented more and more fairly; thus ```phi = 1``` groups are fairly represented. RankTune uses a [pseudo-random process](https://kcachel.github.io/FairRankTune/RankTune/#how-does-it-work) to generate fairness-aware ranked data. RankTune can generate ranked data from [user provided group sizes](https://kcachel.github.io/FairRankTune/RankTune/#using-group-sizes), from [existing datasets](https://kcachel.github.io/FairRankTune/RankTune/#using-an-existing-dataset), along with [producing relevance scores](https://kcachel.github.io/FairRankTune/RankTune/#generating-scores-with-the-ranking) accompanying the ranked list(s). 
 
 
 Please refer to the [documentation](https://kcachel.github.io/FairRankTune/RankTune/) for additional information. 
@@ -94,7 +94,7 @@ group_proportions = np.asarray([.1, .2, .3, .4]) #Array of group proportions
 num_items = 1000 #1000 items to be in the generated ranking
 phi = 0.1
 r_cnt = 1 #Generate 1 ranking
-seed = 10 #For reproducability
+seed = 10 #For reproducibility
 ranking_df, item_group_dict = frt.RankTune.GenFromGroups(group_proportions, num_items, phi, r_cnt, seed)
 
 #Calculate EXP with a MinMaxRatio
@@ -122,7 +122,7 @@ from FairRankTune import RankTune, Metrics
 item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W", Jill= "W", Jane= "W", Dave= "M", Nancy= "W", Nick= "M")
 phi = 0.1
 r_cnt = 1 #Generate 1 ranking
-seed = 10 #For reproducability
+seed = 10 #For reproducibility
 ranking_df, item_group_dict = frt.RankTune.GenFromItems(item_group_dict, phi, r_cnt, seed)
 
 #Calculate EXP with a MinMaxRatio
@@ -166,8 +166,11 @@ from FairRankTune import RankTune, Metrics
 import random
 
 #Generate a biased (phi = 0) ranking of 1000 items, with two groups of 100 and 900 items each.
-seed = 2 #For reproducability
-ranking_df, item_group_dict, scores_df = frt.RankTune.ScoredGenFromGroups(np.asarray([.1, .9]),  1000, 0, 1, 'uniform', seed)
+group_proportions = np.asarray([.1, .9]) #Array of group proportions
+num_items = 1000 #1000 items to be in the generated ranking
+phi = 0 #Biased ranking
+r_cnt = 1 #Generate 1 ranking
+ranking_df, item_group_dict, scores_df = frt.RankTune.ScoredGenFromGroups(group_proportions,  num_items, phi, r_cnt, 'uniform', seed)
 
 #Calculate EXP with a MinMaxRatio
 EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
@@ -175,7 +178,7 @@ print("EXP before Epsilon-Greedy: ", EXP_minmax, "avg_exposures before Epsilon-G
 
 
 #Rerank using Epsilon-Greedy
-seed = 2 #For reproducability
+seed = 2 #For reproducibility
 epsilon = .6 
 reranking_df, item_group_d, reranking_scores = frt.Rankers.EPSILONGREEDY(ranking_df, item_group_dict, scores_df, epsilon, seed)
 
@@ -200,8 +203,8 @@ We can see that the EXP fairness score improved from running Epsilon-Greedy. For
 | RankTune Overview | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/2_ranktune.ipynb) |
 | RankTune Augmenting Datasets | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/3_ranktune_augment.ipynb) |
 | Statistical Parity Metrics | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/4_statisticalparitymetrics.ipynb) |
-| Stcore-based (Group & Individual) Metrics | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/5_scorebasedmetrics.ipynb) |
-
+| Score-based (Group & Individual) Metrics | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/5_scorebasedmetrics.ipynb) |
+| Using Fair Ranking Algorithms| [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/5_scorebasedmetrics.ipynb) |
 
 
 ## 📚 Documentation
