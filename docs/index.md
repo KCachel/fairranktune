@@ -219,7 +219,7 @@ If you end up using [FairRankTune](https://github.com/KCachel/FairRankTune) in y
   ```bibtex
   @misc{CachelFRT,
     author    = {Kathleen Cachel},
-    title     = {FairRankTUne: A Python Library for Fair Ranking},
+    title     = {FairRankTune: A Python Library for Fair Ranking},
     year = {2023},
     publisher = {GitHub},
     howpublished = {\url{https://github.com/KCachel/FairRankTune}}
