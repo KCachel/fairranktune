@@ -1,172 +1,240 @@
-# FairRankTune
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/KCachel/FairRankTune/main/.github/images/FairRankTune.png">
+</div>
+
+<p align="center">
+  <!-- Python -->
+  <a href="https://www.python.org" alt="Python"><img src="https://badges.aleen42.com/src/python.svg"></a>
+  <!-- Version -->
+  <a href="https://pypi.org/project/FairRankTune/"><img src="https://img.shields.io/pypi/v/FairRankTune?color=light-green" alt="PyPI version"></a>
+  <!-- Docs -->
+  <a href="https://kcachel.github.io/fairranktune"><img src="https://img.shields.io/badge/docs-passing-<COLOR>.svg" alt="Documentation Status"></a>
+  <!-- Black -->
+  <a href="https://github.com/psf/black" alt="Code style: black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+  <!-- License -->
+  <a href="https://www.tldrlegal.com/license/bsd-3-clause-license-revised"><img src="https://img.shields.io/badge/license-BSD3-blue" alt="License: BSD 3-Clause"></a>
+</p>
+
+## 📍 Introduction
+
+[FairRankTune](https://github.com/KCachel/FairRankTune) is a  an open-source [Python](https://en.wikipedia.org/wiki/Python_(programming_language)) toolkit supporting end-to-end fair ranking workflows, analysis, auditing, and experimentation. FairRankTune provides researchers, practitioners, and educators with a self-contained module for generating ranked data, ranking strategies, and popular ranking-based fairness metrics.
+
+For a quick overview, follow the [Usage](#-usage) section.
+
+For a in-depth overview, follow the [Examples](#-examples) section.
 
 
-Updated 8/2023 with additional metrics (score-based group and individual fairness).
-
-1. [Basic installation instructions](#basic-installation-instructions)
-2. [Quick start & notebook playground](#quick-start-playground)
-3. [FairRankTune source](#fairranktune-source)
-4. [Reproducing experiments](#reproducing-experiments)
-5. [Plotting experimental results](#plotting-experimental-results)
+## ✨ Features
 
 
-## Basic Installation Instructions
-1. Install via pip (note this is not available due to anonymized review. Once we can we will make fairranktune a pypi package).
-```python
+### 🎨 Fairness-Aware Ranked Data Generation
+
+```RankTune``` is a pseudo-stochastic data generation method for creating fairness-aware ranked lists using the fairness concept of statistical parity. Included in the ```RankTune``` module, it creates ranking(s) based on the ```phi``` representativeness parameter. When ```phi = 0``` then the generated ranked list(s) does not represent groups fairly, and as ```phi``` increases groups are represented more and more fairly; thus ```phi = 1``` groups are fairly represented. RankTune uses a [pseudo-random process](https://kcachel.github.io/FairRankTune/RankTune/#how-does-it-work) to generate fairness-aware ranked data. RankTune can generate ranked data from [user provided group sizes](https://kcachel.github.io/FairRankTune/RankTune/#using-group-sizes), from [existing datasets](https://kcachel.github.io/FairRankTune/RankTune/#using-an-existing-dataset), along with [producing relevance scores](https://kcachel.github.io/FairRankTune/RankTune/#generating-scores-with-the-ranking) accompanying the ranked list(s). 
+
+
+Please refer to the [documentation](https://kcachel.github.io/FairRankTune/RankTune/) for additional information. 
+
+### 📏 Metrics
+
+```FairRankTune ``` provides several metrics for evaluating the fairness of ranked lists in the ```Metrics``` module. The table below provides a high-level overview of each metric. These metrics encompass a variety of fair ranking metrics, including both [group](https://en.wikipedia.org/wiki/Fairness_(machine_learning)#Group_Fairness_criteria) and [individual](https://en.wikipedia.org/wiki/Fairness_(machine_learning)#Individual_Fairness_criteria) fairness, along with both score-based and statistical parity metrics. 
+
+
+| **Metric** | **Abbreviation** | **Fairness (Group or Individual)** | **Score-based** | **Statistical Parity** | **Reference** |
+|---|:---:|:---:|:---:|:---:|:---:|
+| [Group Exposure](https://kcachel.github.io/FairRankTune/Metrics/#group-exposure-exp) | EXP | Group | No | Yes | [Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) |
+| [Exposure Utility](https://kcachel.github.io/FairRankTune/Metrics/#exposure-realized-utility-expru) | EXPU | Group | Yes | No | [Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) |
+| [Exposure Realized Utility](https://kcachel.github.io/FairRankTune/Metrics/#exposure-realized-utility-expru) | EXPRU | Group | Yes | No |[Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088)|
+| [Attention Weighted Rank Fairness](https://kcachel.github.io/FairRankTune/Metrics/#attention-weighted-rank-fairness-awrf) | AWRF | Group | No | Yes |[Sapiezynski et al.](https://dl.acm.org/doi/10.1145/3308560.3317595)  |
+| [Exposure Rank Biased Precision Equality](https://kcachel.github.io/FairRankTune/Metrics/#exposure-rank-biased-precision-equality-erbe) | ERBE | Group | No | No | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080)  |
+| [Exposure Rank Biased Precision Proportionality](https://kcachel.github.io/FairRankTune/Metrics/#exposue-rank-biased-precision-proportionality-erbp) | ERBP | Group | No | Yes | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080) |
+| [Exposure Rank Biased Precision Proportional to Relevance](https://kcachel.github.io/FairRankTune/Metrics/#exposure-rank-biased-precision-proportional-to-relevance-erbr) | ERBR | Group | Yes | No | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080) |
+| [Attribute Rank Parity](https://kcachel.github.io/FairRankTune/Metrics/#attribute-rank-parity-arp) | ARP | Group | No | Yes | [Cachel et al.](https://ieeexplore.ieee.org/document/9835646) |
+| [Normalized Discounted KL-Divergence](https://kcachel.github.io/FairRankTune/Metrics/#normalized-discounted-kl-divergence-ndkl) | NDKL | Group | No | Yes |[Geyik et al.](https://dl.acm.org/doi/10.1145/3292500.3330691)  |
+| [Inequity of Amortized Attention](https://kcachel.github.io/FairRankTune/Metrics/#inequity-of-amortized-attention-iaa) | IAA | Individual | Yes | No | [Biega et al.](https://dl.acm.org/doi/10.1145/3209978.3210063)  |
+
+Please refer to the [Metrics documentation](https://kcachel.github.io/FairRankTune/Metrics/) for further details. 
+
+### ⚖️ Fair Ranking Methods
+
+```FairRankTune``` provides several [fair ranking algorithms](https://kcachel.github.io/FairRankTune/Rankers/#supported-fair-ranking-algorithms) in the ```Rankers``` module. The [DetConstSort](https://kcachel.github.io/FairRankTune/Rankers/#detconstsort-re-ranker) and [Epsilon-Greedy](https://kcachel.github.io/FairRankTune/Rankers/#epsilon-greedy-re-ranker) fair ranking algorithms can be used to re-rank a given ranking with the objective of making the resulting ranking fair. 
+
+Please refer to the [documentation](https://kcachel.github.io/FairRankTune/Metrics/) for further details. 
+
+## 🔌 Requirements
+```bash
+python>=3.8
+```
+As of `v.0.0.1`, [FairRankTune](https://github.com/KCachel/FairRankTune) requires `python>=3.8`.
+
+## 💾 Installation 
+
+```bash
 pip install FairRankTune
 ```
-Or install directly from source (right now please download from the anonymous.4open.science repository).
-```python
-git clone <repo>
-```
-2. To use the generator you need to import the function from the package:
-```python
-import FairRankTune as rt
+
+## 💡 Usage
+
+
+
+### 🎨 Fairness-Aware Ranked Data Generation
+
+
+```RankTune``` can be used to generate ranking(s) from ```group_proportions```, a numpy array with each group's proportion of the total items,```num_items```, by using the ```GenFromGroups()``` function.
+
+```python title="GenFromGroups() function" hl_lines="12"
+import FairRankTune as frt
+import numpy as np
+import pandas as pd
+from FairRankTune import RankTune, Metrics
+
+#Generate a biased (phi = 0.1) ranking of 1000 items, with four groups of 100, 200, 300, and 400 items each.
+group_proportions = np.asarray([.1, .2, .3, .4]) #Array of group proportions
+num_items = 1000 #1000 items to be in the generated ranking
+phi = 0.1
+r_cnt = 1 #Generate 1 ranking
+seed = 10 #For reproducibility
+ranking_df, item_group_dict = frt.RankTune.GenFromGroups(group_proportions, num_items, phi, r_cnt, seed)
+
+#Calculate EXP with a MinMaxRatio
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
+print("EXP of generated ranking: ", EXP_minmax, "avg_exposures: ", avg_exposures_minmax)
 ```
 
-## Quick Start Playground
-To use FairRankTune in your run:
+Output:
+```python
+EXP of generated ranking:  0.511665941043515 avg_exposures:  {0: 0.20498798214669187, 1: 0.13126425437156242, 2: 0.11461912123646827, 3: 0.10488536878769836}
+```
+Can confirm this is an unfair ranking by the low EXP value.
+
+
+```RankTune``` can be used to generate ranking(s) from ```item_group_dict```, a dictionary of items where the keys are each item's group by using the ```GenFromItems()``` function.
+
+
+```python title="GenFromItems() function" hl_lines="11"
+import FairRankTune as frt
+import numpy as np
+import pandas as pd
+from FairRankTune import RankTune, Metrics
+
+#Generate a biased (phi = 0.1) ranking
+item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W", Jill= "W", Jane= "W", Dave= "M", Nancy= "W", Nick= "M")
+phi = 0.1
+r_cnt = 1 #Generate 1 ranking
+seed = 10 #For reproducibility
+ranking_df, item_group_dict = frt.RankTune.GenFromItems(item_group_dict, phi, r_cnt, seed)
+
+#Calculate EXP with a MinMaxRatio
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
+print("EXP of generated ranking: ", EXP_minmax, "avg_exposures: ", avg_exposures_minmax)
+```
+
+Output:
+```python
+EXP of generated ranking:  0.5158099476966725 avg_exposures:  {'M': 0.6404015779112127, 'W': 0.33032550440724917}
+```
+We can confirm this is a biased ranking base don the low EXP score and large difference in average exposure between the 'M' and 'W' groups.
+
+For further detail on how to use ```RankTune``` to generate relevance scores see the [RankTune documentation](https://kcachel.github.io/FairRankTune/RankTune/).
+
+### 📏 Metrics
 ```python
 import FairRankTune as frt
-import numpy as np #helpful to use
+import pandas as pd
+import numpy as np
+ranking_df = pd.DataFrame(["Joe", "Jack", "Nick", "David", "Mark", "Josh", "Dave",
+                          "Bella", "Heidi", "Amy"])
+item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W", Mark= "M", Josh= "M", Dave= "M", Jack= "M", Nick= "M")
+#Calculate EXP with a MaxMinDiff
+EXP, avg_exposures = frt.Metrics.EXP(ranking_df, item_group_dict, 'MaxMinDiff')
+print("EXP: ", EXP, "avg_exposures: ", avg_exposures)
 ```
-
-To generate a ranking with only the group distribution, number of items, and phi
-
+Output:
 ```python
-num_items = 1000
-phi = 1  # maximally unfair
-group_proportions = np.array([0.2, .3, .5])  # groups of size 200, 300, and 500
-ranking, group_ids_in_ranking = frt.GenFromGroups(group_proportions, num_items, phi, 1)
+>>> EXP:  0.21786100126614577 avg_exposures:  {'M': 0.5197142341886783, 'W': 0.3018532329225326}
 ```
 
-To help get a feel for using FairRankTune we have created a self-contained notebook that includes the FairRankTune source code and metrics. To interact with FairRankTune please see [FairRankTunePlayground.ipynb](https://github.com/KCachel/FairRankTune/blob/main/FairRankTunePlayground.ipynb).
+
+### ⚖️ Fair Ranking Algorithms
+
+```python title="Epsilon-Greedy Algorithm" 
+import FairRankTune as frt
+import numpy as np
+import pandas as pd
+from FairRankTune import RankTune, Metrics
+import random
+
+#Generate a biased (phi = 0) ranking of 1000 items, with two groups of 100 and 900 items each.
+group_proportions = np.asarray([.1, .9]) #Array of group proportions
+num_items = 1000 #1000 items to be in the generated ranking
+phi = 0 #Biased ranking
+r_cnt = 1 #Generate 1 ranking
+ranking_df, item_group_dict, scores_df = frt.RankTune.ScoredGenFromGroups(group_proportions,  num_items, phi, r_cnt, 'uniform', seed)
+
+#Calculate EXP with a MinMaxRatio
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
+print("EXP before Epsilon-Greedy: ", EXP_minmax, "avg_exposures before Epsilon-Greedy: ", avg_exposures_minmax)
 
 
+#Rerank using Epsilon-Greedy
+seed = 2 #For reproducibility
+epsilon = .6 
+reranking_df, item_group_d, reranking_scores = frt.Rankers.EPSILONGREEDY(ranking_df, item_group_dict, scores_df, epsilon, seed)
 
-## FairRankTune Source
-All source code for FairRankTune can be found in the [FAIRRANKTUNE](https://github.com/KCachel/FairRankTune/tree/main/FairRankTune) directory. Each of the three components of the toolkit have their own sub-package/directory described below.
-
-
-#### RankTune
-The RankTune source code is the [RankTune](https://github.com/KCachel/FairRankTune/tree/main/FairRankTune/RankTune) directory and correpsonding src.py script. 
-
-#### Metrics
-All metrics are in the *Metrics* directory. Each metric has a corresponding python script. 
-- [ARP](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/ARP.py) [1]
-- [AWRF](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/AWRF.py) [2]
-- [ER](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/EXR.py) [3, 4]
-- [EXPU](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/EXR.py) [4]
-- [EXPRU](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/EXR.py) [4]
-- [NDKL](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/NDKL.py) [5]
-- [ERBE](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/ERB.py) [8]
-- [ERBP](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/ERB.py) [8]
-- [ERBR](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/ERB.py) [8]
-- [IAA](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Metrics/IAA.py) [9]
-
-Functions to combine per-group metrics into a single metric are in the ComboUtil.py script. 
-
-#### Rankers
-All fair ranking methods are in the *Rankers* directory. Each method has a corresponding python script. 
-- [DetConSort](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Rankers/DetConSort_Geyiketal.py) [5]
-- [Epsilon-Greedy](https://github.com/KCachel/FairRankTune/blob/main/FairRankTune/Rankers/EpsilonGreedy_Fengetal.py) [6]
-
-Functions to combine per-group metrics into a single metric are in the ComboUtil.py script. 
-
-## Reproducing Demonstration, Case Study, and Comparisons
-The scripts to reproduce empirical analysis in the paper can be found in the [Analysis](https://github.com/KCachel/FairRankTune/tree/main/Analysis) directory along with the raw csv files containing the results. 
-
-Law Demonstration: the [law](https://github.com/KCachel/FairRankTune/tree/main/Analysis/law) directory contains the law student data, scripts to run the experiment, result csv, and R script to generate the plots from the paper.
-
-Comparison of RankTune to available methods: the [comparison](https://github.com/KCachel/FairRankTune/tree/main/Analysis/comparison) directory contains scripts for the compared methods (including the binary ranked data generation method URG [7], and the result csvs of running the data generation methods. 
-
-Case Study: the [case_study](https://github.com/KCachel/FairRankTune/tree/main/Analysis/case_study) directory contains scripts and results from generating data and analyzing metrics on the nine distributions from the paper
-
-Timing: the [timing](https://github.com/KCachel/FairRankTune/tree/main/Analysis/timing) directory contains the scripts and results from analyszing the runtime of RankTune.
-
-### Generating plots from the paper
-The scripts to generate the plots from the case study and comparison with URG are included in the [plotting.R](https://github.com/KCachel/FairRankTune/blob/main/Analysis/plotting.R) file. This script saves off figures to the 'plots' folder in the main directory.
-
-### References
-[1] Cachel, K., Rundensteiner, E., & Harrison, L. (2022, May). Mani-rank: Multiple attribute and intersectional group fairness for consensus ranking. In 2022 IEEE 38th International Conference on Data Engineering (ICDE) (pp. 1124-1137). IEEE.
-```textmate
-@article{Cachel2022MANIRankMA,
-  title={MANI-Rank: Multiple Attribute and Intersectional Group Fairness for Consensus Ranking},
-  author={Kathleen Cachel and Elke A. Rundensteiner and Lane Harrison},
-  journal={2022 IEEE 38th International Conference on Data Engineering (ICDE)},
-  year={2022},
-  pages={1124-1137}
-}
+#Calculate EXP with a MinMaxRatio post Epsilon-Greedy
+EXP, avg_exposures= frt.Metrics.EXP(reranking_df, item_group_d, 'MinMaxRatio')
+print("EXP after Epsilon-Greedy: ", EXP, "avg_exposures after Epsilon-Greedy: ", avg_exposures)
 ```
-[2] Sapiezynski, P., Zeng, W., E Robertson, R., Mislove, A., & Wilson, C. (2019, May). Quantifying the impact of user attentionon fair group representation in ranked lists. In Companion proceedings of the 2019 world wide web conference (pp. 553-562).
-```textmate
-@article{Sapiezynski2019QuantifyingTI,
-  title={Quantifying the Impact of User Attentionon Fair Group Representation in Ranked Lists},
-  author={Piotr Sapiezynski and Wesley Zeng and Ronald E. Robertson and Alan Mislove and Christo Wilson},
-  journal={Companion Proceedings of The 2019 World Wide Web Conference},
-  year={2019}
-}
+
+Output:
+```python
+EXP before Epsilon-Greedy:  0.5420744267551784 avg_exposures before Epsilon-Greedy:  {0: 0.2093867087428094, 1: 0.11350318011191189}
+EXP after Epsilon-Greedy:  0.7689042373241246 avg_exposures after Epsilon-Greedy:  {0: 0.15541589156986096, 1: 0.1194999375755728}
 ```
-[3] Diaz, F., Mitra, B., Ekstrand, M. D., Biega, A. J., & Carterette, B. (2020, October). Evaluating stochastic rankings with expected exposure. In Proceedings of the 29th ACM international conference on information & knowledge management (pp. 275-284).
-```textmate
-@article{Diaz2020EvaluatingSR,
-  title={Evaluating Stochastic Rankings with Expected Exposure},
-  author={Fernando Diaz and Bhaskar Mitra and Michael D. Ekstrand and Asia J. Biega and Ben Carterette},
-  journal={Proceedings of the 29th ACM International Conference on Information \& Knowledge Management},
-  year={2020}
-}
-```
-[4] Singh, A., & Joachims, T. (2018, July). Fairness of exposure in rankings. In Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining (pp. 2219-2228).
-```textmate
-@article{Singh2018FairnessOE,
-  title={Fairness of Exposure in Rankings},
-  author={Ashudeep Singh and Thorsten Joachims},
-  journal={Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
-  year={2018}
-}
-```
-[5] Geyik, S. C., Ambler, S., & Kenthapadi, K. (2019, July). Fairness-aware ranking in search & recommendation systems with application to linkedin talent search. In Proceedings of the 25th acm sigkdd international conference on knowledge discovery & data mining (pp. 2221-2231).
-```textmate
-@article{Geyik2019FairnessAwareRI,
-  title={Fairness-Aware Ranking in Search \& Recommendation Systems with Application to LinkedIn Talent Search},
-  author={Sahin Cem Geyik and Stuart Ambler and Krishnaram Kenthapadi},
-  journal={Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
-  year={2019}
-}
-```
-[6] Feng, Y., & Shah, C. (2022). Has CEO Gender Bias Really Been Fixed? Adversarial Attacking and Improving Gender Fairness in Image Search. AAAI Conference on Artificial Intelligence.
-```textmate
-@inproceedings{Feng2022HasCG,
-  title={Has CEO Gender Bias Really Been Fixed? Adversarial Attacking and Improving Gender Fairness in Image Search},
-  author={Yunhe Feng and C. Shah},
-  booktitle={AAAI Conference on Artificial Intelligence},
-  year={2022}
-}
-```
-[7] Yang, K., & Stoyanovich, J. (2017, June). Measuring fairness in ranked outputs. In Proceedings of the 29th international conference on scientific and statistical database management (pp. 1-6).
-```textmate
-@article{Yang2016MeasuringFI,
-  title={Measuring Fairness in Ranked Outputs},
-  author={Ke Yang and Julia Stoyanovich},
-  journal={Proceedings of the 29th International Conference on Scientific and Statistical Database Management},
-  year={2016}
-}
-```
-[8] Kirnap, Ö., Diaz, F., Biega, A.J., Ekstrand, M.D., Carterette, B., & Yilmaz, E. (2021). Estimation of Fair Ranking Metrics with Incomplete Judgments. Proceedings of the Web Conference 2021.
-```textmate
-@article{Kirnap2021EstimationOF,
-  title={Estimation of Fair Ranking Metrics with Incomplete Judgments},
-  author={{\"O}mer Kirnap and Fernando Diaz and Asia J. Biega and Michael D. Ekstrand and Ben Carterette and Emine Yilmaz},
-  journal={Proceedings of the Web Conference 2021},
-  year={2021}
-}
-```
-[9] Biega, A.J., Gummadi, K.P., & Weikum, G. (2018). Equity of Attention: Amortizing Individual Fairness in Rankings. The 41st International ACM SIGIR Conference on Research & Development in Information Retrieval.
-```textmate
-@article{Biega2018EquityOA,
-  title={Equity of Attention: Amortizing Individual Fairness in Rankings},
-  author={Asia J. Biega and Krishna P. Gummadi and Gerhard Weikum},
-  journal={The 41st International ACM SIGIR Conference on Research \& Development in Information Retrieval},
-  year={2018}
-}
-```
+We can see that the EXP fairness score improved from running Epsilon-Greedy. For more usage examples please see the [documentation](https://kcachel.github.io/FairRankTune/Rankers/).
+
+## 📖 Examples
+
+
+| Topic | Link |
+| :--- | :---|
+| Quickstart | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/1_quickstart.ipynb) |
+| RankTune Overview | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/2_ranktune.ipynb) |
+| RankTune Augmenting Datasets | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/3_ranktune_augment.ipynb) |
+| Statistical Parity Metrics | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/4_statisticalparitymetrics.ipynb) |
+| Score-based (Group & Individual) Metrics | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/5_scorebasedmetrics.ipynb) |
+| Using Fair Ranking Algorithms| [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/5_scorebasedmetrics.ipynb) |
+
+
+## 📚 Documentation
+Check out the [documentation](https://kcachel.github.io/FairRankTune) for more details and example notebooks.
+
+
+## 🎓 Citation
+If you end up using [FairRankTune](https://github.com/KCachel/FairRankTune) in your work, please consider citing it:
+<details>
+  <summary>BibTeX</summary>
+  
+  ```bibtex
+  @misc{CachelFRT,
+    author    = {Kathleen Cachel},
+    title     = {FairRankTUne: A Python Library for Fair Ranking},
+    year = {2023},
+    publisher = {GitHub},
+    howpublished = {\url{https://github.com/KCachel/FairRankTune}}
+  }
+  ```
+</details>
+
+
+
+## ⁉️ Feature Requests
+We believe in open-source community driven software. Would you like to see other functionality implemented? Please, open a [feature request](https://github.com/KCachel/FairRankTune/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFeature+Request%5D+title). Is there a bug or issue ? Please, open a [github issue](https://github.com/KCachel/FairRankTune/issues/new).
+
+
+## 👋 Want to contribute?
+Would you like to contribute? Please, send me an [e-mail](mailto:kathleen.cachel@gmail.com?subject=[GitHub]%20fairranktune).
+
+
+## 📄 License
+[FairRankTune](https://github.com/KCachel/FairRankTune) is open-sourced software licensed under the [BSD-3-Clause](https://github.com/KCachel/FairRankTune/blob/main/LICENSE) license.
