@@ -20,8 +20,8 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Switch to dark mode
-      primary: purple
-      accent: lightblue 
+      primary: amber
+      accent: light blue 
     - scheme: slate 
       toggle:
         icon: material/weather-night

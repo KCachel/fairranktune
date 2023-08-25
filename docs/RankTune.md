@@ -120,7 +120,7 @@ from FairRankTune import RankTune, Metrics
 #Generate a biased (phi = 0.1) ranking
 item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W", Jill= "W", Jane= "W", Dave= "M", Nancy= "W", Nick= "M")
 r_cnt = 1 #Generate 1 ranking
-seed = 10 #For reproducability
+seed = 10 #For reproducibility
 phi = 0.1
 score_dist = "uniform"
 ranking_df, item_group_dict, score_df = frt.RankTune.ScoredGenFromItems(item_group_dict, phi, r_cnt, score_dist,seed)
