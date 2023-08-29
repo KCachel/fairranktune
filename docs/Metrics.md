@@ -5,13 +5,13 @@
 
 >What is group, individual, score-based, and or statistical parity fairness? 
 
-*Group Fairness*: Measures if groups of items are being treated similiarly. For example, we might want to know if groups are making it to the top of ranking(s).
+*Group Fairness*: Measures if groups of items are being treated similarly. For example, we might want to know if groups are making it to the top of ranking(s).
 
-*Individual Fairness*: Measures if similiar items are being treated similiarly. For example, we might want to know if items that are similiar are ranked in similiar positions in rankings.
+*Individual Fairness*: Measures if similar items are being treated similarly. For example, we might want to know if items that are similar are ranked in similar positions in rankings.
 
-*Score-based Fairness*: Measures if exposure (or attention, clicks, views etc.) are proportional to item relevance or group relevance. For example, in the form of individual fairness, we might want to know if items that are similiar received similiar amounts of exposure in rankings. Or for group fairness, we might want to know if groups are click-on proportional to their relevance.
+*Score-based Fairness*: Measures if exposure (or attention, clicks, views etc.) are proportional to item relevance or group relevance. For example, in the form of individual fairness, we might want to know if items that are similar received similar amounts of exposure in rankings. Or for group fairness, we might want to know if groups are click-on proportional to their relevance.
 
-*Statistical Parity Fairness*: A sub-tupe of *Group Fairness*, measures if groups receive a proportional share of the positive outcome; in ranking(s) the positive outcome can be the exposure or attention of the viewer or a share of top-ranked position. Statistical Parity is also known as Demographic Parity and explicitly does not use relevance scores. For example, we might want to know if groups receive comporable amounts of exposure.
+*Statistical Parity Fairness*: A sub-type of *Group Fairness*, measures if groups receive a proportional share of the positive outcome; in ranking(s) the positive outcome can be the exposure or attention of the viewer or a share of top-ranked position. Statistical Parity is also known as Demographic Parity and explicitly does not use relevance scores. For example, we might want to know if groups receive comparable amounts of exposure.
 
 | **Metric** | **Abbreviation** | **Fairness (Group or Individual)** | **Score-based** | **Statistical Parity** | **Reference** |
 |---|:---:|:---:|:---:|:---:|:---:|
@@ -75,7 +75,7 @@ The following metrics have meta-metric functionality: [EXP](#group-exposure-exp)
 
 All metric functions take as the inputted ```ranking_df``` parameter a [pandas dataframe](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html) of the ranking(s) to be evaluated. These rankings need not have the same number of items, and items can be represented as floats, ints, or strings.
 
-All group fairness metric functions take as the inputted ```item_group_dict``` parameter a [python dictionary](https://realpython.com/python-dicts/) of items and their group membership. Items are keys, and the value Trepresents the group of that item (ints or strings are equally fine). Note, that all group metrics supported in ```FairRankTune``` support multiple groups.
+All group fairness metric functions take as the inputted ```item_group_dict``` parameter a [python dictionary](https://realpython.com/python-dicts/) of items and their group membership. Items are keys, and the value represents the group of that item (ints or strings are equally fine). Note, that all group metrics supported in ```FairRankTune``` support multiple groups.
 
 
 ### Group Exposure (EXP)
@@ -141,7 +141,7 @@ series = {CIKM '20}
 
 ### Exposure Utility (EXPU)
 
-EXPU assesses if groups receive exposure proportional to their relevance in the ranking(s). This is a fotm of group fairness that considers the scores (relevances) associated with items. The per-group metric is the ratio of group average exposure and group average utility, whereby group average exposure is measured exactly as in [EXP](#group-exposure-exp). Group average utility for group $g_j$ is $avgutil(\tau,g_j) = \sum_{\forall x \in g_{j}}x_i^{util_{\tau}}/|g_{j}|$, where $x_i^{util_{\tau}}$ is the utility (or relevance score) for candidate $x_i$ in ranking $\tau$.  The range of EXPU and its "most fair" value depends on the [per-group aggregation](#modular-metric-implementation) ```combo``` variable. 
+EXPU assesses if groups receive exposure proportional to their relevance in the ranking(s). This is a form of group fairness that considers the scores (relevances) associated with items. The per-group metric is the ratio of group average exposure and group average utility, whereby group average exposure is measured exactly as in [EXP](#group-exposure-exp). Group average utility for group $g_j$ is $avgutil(\tau,g_j) = \sum_{\forall x \in g_{j}}x_i^{util_{\tau}}/|g_{j}|$, where $x_i^{util_{\tau}}$ is the utility (or relevance score) for candidate $x_i$ in ranking $\tau$.  The range of EXPU and its "most fair" value depends on the [per-group aggregation](#modular-metric-implementation) ```combo``` variable. 
 
 [Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) refer to EXPU as "Disparate Treatment", as pointed out by Raj et al. this terminology, is inconsistent with the use of these terms in the broader algorithmic fairness literature, thus ```FairRankTune``` uses the term "Exposure Utility" a introduced in [Raj et al.}(https://dl.acm.org/doi/10.1145/3477495.3532018).
 
@@ -224,7 +224,7 @@ whereby the attention score for item $x_i$ in ranking $\tau$ as $attention(\tau,
 Usage:
 ```python
 #Calculate AWRF with a MinMaxRatio
-p = .01 #paramater representing the proportion of attention received by the first postion
+p = .01 #parameter representing the proportion of attention received by the first postion
 AWRF, per_group = frt.Metrics.AWRF(ranking_df, item_group_dict, p, 'MinMaxRatio')
 ```
 The first returned object is a float specifying the AWRF value and the second returned object is a dictionary of average attention values for each group (keys are group ids).
