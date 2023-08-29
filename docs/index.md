@@ -31,10 +31,10 @@ For a in-depth overview, follow the [Examples](#📖-examples) section.
 
 ### 🎨 Fairness-Aware Ranked Data Generation
 
-```RankTune``` is a pseudo-stochastic data generation method for creating fairness-aware ranked lists using the fairness concept of statistical parity. Included in the ```RankTune``` module, it creates ranking(s) based on the ```phi``` representativeness parameter. When ```phi = 0``` then the generated ranked list(s) does not represent groups fairly, and as ```phi``` increases groups are represented more and more fairly; thus ```phi = 1``` groups are fairly represented. RankTune uses a [pseudo-random process](https://kcachel.github.io/fairranktune/RankTune/#how-does-it-work) to generate fairness-aware ranked data. RankTune can generate ranked data from [user provided group sizes](https://kcachel.github.io/fairranktune/RankTune/#using-group-sizes), from [existing datasets](https://kcachel.github.io/fairranktune/RankTune/#using-an-existing-dataset), along with [producing relevance scores](https://kcachel.github.io/fairranktune/RankTune/#generating-scores-with-the-ranking) accompanying the ranked list(s). 
+```RankTune``` is a pseudo-stochastic data generation method for creating fairness-aware ranked lists using the fairness concept of statistical parity. Included in the ```RankTune``` module, it creates ranking(s) based on the ```phi``` representativeness parameter. When ```phi = 0``` then the generated ranked list(s) does not represent groups fairly, and as ```phi``` increases groups are represented more and more fairly; thus ```phi = 1``` groups are fairly represented. RankTune uses a [pseudo-random process](https://kcachel.github.io/fairranktune/RankTune/#how-does-it-work) to generate fairness-aware ranked data. RankTune can generate ranked data from [user provided group sizes](https://kcachel.github.io/fairranktune/rankTune/#using-group-sizes), from [existing datasets](https://kcachel.github.io/fairranktune/rankTune/#using-an-existing-dataset), along with [producing relevance scores](https://kcachel.github.io/fairranktune/rankTune/#generating-scores-with-the-ranking) accompanying the ranked list(s). 
 
 
-Please refer to the [documentation](https://kcachel.github.io/fairranktune/RankTune/) for additional information. 
+Please refer to the [documentation](https://kcachel.github.io/fairranktune/rankTune/) for additional information. 
 
 ### 📏 Metrics
 
@@ -58,7 +58,7 @@ Please refer to the [Metrics documentation](https://kcachel.github.io/fairranktu
 
 ### ⚖️ Fair Ranking Methods
 
-```FairRankTune``` provides several [fair ranking algorithms](https://kcachel.github.io/fairranktune/Rankers/#supported-fair-ranking-algorithms) in the ```Rankers``` module. The [DetConstSort](https://kcachel.github.io/fairranktune/Rankers/#detconstsort-re-ranker) and [Epsilon-Greedy](https://kcachel.github.io/fairranktune/Rankers/#epsilon-greedy-re-ranker) fair ranking algorithms can be used to re-rank a given ranking with the objective of making the resulting ranking fair. 
+```FairRankTune``` provides several [fair ranking algorithms](https://kcachel.github.io/fairranktune/rankers/#supported-fair-ranking-algorithms) in the ```Rankers``` module. The [DetConstSort](https://kcachel.github.io/fairranktune/rankers/#detconstsort-re-ranker) and [Epsilon-Greedy](https://kcachel.github.io/fairranktune/rankers/#epsilon-greedy-re-ranker) fair ranking algorithms can be used to re-rank a given ranking with the objective of making the resulting ranking fair. 
 
 Please refer to the [documentation](https://kcachel.github.io/fairranktune/metrics/) for further details. 
 
