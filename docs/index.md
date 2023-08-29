@@ -31,10 +31,10 @@ For a in-depth overview, follow the [Examples](#📖-examples) section.
 
 ### 🎨 Fairness-Aware Ranked Data Generation
 
-```RankTune``` is a pseudo-stochastic data generation method for creating fairness-aware ranked lists using the fairness concept of statistical parity. Included in the ```RankTune``` module, it creates ranking(s) based on the ```phi``` representativeness parameter. When ```phi = 0``` then the generated ranked list(s) does not represent groups fairly, and as ```phi``` increases groups are represented more and more fairly; thus ```phi = 1``` groups are fairly represented. RankTune uses a [pseudo-random process](https://kcachel.github.io/fairranktune/RankTune/#how-does-it-work) to generate fairness-aware ranked data. RankTune can generate ranked data from [user provided group sizes](https://kcachel.github.io/fairranktune/rankTune/#using-group-sizes), from [existing datasets](https://kcachel.github.io/fairranktune/rankTune/#using-an-existing-dataset), along with [producing relevance scores](https://kcachel.github.io/fairranktune/rankTune/#generating-scores-with-the-ranking) accompanying the ranked list(s). 
+```RankTune``` is a pseudo-stochastic data generation method for creating fairness-aware ranked lists using the fairness concept of statistical parity. Included in the ```RankTune``` module, it creates ranking(s) based on the ```phi``` representativeness parameter. When ```phi = 0``` then the generated ranked list(s) does not represent groups fairly, and as ```phi``` increases groups are represented more and more fairly; thus ```phi = 1``` groups are fairly represented. RankTune uses a [pseudo-random process](https://kcachel.github.io/fairranktune/ranktune/#how-does-it-work) to generate fairness-aware ranked data. RankTune can generate ranked data from [user provided group sizes](https://kcachel.github.io/fairranktune/ranktune/#using-group-sizes), from [existing datasets](https://kcachel.github.io/fairranktune/rankTune/#using-an-existing-dataset), along with [producing relevance scores](https://kcachel.github.io/fairranktune/ranktune/#generating-scores-with-the-ranking) accompanying the ranked list(s). 
 
 
-Please refer to the [documentation](https://kcachel.github.io/fairranktune/rankTune/) for additional information. 
+Please refer to the [documentation](https://kcachel.github.io/fairranktune/ranktune/) for additional information. 
 
 ### 📏 Metrics
 
@@ -192,7 +192,7 @@ Output:
 EXP before Epsilon-Greedy:  0.5420744267551784 avg_exposures before Epsilon-Greedy:  {0: 0.2093867087428094, 1: 0.11350318011191189}
 EXP after Epsilon-Greedy:  0.7689042373241246 avg_exposures after Epsilon-Greedy:  {0: 0.15541589156986096, 1: 0.1194999375755728}
 ```
-We can see that the EXP fairness score improved from running Epsilon-Greedy. For more usage examples please see the [documentation](https://kcachel.github.io/fairranktune/Rankers/).
+We can see that the EXP fairness score improved from running Epsilon-Greedy. For more usage examples please see the [documentation](https://kcachel.github.io/fairranktune/rankers/).
 
 ## 📖 Examples
 

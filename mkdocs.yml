@@ -62,7 +62,7 @@ extra_javascript:
 
 nav:
   - 'index.md'
-  - 'rankTune.md'
+  - 'ranktune.md'
   - 'metrics.md'
   - 'rankers.md'
   - 'examples.md'
