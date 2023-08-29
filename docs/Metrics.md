@@ -237,7 +237,7 @@ Citation:
 ```bibtex
 @inproceedings{10.1145/3308560.3317595,
 author = {Sapiezynski, Piotr and Zeng, Wesley and E Robertson, Ronald and Mislove, Alan and Wilson, Christo},
-title = {Quantifying the Impact of User Attentionon Fair Group Representation in Ranked Lists},
+title = {Quantifying the Impact of User Attention on Fair Group Representation in Ranked Lists},
 year = {2019},
 isbn = {9781450366755},
 publisher = {Association for Computing Machinery},

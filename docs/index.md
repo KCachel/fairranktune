@@ -43,24 +43,24 @@ Please refer to the [documentation](https://kcachel.github.io/fairranktune/RankT
 
 | **Metric** | **Abbreviation** | **Fairness (Group or Individual)** | **Score-based** | **Statistical Parity** | **Reference** |
 |---|:---:|:---:|:---:|:---:|:---:|
-| [Group Exposure](https://kcachel.github.io/fairranktune/Metrics/#group-exposure-exp) | EXP | Group | No | Yes | [Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) |
-| [Exposure Utility](https://kcachel.github.io/fairranktune/Metrics/#exposure-realized-utility-expru) | EXPU | Group | Yes | No | [Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) |
-| [Exposure Realized Utility](https://kcachel.github.io/fairranktune/Metrics/#exposure-realized-utility-expru) | EXPRU | Group | Yes | No |[Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088)|
-| [Attention Weighted Rank Fairness](https://kcachel.github.io/fairranktune/Metrics/#attention-weighted-rank-fairness-awrf) | AWRF | Group | No | Yes |[Sapiezynski et al.](https://dl.acm.org/doi/10.1145/3308560.3317595)  |
-| [Exposure Rank Biased Precision Equality](https://kcachel.github.io/fairranktune/Metrics/#exposure-rank-biased-precision-equality-erbe) | ERBE | Group | No | No | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080)  |
-| [Exposure Rank Biased Precision Proportionality](https://kcachel.github.io/fairranktune/Metrics/#exposue-rank-biased-precision-proportionality-erbp) | ERBP | Group | No | Yes | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080) |
-| [Exposure Rank Biased Precision Proportional to Relevance](https://kcachel.github.io/fairranktune/Metrics/#exposure-rank-biased-precision-proportional-to-relevance-erbr) | ERBR | Group | Yes | No | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080) |
-| [Attribute Rank Parity](https://kcachel.github.io/fairranktune/Metrics/#attribute-rank-parity-arp) | ARP | Group | No | Yes | [Cachel et al.](https://ieeexplore.ieee.org/document/9835646) |
-| [Normalized Discounted KL-Divergence](https://kcachel.github.io/fairranktune/Metrics/#normalized-discounted-kl-divergence-ndkl) | NDKL | Group | No | Yes |[Geyik et al.](https://dl.acm.org/doi/10.1145/3292500.3330691)  |
-| [Inequity of Amortized Attention](https://kcachel.github.io/FairRankTune/Metrics/#inequity-of-amortized-attention-iaa) | IAA | Individual | Yes | No | [Biega et al.](https://dl.acm.org/doi/10.1145/3209978.3210063)  |
+| [Group Exposure](https://kcachel.github.io/fairranktune/metrics/#group-exposure-exp) | EXP | Group | No | Yes | [Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) |
+| [Exposure Utility](https://kcachel.github.io/fairranktune/metrics/#exposure-realized-utility-expru) | EXPU | Group | Yes | No | [Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) |
+| [Exposure Realized Utility](https://kcachel.github.io/fairranktune/metrics/#exposure-realized-utility-expru) | EXPRU | Group | Yes | No |[Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088)|
+| [Attention Weighted Rank Fairness](https://kcachel.github.io/fairranktune/metrics/#attention-weighted-rank-fairness-awrf) | AWRF | Group | No | Yes |[Sapiezynski et al.](https://dl.acm.org/doi/10.1145/3308560.3317595)  |
+| [Exposure Rank Biased Precision Equality](https://kcachel.github.io/fairranktune/metrics/#exposure-rank-biased-precision-equality-erbe) | ERBE | Group | No | No | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080)  |
+| [Exposure Rank Biased Precision Proportionality](https://kcachel.github.io/fairranktune/metrics/#exposue-rank-biased-precision-proportionality-erbp) | ERBP | Group | No | Yes | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080) |
+| [Exposure Rank Biased Precision Proportional to Relevance](https://kcachel.github.io/fairranktune/metrics/#exposure-rank-biased-precision-proportional-to-relevance-erbr) | ERBR | Group | Yes | No | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080) |
+| [Attribute Rank Parity](https://kcachel.github.io/fairranktune/metrics/#attribute-rank-parity-arp) | ARP | Group | No | Yes | [Cachel et al.](https://ieeexplore.ieee.org/document/9835646) |
+| [Normalized Discounted KL-Divergence](https://kcachel.github.io/fairranktune/metrics/#normalized-discounted-kl-divergence-ndkl) | NDKL | Group | No | Yes |[Geyik et al.](https://dl.acm.org/doi/10.1145/3292500.3330691)  |
+| [Inequity of Amortized Attention](https://kcachel.github.io/FairRankTune/metrics/#inequity-of-amortized-attention-iaa) | IAA | Individual | Yes | No | [Biega et al.](https://dl.acm.org/doi/10.1145/3209978.3210063)  |
 
-Please refer to the [Metrics documentation](https://kcachel.github.io/fairranktune/Metrics/) for further details. 
+Please refer to the [Metrics documentation](https://kcachel.github.io/fairranktune/metrics/) for further details. 
 
 ### ⚖️ Fair Ranking Methods
 
 ```FairRankTune``` provides several [fair ranking algorithms](https://kcachel.github.io/fairranktune/Rankers/#supported-fair-ranking-algorithms) in the ```Rankers``` module. The [DetConstSort](https://kcachel.github.io/fairranktune/Rankers/#detconstsort-re-ranker) and [Epsilon-Greedy](https://kcachel.github.io/fairranktune/Rankers/#epsilon-greedy-re-ranker) fair ranking algorithms can be used to re-rank a given ranking with the objective of making the resulting ranking fair. 
 
-Please refer to the [documentation](https://kcachel.github.io/fairranktune/Metrics/) for further details. 
+Please refer to the [documentation](https://kcachel.github.io/fairranktune/metrics/) for further details. 
 
 ## 🔌 Requirements
 ```bash
