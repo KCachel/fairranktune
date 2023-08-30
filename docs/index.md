@@ -83,28 +83,33 @@ pip install FairRankTune
 
 ```RankTune``` can be used to generate ranking(s) from ```group_proportions```, a numpy array with each group's proportion of the total items,```num_items```, by using the ```GenFromGroups()``` function.
 
-```python title="GenFromGroups() function" hl_lines="12"
+```python title="GenFromGroups() function" hl_lines="13-14"
 import FairRankTune as frt
 import numpy as np
 import pandas as pd
 from FairRankTune import RankTune, Metrics
 
-#Generate a biased (phi = 0.1) ranking of 1000 items, with four groups of 100, 200, 300, and 400 items each.
+#Generate a biased (phi = 0.1) ranking of 1000 items, with four groups of 100,
+# 200, 300, and 400 items each.
 group_proportions = np.asarray([.1, .2, .3, .4]) #Array of group proportions
 num_items = 1000 #1000 items to be in the generated ranking
 phi = 0.1
 r_cnt = 1 #Generate 1 ranking
 seed = 10 #For reproducibility
-ranking_df, item_group_dict = frt.RankTune.GenFromGroups(group_proportions, num_items, phi, r_cnt, seed)
+ranking_df, item_group_dict = frt.RankTune.GenFromGroups(group_proportions, 
+  num_items,phi, r_cnt, seed)
 
 #Calculate EXP with a MinMaxRatio
-EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
-print("EXP of generated ranking: ", EXP_minmax, "avg_exposures: ", avg_exposures_minmax)
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict,
+  'MinMaxRatio')
+print("EXP of generated ranking: ", EXP_minmax, "avg_exposures: ",
+  avg_exposures_minmax)
 ```
 
 Output:
 ```python
-EXP of generated ranking:  0.511665941043515 avg_exposures:  {0: 0.20498798214669187, 1: 0.13126425437156242, 2: 0.11461912123646827, 3: 0.10488536878769836}
+EXP of generated ranking:  0.511665941043515
+ avg_exposures:  {0: 0.20498798214669187, 1: 0.13126425437156242, 2: 0.11461912123646827, 3: 0.10488536878769836}
 ```
 Can confirm this is an unfair ranking by the low EXP value.
 
@@ -112,22 +117,26 @@ Can confirm this is an unfair ranking by the low EXP value.
 ```RankTune``` can be used to generate ranking(s) from ```item_group_dict```, a dictionary of items where the keys are each item's group by using the ```GenFromItems()``` function.
 
 
-```python title="GenFromItems() function" hl_lines="11"
+```python title="GenFromItems() function" hl_lines="12-13"
 import FairRankTune as frt
 import numpy as np
 import pandas as pd
 from FairRankTune import RankTune, Metrics
 
 #Generate a biased (phi = 0.1) ranking
-item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W", Jill= "W", Jane= "W", Dave= "M", Nancy= "W", Nick= "M")
+item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W",
+  Amy = "W", Jill= "W", Jane= "W", Dave= "M", Nancy= "W", Nick= "M")
 phi = 0.1
 r_cnt = 1 #Generate 1 ranking
 seed = 10 #For reproducibility
-ranking_df, item_group_dict = frt.RankTune.GenFromItems(item_group_dict, phi, r_cnt, seed)
+ranking_df, item_group_dict = frt.RankTune.GenFromItems(item_group_dict, phi,
+  r_cnt, seed)
 
 #Calculate EXP with a MinMaxRatio
-EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
-print("EXP of generated ranking: ", EXP_minmax, "avg_exposures: ", avg_exposures_minmax)
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, 
+  item_group_dict, 'MinMaxRatio')
+print("EXP of generated ranking: ", EXP_minmax, 
+  "avg_exposures: ", avg_exposures_minmax)
 ```
 
 Output:
@@ -143,11 +152,13 @@ For further detail on how to use ```RankTune``` to generate relevance scores see
 import FairRankTune as frt
 import pandas as pd
 import numpy as np
-ranking_df = pd.DataFrame(["Joe", "Jack", "Nick", "David", "Mark", "Josh", "Dave",
-                          "Bella", "Heidi", "Amy"])
-item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W", Mark= "M", Josh= "M", Dave= "M", Jack= "M", Nick= "M")
+ranking_df = pd.DataFrame(["Joe", "Jack", "Nick", "David",
+  "Mark", "Josh", "Dave", "Bella", "Heidi", "Amy"])
+item_group_dict = dict(Joe= "M",  David= "M", Bella= "W",
+  Heidi= "W", Amy = "W", Mark= "M", Josh= "M", Dave= "M", Jack= "M", Nick= "M")
 #Calculate EXP with a MaxMinDiff
-EXP, avg_exposures = frt.Metrics.EXP(ranking_df, item_group_dict, 'MaxMinDiff')
+EXP, avg_exposures = frt.Metrics.EXP(ranking_df, item_group_dict,
+  'MaxMinDiff')
 print("EXP: ", EXP, "avg_exposures: ", avg_exposures)
 ```
 Output:
@@ -165,26 +176,33 @@ import pandas as pd
 from FairRankTune import RankTune, Metrics
 import random
 
-#Generate a biased (phi = 0) ranking of 1000 items, with two groups of 100 and 900 items each.
+#Generate a biased (phi = 0) ranking of 1000 items, with two groups of 
+#100 and 900 items each.
 group_proportions = np.asarray([.1, .9]) #Array of group proportions
 num_items = 1000 #1000 items to be in the generated ranking
 phi = 0 #Biased ranking
 r_cnt = 1 #Generate 1 ranking
-ranking_df, item_group_dict, scores_df = frt.RankTune.ScoredGenFromGroups(group_proportions,  num_items, phi, r_cnt, 'uniform', seed)
+ranking_df, item_group_dict, scores_df = frt.RankTune.ScoredGenFromGroups(
+  group_proportions, num_items, phi, r_cnt, 'uniform', seed)
 
 #Calculate EXP with a MinMaxRatio
-EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
-print("EXP before Epsilon-Greedy: ", EXP_minmax, "avg_exposures before Epsilon-Greedy: ", avg_exposures_minmax)
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, 
+  item_group_dict, 'MinMaxRatio')
+print("EXP before Epsilon-Greedy: ", EXP_minmax,
+  "avg_exposures before Epsilon-Greedy: ", avg_exposures_minmax)
 
 
 #Rerank using Epsilon-Greedy
 seed = 2 #For reproducibility
 epsilon = .6 
-reranking_df, item_group_d, reranking_scores = frt.Rankers.EPSILONGREEDY(ranking_df, item_group_dict, scores_df, epsilon, seed)
+reranking_df, item_group_d, reranking_scores = frt.Rankers.EPSILONGREEDY(
+  ranking_df, item_group_dict, scores_df, epsilon, seed)
 
 #Calculate EXP with a MinMaxRatio post Epsilon-Greedy
-EXP, avg_exposures= frt.Metrics.EXP(reranking_df, item_group_d, 'MinMaxRatio')
-print("EXP after Epsilon-Greedy: ", EXP, "avg_exposures after Epsilon-Greedy: ", avg_exposures)
+EXP, avg_exposures= frt.Metrics.EXP(reranking_df, item_group_d,
+  'MinMaxRatio')
+print("EXP after Epsilon-Greedy: ", EXP,
+  "avg_exposures after Epsilon-Greedy: ", avg_exposures)
 ```
 
 Output:

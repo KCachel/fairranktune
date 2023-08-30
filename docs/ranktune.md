@@ -11,23 +11,27 @@ RankTune can be utilized through four function interfaces.
 ```RankTune``` can be used to generate ranking(s) from ```group_proportions```, a numpy array with each group's proportion of the total items,```num_items```, by using the ```GenFromGroups()``` function.
 
 Usage:
-```python title="GenFromGroups() function" hl_lines="12"
+```python title="GenFromGroups() function" hl_lines="13-14"
 import FairRankTune as frt
 import numpy as np
 import pandas as pd
 from FairRankTune import RankTune, Metrics
 
-#Generate a biased (phi = 0.1) ranking of 1000 items, with four groups of 100, 200, 300, and 400 items each.
+#Generate a biased (phi = 0.1) ranking of 1000 items, with four groups of 100,
+# 200, 300, and 400 items each.
 group_proportions = np.asarray([.1, .2, .3, .4]) #Array of group proportions
 num_items = 1000 #1000 items to be in the generated ranking
 phi = 0.1
 r_cnt = 1 #Generate 1 ranking
-seed = 10 #For reproducability
-ranking_df, item_group_dict = frt.RankTune.GenFromGroups(group_proportions, num_items, phi, r_cnt, seed)
+seed = 10 #For reproducibility
+ranking_df, item_group_dict = frt.RankTune.GenFromGroups(group_proportions,
+    num_items, phi, r_cnt, seed)
 
 #Calculate EXP with a MinMaxRatio
-EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
-print("EXP of generated ranking: ", EXP_minmax, "avg_exposures: ", avg_exposures_minmax)
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df,
+    item_group_dict, 'MinMaxRatio')
+print("EXP of generated ranking: ", EXP_minmax,
+    "avg_exposures: ", avg_exposures_minmax)
 ```
 
 Output:
@@ -41,23 +45,27 @@ Can confirm this is an unfair ranking by the low EXP value.
 ```RankTune``` can be used to generate ranking(s) from ```item_group_dict```, a dictionary of items where the keys are each item's group by using the ```GenFromItems()``` function.
 
 Usage:
-```python title="GenFromItems() function" hl_lines="11"
+```python title="GenFromItems() function" hl_lines="12-13"
 import FairRankTune as frt
 import numpy as np
 import pandas as pd
 from FairRankTune import RankTune, Metrics
 
 #Generate a biased (phi = 0.1) ranking
-item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W", Jill= "W", Jane= "W", Dave= "M", Nancy= "W", Nick= "M")
+item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W",
+    Jill= "W", Jane= "W", Dave= "M", Nancy= "W", Nick= "M")
 phi = 0.1
 r_cnt = 1 #Generate 1 ranking
-seed = 10 #For reproducability
-ranking_df, item_group_dict = frt.RankTune.GenFromItems(item_group_dict, phi, r_cnt, seed)
+seed = 10 #For reproducibility
+ranking_df, item_group_dict = frt.RankTune.GenFromItems(item_group_dict,
+    phi, r_cnt, seed)
 
 #Calculate EXP with a MinMaxRatio
-EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df,
+    item_group_dict, 'MinMaxRatio')
 print("Generated ranking: ", ranking_df)
-print("EXP of generated ranking: ", EXP_minmax, "avg_exposures: ", avg_exposures_minmax)
+print("EXP of generated ranking: ", EXP_minmax,
+    "avg_exposures: ", avg_exposures_minmax)
 ```
 
 Output:
@@ -84,24 +92,28 @@ Both ```GenFromGroups()``` and ```GenFromItems()``` contain sibling functions; r
 
 For generating from group proportions use ```ScoredGenFromGroups()``` as follows:
 
-```python title="ScoredGenFromGroups() function" hl_lines="13"
+```python title="ScoredGenFromGroups() function" hl_lines="14-15"
 import FairRankTune as frt
 import numpy as np
 import pandas as pd
 from FairRankTune import RankTune, Metrics
 
-#Generate a biased (phi = 0.1) ranking of 1000 items, with four groups of 100, 200, 300, and 400 items each.
+#Generate a biased (phi = 0.1) ranking of 1000 items, with four groups of 100, 
+# 200, 300, and 400 items each.
 group_proportions = np.asarray([.1, .2, .3, .4]) #Array of group proportions
 num_items = 1000 #1000 items to be in the generated ranking
 phi = 0.1
 r_cnt = 1 #Generate 1 ranking
-seed = 11 #For reproducability
+seed = 11 #For reproducibility
 score_dist = "uniform"
-ranking_df, item_group_dict, scores_df = frt.RankTune.ScoredGenFromGroups(group_proportions, num_items, phi, r_cnt, score_dist, seed)
+ranking_df, item_group_dict, scores_df = frt.RankTune.ScoredGenFromGroups(group_proportions,
+    num_items, phi, r_cnt, score_dist, seed)
 
 #Calculate EXP with a MinMaxRatio
-EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
-print("EXP of generated ranking: ", EXP_minmax, "avg_exposures: ", avg_exposures_minmax)
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df,
+    item_group_dict, 'MinMaxRatio')
+print("EXP of generated ranking: ", EXP_minmax,
+    "avg_exposures: ", avg_exposures_minmax)
 ```
 
 
@@ -113,25 +125,29 @@ EXP of generated ranking:  0.5218433930014378 avg_exposures:  {0: 0.202122214566
 For generating from existing items use ```ScoredGenFromItems()``` as follows:
 
 
-```python title="ScoredGenFromGroups() function" hl_lines="12"
+```python title="ScoredGenFromGroups() function" hl_lines="13-14"
 import FairRankTune as frt
 import numpy as np
 import pandas as pd
 from FairRankTune import RankTune, Metrics
 
 #Generate a biased (phi = 0.1) ranking
-item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W", Jill= "W", Jane= "W", Dave= "M", Nancy= "W", Nick= "M")
+item_group_dict = dict(Joe= "M",  David= "M", Bella= "W", Heidi= "W", Amy = "W",
+    Jill= "W", Jane= "W", Dave= "M", Nancy= "W", Nick= "M")
 r_cnt = 1 #Generate 1 ranking
 seed = 10 #For reproducibility
 phi = 0.1
 score_dist = "uniform"
-ranking_df, item_group_dict, score_df = frt.RankTune.ScoredGenFromItems(item_group_dict, phi, r_cnt, score_dist,seed)
+ranking_df, item_group_dict, score_df = frt.RankTune.ScoredGenFromItems(item_group_dict,
+    phi, r_cnt, score_dist,seed)
 
 #Calculate EXP with a MinMaxRatio
-EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df,
+    item_group_dict, 'MinMaxRatio')
 print("Generated ranking: ", ranking_df)
 print("Generated scores: ", score_df)
-print("EXP of generated ranking: ", EXP_minmax, "avg_exposures: ", avg_exposures_minmax)
+print("EXP of generated ranking: ", EXP_minmax,
+    "avg_exposures: ", avg_exposures_minmax)
 ```
 
 Output:

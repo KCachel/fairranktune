@@ -49,17 +49,18 @@ Usage:
 
 ```python
 from FairRankTune import RankTune, Metrics
-import random
-random.seed(10)
 
-#Generate a biased (phi = 0) ranking of 1000 items, with two groups of 100 and 900 items each. 
-ranking_df, item_group_dict = frt.RankTune.GenFromGroups(np.asarray([.1, .9]),  1000, 0, 1)
-
+#Generate a biased (phi = 0) ranking of 1000 items, with two groups of 100
+#and 900 items each. 
+ranking_df, item_group_dict = frt.RankTune.GenFromGroups(np.asarray([.1, .9]),
+  1000, 0, 1)
 #Calculate EXP with a MinMaxRatio
-EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
+EXP_minmax, avg_exposures_minmax = frt.Metrics.EXP(ranking_df,
+  item_group_dict, 'MinMaxRatio')
 print("EXP_minmax: ", EXP_minmax, "avg_exposures: ", avg_exposures)
 #Calculate EXP with a MaxAbsDiff
-EXP_maxabs, avg_exposures_maxabs = frt.Metrics.EXP(ranking_df, item_group_dict, 'MaxAbsDiff')
+EXP_maxabs, avg_exposures_maxabs = frt.Metrics.EXP(ranking_df,
+  item_group_dict, 'MaxAbsDiff')
 print("EXP_maxabs: ", EXP_maxabs, "avg_exposures: ", avg_exposures)
 ```
 Outputs:
@@ -85,7 +86,8 @@ Usage:
 
 ```python
 #Calculate EXP with a MinMaxRatio
-EXP_minmax, avg_exposures = frt.Metrics.EXP(ranking_df, item_group_dict, 'MinMaxRatio')
+EXP_minmax, avg_exposures = frt.Metrics.EXP(ranking_df,
+  item_group_dict, 'MinMaxRatio')
 ```
 The first returned object is float specifying the EXP value and the second returned object is a dictionary of average exposures for each group (keys are group ids).
 
@@ -150,7 +152,8 @@ Usage:
 
 ```python
 #Calculate EXPU with a MinMaxRatio
-EXPU, per_group = frt.Metrics.EXPU(ranking_df, item_group_dict, relevance_df, 'MinMaxRatio')
+EXPU, per_group = frt.Metrics.EXPU(ranking_df, item_group_dict,
+  relevance_df, 'MinMaxRatio')
 ```
 Note that the relevance scores associated with the ranking(s) in ```relevance_df``` must be between 0 and 1. The first returned object is a float specifying the EXPU value and the second returned object is a dictionary of average exposure and average utility ratios for each group (keys are group ids).
 
@@ -187,7 +190,8 @@ EXPRU assesses if groups are click-on proportional to their relevance in the ran
 Usage:
 ```python
 #Calculate EXPRU with a MinMaxRatio
-EXPRU, per_group = frt.Metrics.EXPRU(ranking_df, item_group_dict, relevance_df, ctr_df,'MinMaxRatio')
+EXPRU, per_group = frt.Metrics.EXPRU(ranking_df, item_group_dict,
+  relevance_df, ctr_df,'MinMaxRatio')
 ```
 Note that the relevance scores associated with the ranking(s) in ```relevance_df``` must be between 0 and 1 and the click-through-rates in ```ctr_df``` must be between 0 (no clicks) or 1 (100% ctr). The first returned object is a float specifying the EXPRU value and the second returned object is a dictionary of  average utility and average click-through rate ratios for each group (keys are group ids).
 
@@ -224,7 +228,8 @@ whereby the attention score for item $x_i$ in ranking $\tau$ as $attention(\tau,
 Usage:
 ```python
 #Calculate AWRF with a MinMaxRatio
-p = .01 #parameter representing the proportion of attention received by the first postion
+p = .01 #parameter representing the proportion of attention...
+# received by the first position
 AWRF, per_group = frt.Metrics.AWRF(ranking_df, item_group_dict, p, 'MinMaxRatio')
 ```
 The first returned object is a float specifying the AWRF value and the second returned object is a dictionary of average attention values for each group (keys are group ids).
@@ -261,8 +266,10 @@ ERBE assesses if groups receive equal exposure whereby exposure is based on the 
 Usage:
 ```python
 #Calculate ERBE with a MinMaxRatio
-decay = .01 #paramater representing gamma which controls the importance of higher ranks
-ERBE, per_group = frt.Metrics.ERBE(ranking_df, item_group_dict, decay, 'MinMaxRatio')
+decay = .01 #parameter representing gamma which...
+#controls the importance of higher ranks
+ERBE, per_group = frt.Metrics.ERBE(ranking_df, item_group_dict,
+  decay, 'MinMaxRatio')
 ```
 The first returned object is a float specifying the ERBE value and the second returned object is a dictionary of total exposure values for each group (keys are group ids).
 
@@ -298,8 +305,10 @@ ERBP assesses if groups receive exposure proportional to their size whereby expo
 Usage:
 ```python
 #Calculate ERBP with a MinMaxRatio
-decay = .01 #paramater representing gamma which controls the importance of higher ranks
-ERBP, per_group = frt.Metrics.ERBP(ranking_df, item_group_dict, decay, 'MinMaxRatio')
+decay = .01 #parameter representing gamma which...
+#controls the importance of higher ranks
+ERBP, per_group = frt.Metrics.ERBP(ranking_df, item_group_dict,
+  decay, 'MinMaxRatio')
 ```
 The first returned object is a float specifying the ERBP value and the second returned object is a dictionary of average exposure values for each group (keys are group ids).
 Citation:
@@ -333,8 +342,10 @@ ERBR assesses if groups receive exposure proportional to how many relevant items
 Usage:
 ```python
 #Calculate ERBR with a MinMaxRatio
-decay = .01 #paramater representing gamma which controls the importance of higher ranks
-ERBR, per_group = frt.Metrics.ERBP(ranking_df, item_group_dict, relevance_df, decay, 'MinMaxRatio')
+decay = .01 #parameter representing gamma which...
+#controls the importance of higher ranks
+ERBR, per_group = frt.Metrics.ERBP(ranking_df, item_group_dict,
+  relevance_df, decay, 'MinMaxRatio')
 ```
 Note that the relevance scores associated with the ranking(s) in ```relevance_df``` must be either 0 or 1. The first returned object is float specifying the ERBR value and the second returned object is a dictionary of exposure and relevance ratios for each group (keys are group ids).
 
@@ -369,8 +380,7 @@ ARP compares the number of mixed pairs won by groups in the ranking(s) and does 
 Usage:
 ```python
 #Calculate ARP with a MaxAbsDiff
-decay = .01 #paramater representing gamma which controls the importance of higher ranks
-ARP, per_group = frt.Metrics.ARP(ranking_df, item_group_dict,  'MaxAbsDiff')
+ARP, per_group = frt.Metrics.ARP(ranking_df, item_group_dict, 'MaxAbsDiff')
 ```
 
 The first returned object is a float specifying the ARP value and the second returned object is a dictionary of FPR scores (average count of won mixed pairs) for each group (keys are group ids).
@@ -431,7 +441,7 @@ series = {KDD '19}
 
 ### Inequity of Amortized Attention (IAA)
 
-IAA assess if a series of rankings is individually fair; meaning items are given attention similiar to their relevance. IAA measures the difference, via the $L_1$ norm between the cumulative attention and cumulative relevance of items in the rankings. Whereby the attention of an item $x_i$ in ranking $\tau$ is $attention(\tau,x_i) = 1 / log_2(\tau(x_i)+1))$ and the relevance of an item is a $[0 - 1]$-normalized score. IAA is ranges from 0 to $\infty$, and is most fair at 0.
+IAA assess if a series of rankings is individually fair; meaning items are given attention similiar to their relevance. IAA measures the difference, via the $L_1$ norm between the cumulative attention and cumulative relevance of items in the rankings. Whereby the attention of an item $x_i$ in ranking $\tau$ is $attention(\tau,x_i) = 1 / log_2(\tau(x_i)+1))$ and the relevance of an item is a [0-1]-normalized score. IAA is ranges from 0 to $\infty$, and is most fair at 0.
 
 Usage:
 ```python
