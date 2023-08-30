@@ -3,6 +3,11 @@
 ## Overview
 RankTune is a pseudo-stochastic data generation method for creating fairness-aware ranked lists using the fairness concept of statistical parity. Included in the ```RankTune``` module, it creates ranking(s) based on the ```phi``` representativeness parameter. When ```phi = 0``` then the generated ranked list(s) does not represent groups fairly, and as ```phi``` increases groups are represented more and more fairly; thus ```phi = 1``` groups are fairly represented. RankTune uses a [pseudo-random process](#how-does-it-work) to generate fairness-aware ranked data. RankTune can generate ranked data from [user provided group sizes](#using-group-sizes), from [existing datasets](#using-an-existing-dataset), along with [producing relevance scores](#generating-scores-with-the-ranking) accompanying the ranked list(s). 
 
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/KCachel/fairranktune/main/.github/images/ci_multi_distributions.png">
+</div>
+
 ## Usage
 RankTune can be utilized through four function interfaces.
 ### Using Group Sizes
