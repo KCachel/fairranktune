@@ -81,7 +81,7 @@ pip install FairRankTune
 ### 🎨 Fairness-Aware Ranked Data Generation
 
 
-```RankTune``` can be used to generate ranking(s) from ```group_proportions```, a numpy array with each group's proportion of the total items,```num_items```, by using the ```GenFromGroups()``` function.
+```RankTune``` can be used to generate ranking(s) from ```group_proportions```, a numpy array with each group's proportion of the total items, ```num_items```, by using the ```GenFromGroups()``` function.
 
 ```python title="GenFromGroups() function" hl_lines="13-14"
 import FairRankTune as frt
@@ -148,7 +148,9 @@ We can confirm this is a biased ranking base don the low EXP score and large dif
 For further detail on how to use ```RankTune``` to generate relevance scores see the [RankTune documentation](https://kcachel.github.io/fairranktune/RankTune/).
 
 ### 📏 Metrics
-```python
+The ```Metric``` library can be used to assess the fairness of rankings. Our current offering contains 10 core metrics across individual and group fairness.  Group fairness metrics include both metrics that incorporate relevance scores associated with items, so-called score-based fairness, and statistical parity metrics that are based on the representation of groups. A key functionality of the  ```Metrics``` library in ```FairRankTune```  is providing toolkit users [multiple choices](https://kcachel.github.io/fairranktune/metrics/#modular-metric-implementation) for how to calculate a given top-level fairness metric. For instance, for group exposure,  a popular fairness criteria,  ```Metrics``` offers seven ways of calculating a top-level exposure metric (e.g., min-max ratios, max absolute difference, L-2 norms of per-group exposures, etc.).
+
+```python title="Calculate Group Exposure EXP with MaxMinDiff" hl_lines="9-10"
 import FairRankTune as frt
 import pandas as pd
 import numpy as np
