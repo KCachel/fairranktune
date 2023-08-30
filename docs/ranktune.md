@@ -4,9 +4,6 @@
 RankTune is a pseudo-stochastic data generation method for creating fairness-aware ranked lists using the fairness concept of statistical parity. Included in the ```RankTune``` module, it creates ranking(s) based on the ```phi``` representativeness parameter. When ```phi = 0``` then the generated ranked list(s) does not represent groups fairly, and as ```phi``` increases groups are represented more and more fairly; thus ```phi = 1``` groups are fairly represented. RankTune uses a [pseudo-random process](#how-does-it-work) to generate fairness-aware ranked data. RankTune can generate ranked data from [user provided group sizes](#using-group-sizes), from [existing datasets](#using-an-existing-dataset), along with [producing relevance scores](#generating-scores-with-the-ranking) accompanying the ranked list(s). 
 
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/KCachel/fairranktune/main/.github/images/ci_multi_distributions.png">
-</div>
 
 ## Usage
 RankTune can be utilized through four function interfaces.
@@ -170,4 +167,14 @@ RankTune is a fairness-tunable  ranked data generation method. It constructs a r
 
 To generate rankings along the statistical parity fairness spectrum, RankTune samples a random number in the [0, 1] interval each time it places an item. We design this interval to have "regions" that map to groups. In this way, the unfairness tuning parameter ```phi``` controls representativeness, i.e.,  how fairly each group is represented in the ranking. Specifically, when ```phi = 1``` , then  each group is fairly represented. Thus each group's region is equal to the group's proportion of the pool (fair). As ```phi``` decreases, the fair representation of each group degrades because regions are distorted in such a way that smaller groups have larger regions compared to their proportion of the total pool (unfair). The fairness tuning parameter ```phi``` is used to create the regions prior to placing any items into the generated ranking.
 
-To learn more please see our technical report. 
+
+### RankTune Demonstration
+
+The figure below displays the results of generating 200 rankings for different ```phi``` representativeness values for multiple group distributions. Average metric values (with $95\%$ confidence intervals) are reported for 200 generated rankings per group distribution of $1,000$ items. As ```phi```increases, RankTune outputs increasingly fairer rankings. EXP and AWRF are measured with 'MinMaxRatio' combo variables and are more fair at $1$ (thus upward slopes), and NDKL, EE-D (EXP with an `LTwo` combo variable ), and ARP (with an `MaxMinDiff` combo variable) are more fair at $0$ (thus downward slopes). To learn more, including the group distributions used, please see our [technical report](https://github.com/KCachel/fairranktune/blob/main/docs/assets/ranktune_report.pdf). 
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/KCachel/fairranktune/main/.github/images/ci_multi_distributions.png">
+</div>
+
+
+

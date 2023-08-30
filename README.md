@@ -1,6 +1,7 @@
+# Home
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/KCachel/FairRankTune/main/.github/images/FairRankTune.png">
+  <img src="https://raw.githubusercontent.com/KCachel/fairranktune/main/.github/images/FairRankTune.png">
 </div>
 
 <p align="center">
@@ -18,11 +19,11 @@
 
 ## 📍 Introduction
 
-[FairRankTune](https://github.com/KCachel/FairRankTune) is a  an open-source [Python](https://en.wikipedia.org/wiki/Python_(programming_language)) toolkit supporting end-to-end fair ranking workflows, analysis, auditing, and experimentation. FairRankTune provides researchers, practitioners, and educators with a self-contained module for generating ranked data, ranking strategies, and popular ranking-based fairness metrics.
+[FairRankTune](https://github.com/KCachel/fairranktune) is a  an open-source [Python](https://en.wikipedia.org/wiki/Python_(programming_language)) toolkit supporting end-to-end fair ranking workflows, analysis, auditing, and experimentation. FairRankTune provides researchers, practitioners, and educators with a self-contained module for generating ranked data, ranking strategies, and popular ranking-based fairness metrics.
 
-For a quick overview, follow the [Usage](#-usage) section.
+For a quick overview, follow the [Usage](#💡-usage) section.
 
-For a in-depth overview, follow the [Examples](#-examples) section.
+For a in-depth overview, follow the [Examples](#📖-examples) section.
 
 
 ## ✨ Features
@@ -30,10 +31,10 @@ For a in-depth overview, follow the [Examples](#-examples) section.
 
 ### 🎨 Fairness-Aware Ranked Data Generation
 
-```RankTune``` is a pseudo-stochastic data generation method for creating fairness-aware ranked lists using the fairness concept of statistical parity. Included in the ```RankTune``` module, it creates ranking(s) based on the ```phi``` representativeness parameter. When ```phi = 0``` then the generated ranked list(s) does not represent groups fairly, and as ```phi``` increases groups are represented more and more fairly; thus ```phi = 1``` groups are fairly represented. RankTune uses a [pseudo-random process](https://kcachel.github.io/FairRankTune/RankTune/#how-does-it-work) to generate fairness-aware ranked data. RankTune can generate ranked data from [user provided group sizes](https://kcachel.github.io/FairRankTune/RankTune/#using-group-sizes), from [existing datasets](https://kcachel.github.io/FairRankTune/RankTune/#using-an-existing-dataset), along with [producing relevance scores](https://kcachel.github.io/FairRankTune/RankTune/#generating-scores-with-the-ranking) accompanying the ranked list(s). 
+```RankTune``` is a pseudo-stochastic data generation method for creating fairness-aware ranked lists using the fairness concept of statistical parity. Included in the ```RankTune``` module, it creates ranking(s) based on the ```phi``` representativeness parameter. When ```phi = 0``` then the generated ranked list(s) does not represent groups fairly, and as ```phi``` increases groups are represented more and more fairly; thus ```phi = 1``` groups are fairly represented. RankTune uses a [pseudo-random process](https://kcachel.github.io/fairranktune/ranktune/#how-does-it-work) to generate fairness-aware ranked data. RankTune can generate ranked data from [user provided group sizes](https://kcachel.github.io/fairranktune/ranktune/#using-group-sizes), from [existing datasets](https://kcachel.github.io/fairranktune/rankTune/#using-an-existing-dataset), along with [producing relevance scores](https://kcachel.github.io/fairranktune/ranktune/#generating-scores-with-the-ranking) accompanying the ranked list(s). 
 
 
-Please refer to the [documentation](https://kcachel.github.io/FairRankTune/RankTune/) for additional information. 
+Please refer to the [documentation](https://kcachel.github.io/fairranktune/ranktune/) for additional information. 
 
 ### 📏 Metrics
 
@@ -42,30 +43,30 @@ Please refer to the [documentation](https://kcachel.github.io/FairRankTune/RankT
 
 | **Metric** | **Abbreviation** | **Fairness (Group or Individual)** | **Score-based** | **Statistical Parity** | **Reference** |
 |---|:---:|:---:|:---:|:---:|:---:|
-| [Group Exposure](https://kcachel.github.io/FairRankTune/Metrics/#group-exposure-exp) | EXP | Group | No | Yes | [Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) |
-| [Exposure Utility](https://kcachel.github.io/FairRankTune/Metrics/#exposure-realized-utility-expru) | EXPU | Group | Yes | No | [Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) |
-| [Exposure Realized Utility](https://kcachel.github.io/FairRankTune/Metrics/#exposure-realized-utility-expru) | EXPRU | Group | Yes | No |[Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088)|
-| [Attention Weighted Rank Fairness](https://kcachel.github.io/FairRankTune/Metrics/#attention-weighted-rank-fairness-awrf) | AWRF | Group | No | Yes |[Sapiezynski et al.](https://dl.acm.org/doi/10.1145/3308560.3317595)  |
-| [Exposure Rank Biased Precision Equality](https://kcachel.github.io/FairRankTune/Metrics/#exposure-rank-biased-precision-equality-erbe) | ERBE | Group | No | No | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080)  |
-| [Exposure Rank Biased Precision Proportionality](https://kcachel.github.io/FairRankTune/Metrics/#exposue-rank-biased-precision-proportionality-erbp) | ERBP | Group | No | Yes | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080) |
-| [Exposure Rank Biased Precision Proportional to Relevance](https://kcachel.github.io/FairRankTune/Metrics/#exposure-rank-biased-precision-proportional-to-relevance-erbr) | ERBR | Group | Yes | No | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080) |
-| [Attribute Rank Parity](https://kcachel.github.io/FairRankTune/Metrics/#attribute-rank-parity-arp) | ARP | Group | No | Yes | [Cachel et al.](https://ieeexplore.ieee.org/document/9835646) |
-| [Normalized Discounted KL-Divergence](https://kcachel.github.io/FairRankTune/Metrics/#normalized-discounted-kl-divergence-ndkl) | NDKL | Group | No | Yes |[Geyik et al.](https://dl.acm.org/doi/10.1145/3292500.3330691)  |
-| [Inequity of Amortized Attention](https://kcachel.github.io/FairRankTune/Metrics/#inequity-of-amortized-attention-iaa) | IAA | Individual | Yes | No | [Biega et al.](https://dl.acm.org/doi/10.1145/3209978.3210063)  |
+| [Group Exposure](https://kcachel.github.io/fairranktune/metrics/#group-exposure-exp) | EXP | Group | No | Yes | [Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) |
+| [Exposure Utility](https://kcachel.github.io/fairranktune/metrics/#exposure-realized-utility-expru) | EXPU | Group | Yes | No | [Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088) |
+| [Exposure Realized Utility](https://kcachel.github.io/fairranktune/metrics/#exposure-realized-utility-expru) | EXPRU | Group | Yes | No |[Singh et al.](https://dl.acm.org/doi/10.1145/3219819.3220088)|
+| [Attention Weighted Rank Fairness](https://kcachel.github.io/fairranktune/metrics/#attention-weighted-rank-fairness-awrf) | AWRF | Group | No | Yes |[Sapiezynski et al.](https://dl.acm.org/doi/10.1145/3308560.3317595)  |
+| [Exposure Rank Biased Precision Equality](https://kcachel.github.io/fairranktune/metrics/#exposure-rank-biased-precision-equality-erbe) | ERBE | Group | No | No | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080)  |
+| [Exposure Rank Biased Precision Proportionality](https://kcachel.github.io/fairranktune/metrics/#exposue-rank-biased-precision-proportionality-erbp) | ERBP | Group | No | Yes | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080) |
+| [Exposure Rank Biased Precision Proportional to Relevance](https://kcachel.github.io/fairranktune/metrics/#exposure-rank-biased-precision-proportional-to-relevance-erbr) | ERBR | Group | Yes | No | [Kirnap et al.](https://dl.acm.org/doi/abs/10.1145/3442381.3450080) |
+| [Attribute Rank Parity](https://kcachel.github.io/fairranktune/metrics/#attribute-rank-parity-arp) | ARP | Group | No | Yes | [Cachel et al.](https://ieeexplore.ieee.org/document/9835646) |
+| [Normalized Discounted KL-Divergence](https://kcachel.github.io/fairranktune/metrics/#normalized-discounted-kl-divergence-ndkl) | NDKL | Group | No | Yes |[Geyik et al.](https://dl.acm.org/doi/10.1145/3292500.3330691)  |
+| [Inequity of Amortized Attention](https://kcachel.github.io/FairRankTune/metrics/#inequity-of-amortized-attention-iaa) | IAA | Individual | Yes | No | [Biega et al.](https://dl.acm.org/doi/10.1145/3209978.3210063)  |
 
-Please refer to the [Metrics documentation](https://kcachel.github.io/FairRankTune/Metrics/) for further details. 
+Please refer to the [Metrics documentation](https://kcachel.github.io/fairranktune/metrics/) for further details. 
 
 ### ⚖️ Fair Ranking Methods
 
-```FairRankTune``` provides several [fair ranking algorithms](https://kcachel.github.io/FairRankTune/Rankers/#supported-fair-ranking-algorithms) in the ```Rankers``` module. The [DetConstSort](https://kcachel.github.io/FairRankTune/Rankers/#detconstsort-re-ranker) and [Epsilon-Greedy](https://kcachel.github.io/FairRankTune/Rankers/#epsilon-greedy-re-ranker) fair ranking algorithms can be used to re-rank a given ranking with the objective of making the resulting ranking fair. 
+```FairRankTune``` provides several [fair ranking algorithms](https://kcachel.github.io/fairranktune/rankers/#supported-fair-ranking-algorithms) in the ```Rankers``` module. The [DetConstSort](https://kcachel.github.io/fairranktune/rankers/#detconstsort-re-ranker) and [Epsilon-Greedy](https://kcachel.github.io/fairranktune/rankers/#epsilon-greedy-re-ranker) fair ranking algorithms can be used to re-rank a given ranking with the objective of making the resulting ranking fair. 
 
-Please refer to the [documentation](https://kcachel.github.io/FairRankTune/Metrics/) for further details. 
+Please refer to the [documentation](https://kcachel.github.io/fairranktune/metrics/) for further details. 
 
 ## 🔌 Requirements
 ```bash
 python>=3.8
 ```
-As of `v.0.0.1`, [FairRankTune](https://github.com/KCachel/FairRankTune) requires `python>=3.8`.
+As of `v.0.0.6`, [FairRankTune](https://github.com/KCachel/fairranktune) requires `python>=3.8`.
 
 ## 💾 Installation 
 
@@ -135,7 +136,7 @@ EXP of generated ranking:  0.5158099476966725 avg_exposures:  {'M': 0.6404015779
 ```
 We can confirm this is a biased ranking base don the low EXP score and large difference in average exposure between the 'M' and 'W' groups.
 
-For further detail on how to use ```RankTune``` to generate relevance scores see the [RankTune documentation](https://kcachel.github.io/FairRankTune/RankTune/).
+For further detail on how to use ```RankTune``` to generate relevance scores see the [RankTune documentation](https://kcachel.github.io/fairranktune/RankTune/).
 
 ### 📏 Metrics
 ```python
@@ -191,27 +192,27 @@ Output:
 EXP before Epsilon-Greedy:  0.5420744267551784 avg_exposures before Epsilon-Greedy:  {0: 0.2093867087428094, 1: 0.11350318011191189}
 EXP after Epsilon-Greedy:  0.7689042373241246 avg_exposures after Epsilon-Greedy:  {0: 0.15541589156986096, 1: 0.1194999375755728}
 ```
-We can see that the EXP fairness score improved from running Epsilon-Greedy. For more usage examples please see the [documentation](https://kcachel.github.io/FairRankTune/Rankers/).
+We can see that the EXP fairness score improved from running Epsilon-Greedy. For more usage examples please see the [documentation](https://kcachel.github.io/fairranktune/rankers/).
 
 ## 📖 Examples
 
 
 | Topic | Link |
 | :--- | :---|
-| Quickstart | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/1_quickstart.ipynb) |
-| RankTune Overview | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/2_ranktune.ipynb) |
-| RankTune Augmenting Datasets | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/3_ranktune_augment.ipynb) |
-| Statistical Parity Metrics | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/4_statisticalparitymetrics.ipynb) |
-| Score-based (Group & Individual) Metrics | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/5_scorebasedmetrics.ipynb) |
-| Using Fair Ranking Algorithms| [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/FairRankTune/blob/main/examples/5_scorebasedmetrics.ipynb) |
+| Quickstart | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/fairranktune/blob/main/examples/1_quickstart.ipynb) |
+| RankTune Overview | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/fairranktune/blob/main/examples/2_ranktune.ipynb) |
+| RankTune Augmenting Datasets | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/fairranktune/blob/main/examples/3_ranktune_augment.ipynb) |
+| Statistical Parity Metrics | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/fairranktune/blob/main/examples/4_statisticalparitymetrics.ipynb) |
+| Score-based (Group & Individual) Metrics | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/fairranktune/blob/main/examples/5_scorebasedmetrics.ipynb) |
+| Using Fair Ranking Algorithms| [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/fairranktune/blob/main/examples/5_scorebasedmetrics.ipynb) |
 
 
 ## 📚 Documentation
-Check out the [documentation](https://kcachel.github.io/FairRankTune) for more details and example notebooks.
+Check out the [documentation](https://kcachel.github.io/fairranktune) for more details and example notebooks.
 
 
 ## 🎓 Citation
-If you end up using [FairRankTune](https://github.com/KCachel/FairRankTune) in your work, please consider citing it:
+If you end up using [FairRankTune](https://github.com/KCachel/fairranktune) in your work, please consider citing it:
 <details>
   <summary>BibTeX</summary>
   
@@ -221,7 +222,7 @@ If you end up using [FairRankTune](https://github.com/KCachel/FairRankTune) in y
     title     = {FairRankTune: A Python Library for Fair Ranking},
     year = {2023},
     publisher = {GitHub},
-    howpublished = {\url{https://github.com/KCachel/FairRankTune}}
+    howpublished = {\url{https://github.com/KCachel/fairranktune}}
   }
   ```
 </details>
@@ -229,7 +230,7 @@ If you end up using [FairRankTune](https://github.com/KCachel/FairRankTune) in y
 
 
 ## ⁉️ Feature Requests
-We believe in open-source community driven software. Would you like to see other functionality implemented? Please, open a [feature request](https://github.com/KCachel/FairRankTune/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFeature+Request%5D+title). Is there a bug or issue ? Please, open a [github issue](https://github.com/KCachel/FairRankTune/issues/new).
+We believe in open-source community driven software. Would you like to see other functionality implemented? Please, open a [feature request](https://github.com/KCachel/fairranktune/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFeature+Request%5D+title). Is there a bug or issue ? Please, open a [github issue](https://github.com/KCachel/fairranktune/issues/new).
 
 
 ## 👋 Want to contribute?
@@ -237,4 +238,4 @@ Would you like to contribute? Please, send me an [e-mail](mailto:kathleen.cachel
 
 
 ## 📄 License
-[FairRankTune](https://github.com/KCachel/FairRankTune) is open-sourced software licensed under the [BSD-3-Clause](https://github.com/KCachel/FairRankTune/blob/main/LICENSE) license.
+[FairRankTune](https://github.com/KCachel/fairranktune) is open-sourced software licensed under the [BSD-3-Clause](https://github.com/KCachel/fairranktune/blob/main/LICENSE) license.
