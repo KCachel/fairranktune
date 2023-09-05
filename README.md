@@ -21,9 +21,9 @@
 
 [FairRankTune](https://github.com/KCachel/fairranktune) is a  an open-source [Python](https://en.wikipedia.org/wiki/Python_(programming_language)) toolkit supporting end-to-end fair ranking workflows, analysis, auditing, and experimentation. FairRankTune provides researchers, practitioners, and educators with a self-contained module for generating ranked data, ranking strategies, and popular ranking-based fairness metrics.
 
-For a quick overview, follow the [Usage](#💡-usage) section.
+For a quick overview, follow the [Usage](#-usage) section.
 
-For a in-depth overview, follow the [Examples](#📖-examples) section.
+For a in-depth overview, follow the [Examples](#-examples) section.
 
 
 ## ✨ Features
