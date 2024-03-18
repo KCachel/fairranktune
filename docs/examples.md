@@ -28,4 +28,4 @@ This notebook shows you how to use FairRankTune's Metric library to audit rankin
 ## How to use the Fair Ranking Algorithms
 This notebook shows you how to use FairRankTune's Rankers module to adjust rankings to be fair using existing algorithms from the fairness literature.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/fairranktune/blob/main/examples/5_scorebasedmetrics.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KCachel/fairranktune/blob/main/examples/6_fairranking.ipynb)
